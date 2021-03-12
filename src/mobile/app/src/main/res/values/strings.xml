@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Duckest</string>
+    <string name="button_sign_up"><u>Зарегистрироваться</u></string>
+    <string name="button_forgot_password">Забыли пароль?</string>
+</resources>
