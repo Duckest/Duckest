@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">Duckest</string>
     <string name="button_sign_up"><u>Зарегистрироваться</u></string>
-    <string name="button_forgot_password">Забыли пароль?</string>
+    <string name="button_forgot_password"><u>Забыли пароль?</u></string>
+    <string name="sign_up_hint_surname">Фамилия</string>
+    <string name="sign_up_hint_name">Имя</string>
+    <string name="sign_up_hint_patronymic">Отчество</string>
+    <string name="sign_up_hint_email">E-mail</string>
+    <string name="sign_up_hint_password">Пароль</string>
+    <string name="sign_up_hint_confirm_password">Подтвердите пароль</string>
+    <string name="sign_up_hint_save">Сохранить</string>
 </resources>

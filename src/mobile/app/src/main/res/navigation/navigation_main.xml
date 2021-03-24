@@ -16,6 +16,10 @@
         <action
             android:id="@+id/action_loginFragment_to_lostPasswordFragment"
             app:destination="@id/lostPasswordFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_homeActivity"
+            app:destination="@id/homeActivity" />
+
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -27,4 +31,10 @@
         android:name="com.duckest.duckest.ui.resetpassword.ResetPasswordFragment"
         android:label="LostPasswordFragment"
         tools:layout="@layout/fragment_reset_password" />
+    <activity
+        tools:layout="@layout/activity_home"
+        android:id="@+id/homeActivity"
+        android:name="com.duckest.duckest.ui.home.HomeActivity"
+        android:label="HomeActivity" />
+
 </navigation>
