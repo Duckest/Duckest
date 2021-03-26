@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.duckest.duckest.Utils
+import com.duckest.duckest.Utils.setError
 import com.duckest.duckest.data.Error
 import com.duckest.duckest.data.NetworkResult
 import com.duckest.duckest.databinding.FragmentSignUpBinding
@@ -79,7 +80,7 @@ class SignUpFragment : Fragment() {
                 Error.WEAK_PASSWORD -> setError(binding.password, "Пароль должен содержать более 6 знаков")
                 else -> Toast.makeText(
                     requireContext(),
-                    "Something went wrong, try again later",
+                    "Что-то пошло не так, попробуйте позже",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -99,11 +100,6 @@ class SignUpFragment : Fragment() {
                 }
                 is NetworkResult.Success -> {
                     binding.progressBar.visibility = View.GONE
-                    Toast.makeText(
-                        requireContext(),
-                        it.message,
-                        Toast.LENGTH_SHORT
-                    ).show()
                     findNavController().popBackStack()
                 }
 
@@ -157,10 +153,6 @@ class SignUpFragment : Fragment() {
         return flag
     }
 
-    private fun setError(inputLayout: TextInputLayout, message: String) {
-        inputLayout.isErrorEnabled = true
-        inputLayout.error = message
-    }
 
 
 }

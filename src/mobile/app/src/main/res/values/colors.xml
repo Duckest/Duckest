@@ -12,4 +12,5 @@
     <color name="background">#f3f3f3</color>
     <color name="dark_blue">#1952a3</color>
     <color name="colorPopupBackground">#212121</color>
+    <color name="light_blue">#f7faff</color>
 </resources>
