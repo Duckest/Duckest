@@ -21,4 +21,8 @@
     <string name="sign_up_error_title_empty_email">Введите e-mail</string>
     <string name="feedback_company_email">duckest@gmail.com</string>
     <string name="feedback_error_title_no_mail_app">Нет почтового клиента</string>
+    <string name="feed_test_title_javascript">JavaScript</string>
+    <string name="feed_test_title_python">Python</string>
+    <string name="test_preview_check_box_content_description">Чек бокс</string>
+    <string name="test_preview_test_image_content_description">Изображение темы теста</string>
 </resources>

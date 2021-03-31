@@ -6,7 +6,7 @@
     app:startDestination="@id/feedFragment">
     <fragment
         android:id="@+id/feedFragment"
-        android:name="com.duckest.duckest.ui.home.FeedFragment"
+        android:name="com.duckest.duckest.ui.home.feed.FeedFragment"
         android:label="FeedFragment"
         tools:layout="@layout/fragment_feed" />
     <fragment
