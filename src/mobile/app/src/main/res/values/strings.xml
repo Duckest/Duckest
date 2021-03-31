@@ -25,4 +25,11 @@
     <string name="feed_test_title_python">Python</string>
     <string name="test_preview_check_box_content_description">Чек бокс</string>
     <string name="test_preview_test_image_content_description">Изображение темы теста</string>
+    <string name="menu_title_test">Тесты</string>
+    <string name="menu_title_progress">Прогресс</string>
+    <string name="menu_title_feedback">Обратная связь</string>
+    <string name="menu_title_settings">Настройки</string>
+    <string name="menu_title_exit">Выход</string>
+    <string name="header_content_description_app_icon">App icon</string>
+    <string name="header_content_description_profile_icon">Profile icon</string>
 </resources>
