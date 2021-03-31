@@ -10,4 +10,15 @@
     <string name="sign_up_hint_confirm_password">Подтвердите пароль</string>
     <string name="sign_up_hint_save">Сохранить</string>
     <string name="sign_in_enter">Войти</string>
+    <string name="sign_up_title">Регистрация</string>
+    <string name="sign_up_error_title_user_exist">Имя пользователя уже занято</string>
+    <string name="sign_up_error_title_password">Пароль должен содержать более 6 знаков</string>
+    <string name="sign_up_error_title_something_went_wrong">Что-то пошло не так, попробуйте позже</string>
+    <string name="sign_up_error_title_wrong_email">Введите правильную почту</string>
+    <string name="sign_up_error_title_empty_password">Введите пароль</string>
+    <string name="sign_up_error_title_empty_confitm_password">Введите пароль</string>
+    <string name="sign_up_error_passwords_dont_match">Не совпадают пароли</string>
+    <string name="sign_up_error_title_empty_email">Введите e-mail</string>
+    <string name="feedback_company_email">duckest@gmail.com</string>
+    <string name="feedback_error_title_no_mail_app">Нет почтового клиента</string>
 </resources>

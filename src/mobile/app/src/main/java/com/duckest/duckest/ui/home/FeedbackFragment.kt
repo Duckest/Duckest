@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.duckest.duckest.R
 import com.duckest.duckest.databinding.FragmentFeedbackBinding
 
 class FeedbackFragment : Fragment() {
@@ -25,7 +26,7 @@ class FeedbackFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.sendFeedback.setOnClickListener {
             composeEmail(
-                arrayOf("duckest@gmail.com"),
+                arrayOf(getString(R.string.feedback_company_email)),
                 binding.topicEdit.text.toString().trim(),
                 binding.feedbackEdit.text.toString().trim()
             )
@@ -44,7 +45,7 @@ class FeedbackFragment : Fragment() {
         } else {
             Toast.makeText(
                 requireContext(),
-                "Нет почтового клиента",
+                getString(R.string.feedback_error_title_no_mail_app),
                 Toast.LENGTH_SHORT
             ).show()
         }

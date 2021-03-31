@@ -12,6 +12,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.duckest.duckest.R
 import com.duckest.duckest.Utils
 import com.duckest.duckest.Utils.setError
 import com.duckest.duckest.data.Error
@@ -31,7 +32,7 @@ class SignUpFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        (activity as AppCompatActivity).supportActionBar?.title = "Регистрация"
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.sign_up_title)
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setHasOptionsMenu(true)
 
@@ -76,11 +77,11 @@ class SignUpFragment : Fragment() {
         vm.error.observe(viewLifecycleOwner, {
             binding.progressBar.visibility = View.GONE
             when (it) {
-                Error.EMAIL_ALREADY_EXIST -> setError(binding.email, "Имя пользователя уже занято")
-                Error.WEAK_PASSWORD -> setError(binding.password, "Пароль должен содержать более 6 знаков")
+                Error.EMAIL_ALREADY_EXIST -> setError(binding.email, getString(R.string.sign_up_error_title_user_exist))
+                Error.WEAK_PASSWORD -> setError(binding.password, getString(R.string.sign_up_error_title_password))
                 else -> Toast.makeText(
                     requireContext(),
-                    "Что-то пошло не так, попробуйте позже",
+                    getString(R.string.sign_up_error_title_something_went_wrong),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -129,25 +130,25 @@ class SignUpFragment : Fragment() {
         val confirmPass = binding.confirmPasswordEdit.text.toString().trim()
         val email = binding.emailEdit.text.toString().trim()
         if (email.isEmpty()) {
-            setError(binding.email, "Введите e-mail")
+            setError(binding.email, getString(R.string.sign_up_error_title_empty_email))
             flag = true
         } else if (!Patterns.EMAIL_ADDRESS
                 .matcher(email)
                 .matches()
         ) {
-            setError(binding.email, "Введите правильную почту")
+            setError(binding.email, getString(R.string.sign_up_error_title_wrong_email))
             flag = true
         }
         if (pass.isEmpty()) {
-            setError(binding.password, "Введите пароль")
+            setError(binding.password, getString(R.string.sign_up_error_title_empty_password))
             flag = true
         }
         if (confirmPass.isEmpty()) {
-            setError(binding.confirmPassword, "Введите пароль")
+            setError(binding.confirmPassword, getString(R.string.sign_up_error_title_empty_confitm_password))
             flag = true
         }
         if (pass != confirmPass) {
-            setError(binding.confirmPassword, "Не совпадают пароли")
+            setError(binding.confirmPassword, getString(R.string.sign_up_error_passwords_dont_match))
             flag = true
         }
         return flag
