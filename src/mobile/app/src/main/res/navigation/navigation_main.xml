@@ -4,6 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_main"
     app:startDestination="@id/loginFragment">
+    <fragment
+        android:id="@+id/introFragment"
+        tools:layout="@layout/fragment_intro"
+        android:name="com.duckest.duckest.ui.IntroFragment"
+        android:label="IntroFragment" >
+        <action
+            android:id="@+id/action_introFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_introFragment_to_homeActivity"
+            app:destination="@id/homeActivity" />
+    </fragment>
 
     <fragment
         android:id="@+id/loginFragment"
