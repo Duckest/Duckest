@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Duckest</string>
+    <string name="button_sign_up"><u>Еще нет аккаунта? <b>Зарегистрируйтесь.</b> </u></string>
+    <string name="button_forgot_password"><u>Забыли пароль?</u></string>
+    <string name="sign_up_hint_surname">Фамилия</string>
+    <string name="sign_up_hint_name">Имя</string>
+    <string name="sign_up_hint_patronymic">Отчество</string>
+    <string name="sign_up_hint_email">E-mail</string>
+    <string name="sign_up_hint_password">Пароль</string>
+    <string name="sign_up_hint_confirm_password">Подтвердите пароль</string>
+    <string name="sign_up_hint_save">Сохранить</string>
+    <string name="sign_in_enter">Войти</string>
+    <string name="sign_up_title">Регистрация</string>
+    <string name="sign_up_error_title_user_exist">Имя пользователя уже занято</string>
+    <string name="sign_up_error_title_password">Пароль должен содержать более 6 знаков</string>
+    <string name="sign_up_error_title_something_went_wrong">Что-то пошло не так, попробуйте позже</string>
+    <string name="sign_up_error_title_wrong_email">Введите правильную почту</string>
+    <string name="sign_up_error_title_empty_password">Введите пароль</string>
+    <string name="sign_up_error_title_empty_confitm_password">Введите пароль</string>
+    <string name="sign_up_error_passwords_dont_match">Не совпадают пароли</string>
+    <string name="sign_up_error_title_empty_email">Введите e-mail</string>
+    <string name="feedback_company_email">duckest@gmail.com</string>
+    <string name="feedback_error_title_no_mail_app">Нет почтового клиента</string>
+    <string name="feed_test_title_javascript">JavaScript</string>
+    <string name="feed_test_title_python">Python</string>
+    <string name="test_preview_check_box_content_description">Чек бокс</string>
+    <string name="test_preview_test_image_content_description">Изображение темы теста</string>
+    <string name="menu_title_test">Тесты</string>
+    <string name="menu_title_progress">Прогресс</string>
+    <string name="menu_title_feedback">Обратная связь</string>
+    <string name="menu_title_settings">Настройки</string>
+    <string name="menu_title_exit">Выход</string>
+    <string name="header_content_description_app_icon">App icon</string>
+    <string name="header_content_description_profile_icon">Profile icon</string>
+    <string name="intro_title_app_name">DUCKEST</string>
+</resources>
