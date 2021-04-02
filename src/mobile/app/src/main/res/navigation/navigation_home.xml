@@ -8,11 +8,30 @@
         android:id="@+id/feedFragment"
         android:name="com.duckest.duckest.ui.home.feed.FeedFragment"
         android:label="FeedFragment"
-        tools:layout="@layout/fragment_feed" />
+        tools:layout="@layout/fragment_feed" >
+        <action
+            android:id="@+id/action_feedFragment_to_levelFragment"
+            app:destination="@id/levelFragment" />
+    </fragment>
     <fragment
         android:id="@+id/feedbackFragment"
         android:name="com.duckest.duckest.ui.home.FeedbackFragment"
         android:label="FeedbackFragment"
         tools:layout="@layout/fragment_feedback" />
+    <fragment
+        android:id="@+id/levelFragment"
+        tools:layout="@layout/fragment_level"
+        android:name="com.duckest.duckest.ui.home.testlevel.LevelFragment"
+        android:label="LevelFragment" >
+        <argument
+            android:name="imageId"
+            app:argType="integer" />
+        <argument
+            android:name="testId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_levelFragment_to_feedFragment"
+            app:destination="@id/feedFragment" />
+    </fragment>
 
 </navigation>

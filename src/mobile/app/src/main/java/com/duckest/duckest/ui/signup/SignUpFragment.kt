@@ -32,10 +32,7 @@ class SignUpFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.sign_up_title)
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setHasOptionsMenu(true)
-
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
         mView = binding.root
         return mView
@@ -43,6 +40,8 @@ class SignUpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.sign_up_title)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.emailEdit.addTextChangedListener {
             if (!it.isNullOrEmpty()) {
                 binding.email.isErrorEnabled = false

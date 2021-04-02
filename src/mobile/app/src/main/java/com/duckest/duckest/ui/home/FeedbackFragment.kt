@@ -20,13 +20,13 @@ class FeedbackFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        (activity as AppCompatActivity).supportActionBar?.title = "Обратная связь"
         binding = FragmentFeedbackBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity).supportActionBar?.title = "Обратная связь"
         binding.sendFeedback.setOnClickListener {
             composeEmail(
                 arrayOf(getString(R.string.feedback_company_email)),

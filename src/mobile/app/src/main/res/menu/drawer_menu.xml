@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/testFragment"
+            android:id="@+id/feedFragment"
             android:icon="@drawable/ic_assignment"
             android:title="@string/menu_title_test" />
         <item
