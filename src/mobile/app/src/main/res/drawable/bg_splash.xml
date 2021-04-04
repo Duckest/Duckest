@@ -9,4 +9,13 @@
         android:startColor="#5d5c5c"
         android:type="radial"
         />
+<!--    <gradient-->
+<!--        android:centerColor="#E6E6E6"-->
+<!--        android:endColor="@color/background"-->
+<!--        android:centerX="50%"-->
+<!--        android:centerY="50%"-->
+<!--        android:gradientRadius="2000"-->
+<!--        android:startColor="#DDDDDD"-->
+<!--        android:type="radial"-->
+<!--        />-->
 </shape>

@@ -30,6 +30,7 @@ class SignInFragment : Fragment() {
     ): View {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         (activity as AppCompatActivity).supportActionBar?.title = "Авторизация"
+        (activity as AppCompatActivity).supportActionBar?.show()
         binding = FragmentSignInBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -43,6 +44,7 @@ class SignInFragment : Fragment() {
                     when (response.data) {
                         SignInViewModel.Status.VERIFIED -> {
                             findNavController().navigate(SignInFragmentDirections.actionLoginFragmentToHomeActivity())
+                            requireActivity().finish()
                         }
 
                         SignInViewModel.Status.NOT_VERIFIED -> Toast.makeText(

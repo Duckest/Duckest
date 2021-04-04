@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_feedFragment_to_levelFragment"
             app:destination="@id/levelFragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
     </fragment>
     <fragment
         android:id="@+id/feedbackFragment"
@@ -33,5 +36,9 @@
             android:id="@+id/action_levelFragment_to_feedFragment"
             app:destination="@id/feedFragment" />
     </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.duckest.duckest.MainActivity"
+        android:label="MainActivity" />
 
 </navigation>
