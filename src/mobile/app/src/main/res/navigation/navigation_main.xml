@@ -25,7 +25,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.duckest.duckest.ui.signin.SignInFragment"
-        android:label="LoginFragment"
+        android:label="Авторизация"
         tools:layout="@layout/fragment_sign_in">
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
@@ -45,12 +45,12 @@
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.duckest.duckest.ui.signup.SignUpFragment"
-        android:label="SignUpFragment"
+        android:label="Регистрация"
         tools:layout="@layout/fragment_sign_up" />
     <fragment
         android:id="@+id/lostPasswordFragment"
         android:name="com.duckest.duckest.ui.resetpassword.ResetPasswordFragment"
-        android:label="LostPasswordFragment"
+        android:label="Восстановление"
         tools:layout="@layout/fragment_reset_password" />
     <activity
         tools:layout="@layout/activity_home"

@@ -12,8 +12,8 @@ object UiUtils {
     )
 
     fun getLevels() = listOf(
-        LevelItem(R.string.level_title_junior, R.drawable.img_python, done = false),
-        LevelItem(R.string.level_title_middle, R.drawable.img_python, done = false),
-        LevelItem(R.string.level_title_senior, R.drawable.img_python, done = true)
+        LevelItem(R.string.level_title_junior, R.drawable.img_first, done = false),
+        LevelItem(R.string.level_title_middle, R.drawable.img_second, done = false),
+        LevelItem(R.string.level_title_senior, R.drawable.img_third, done = true)
     )
 }

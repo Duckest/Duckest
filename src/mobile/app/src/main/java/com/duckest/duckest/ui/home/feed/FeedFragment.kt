@@ -22,8 +22,6 @@ class FeedFragment : Fragment(), TestAdapter.TestItemListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        (activity as AppCompatActivity).supportActionBar?.title = "Тесты"
-
         binding = FragmentFeedBinding.inflate(inflater, container, false)
         return binding.root
     }

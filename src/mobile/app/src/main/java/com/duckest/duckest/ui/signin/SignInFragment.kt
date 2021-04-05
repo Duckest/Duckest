@@ -28,9 +28,6 @@ class SignInFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        (activity as AppCompatActivity).supportActionBar?.title = "Авторизация"
-        (activity as AppCompatActivity).supportActionBar?.show()
         binding = FragmentSignInBinding.inflate(inflater, container, false)
         return binding.root
     }

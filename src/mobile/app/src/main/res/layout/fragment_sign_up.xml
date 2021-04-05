@@ -39,12 +39,14 @@
                     app:layout_constraintWidth_percent="0.49">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/name_edit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/sign_up_hint_name"
                         android:paddingHorizontal="0dp"
                         android:paddingStart="0dp"
-                        android:paddingEnd="0dp" />
+                        android:paddingEnd="0dp"
+                        android:singleLine="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -60,11 +62,13 @@
                     app:layout_constraintWidth_percent="0.49">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/surname_edit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/sign_up_hint_surname"
                         android:paddingStart="0dp"
-                        android:paddingEnd="0dp" />
+                        android:paddingEnd="0dp"
+                        android:singleLine="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -79,11 +83,13 @@
                     app:passwordToggleContentDescription="description">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/patronymic_edit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/sign_up_hint_patronymic"
                         android:paddingStart="0dp"
-                        android:paddingEnd="0dp" />
+                        android:paddingEnd="0dp"
+                        android:singleLine="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -129,7 +135,6 @@
                         android:paddingEnd="0dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/confirm_password"
@@ -179,8 +184,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

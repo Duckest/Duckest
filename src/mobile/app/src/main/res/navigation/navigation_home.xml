@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/feedFragment"
         android:name="com.duckest.duckest.ui.home.feed.FeedFragment"
-        android:label="FeedFragment"
+        android:label="Тесты"
         tools:layout="@layout/fragment_feed">
         <action
             android:id="@+id/action_feedFragment_to_levelFragment"
@@ -15,8 +15,8 @@
     </fragment>
     <fragment
         android:id="@+id/feedbackFragment"
-        android:name="com.duckest.duckest.ui.home.FeedbackFragment"
-        android:label="FeedbackFragment"
+        android:name="com.duckest.duckest.ui.home.feedback.FeedbackFragment"
+        android:label="Обратная связь"
         tools:layout="@layout/fragment_feedback" />
     <fragment
         android:id="@+id/levelFragment"

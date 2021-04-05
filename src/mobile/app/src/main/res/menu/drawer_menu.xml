@@ -6,10 +6,6 @@
             android:icon="@drawable/ic_assignment"
             android:title="@string/menu_title_test" />
         <item
-            android:id="@+id/progressFragment"
-            android:icon="@drawable/ic_calendar"
-            android:title="@string/menu_title_progress" />
-        <item
             android:id="@+id/feedbackFragment"
             android:icon="@drawable/ic_send"
             android:title="@string/menu_title_feedback" />
