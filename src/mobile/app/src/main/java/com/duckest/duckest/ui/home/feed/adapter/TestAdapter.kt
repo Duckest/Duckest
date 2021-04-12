@@ -8,12 +8,20 @@ import com.duckest.duckest.R
 import com.duckest.duckest.databinding.ItemTestPreviewBinding
 
 class TestAdapter(
-    private val items: List<TestItem>
+    private val items: List<TestItem>,
+    private val listener: TestItemListener
 ) :
     RecyclerView.Adapter<TestAdapter.TestHolder>() {
+    interface TestItemListener {
+        fun onClickedTest(imageId: Int, testId: Int)
+    }
+
     inner class TestHolder(val binding: ItemTestPreviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: TestItem) {
+            binding.root.setOnClickListener {
+                listener.onClickedTest(item.icon, item.title)
+            }
             binding.title.setText(item.title)
             binding.photo.setImageResource(item.icon)
             if (item.done) {
@@ -25,10 +33,7 @@ class TestAdapter(
                     )
                 )
             }
-
-
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestHolder {

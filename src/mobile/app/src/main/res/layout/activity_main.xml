@@ -10,8 +10,8 @@
         tools:context=".MainActivity">
 
 
-        <fragment
-            android:id="@+id/fragment"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host_fragment_container"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -34,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/blue"
                 app:titleTextColor="@color/white"
+                app:title="Авторизация"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="@android:style/ThemeOverlay.Material.Dark.ActionBar" >
 

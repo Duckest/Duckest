@@ -7,12 +7,30 @@
     <fragment
         android:id="@+id/feedFragment"
         android:name="com.duckest.duckest.ui.home.feed.FeedFragment"
-        android:label="FeedFragment"
-        tools:layout="@layout/fragment_feed" />
+        android:label="Тесты"
+        tools:layout="@layout/fragment_feed">
+        <action
+            android:id="@+id/action_feedFragment_to_levelFragment"
+            app:destination="@id/levelFragment" />
+    </fragment>
     <fragment
         android:id="@+id/feedbackFragment"
-        android:name="com.duckest.duckest.ui.home.FeedbackFragment"
-        android:label="FeedbackFragment"
+        android:name="com.duckest.duckest.ui.home.feedback.FeedbackFragment"
+        android:label="Обратная связь"
         tools:layout="@layout/fragment_feedback" />
-
+    <fragment
+        android:id="@+id/levelFragment"
+        android:name="com.duckest.duckest.ui.home.testlevel.LevelFragment"
+        android:label="LevelFragment"
+        tools:layout="@layout/fragment_level">
+        <argument
+            android:name="imageId"
+            app:argType="integer" />
+        <argument
+            android:name="testId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_levelFragment_to_feedFragment"
+            app:destination="@id/feedFragment" />
+    </fragment>
 </navigation>

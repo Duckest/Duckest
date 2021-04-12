@@ -3,24 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_main"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/introFragment">
     <fragment
         android:id="@+id/introFragment"
         tools:layout="@layout/fragment_intro"
-        android:name="com.duckest.duckest.ui.IntroFragment"
+        android:name="com.duckest.duckest.ui.intro.IntroFragment"
         android:label="IntroFragment" >
         <action
             android:id="@+id/action_introFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/fade_in"
+            app:popUpTo="@id/introFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_introFragment_to_homeActivity"
-            app:destination="@id/homeActivity" />
+            app:destination="@id/homeActivity"
+            app:popUpTo="@id/introFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.duckest.duckest.ui.signin.SignInFragment"
-        android:label="LoginFragment"
+        android:label="Авторизация"
         tools:layout="@layout/fragment_sign_in">
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
@@ -32,23 +37,26 @@
             app:destination="@id/lostPasswordFragment" />
         <action
             android:id="@+id/action_loginFragment_to_homeActivity"
-            app:destination="@id/homeActivity" />
+            app:destination="@id/homeActivity"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
 
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.duckest.duckest.ui.signup.SignUpFragment"
-        android:label="SignUpFragment"
+        android:label="Регистрация"
         tools:layout="@layout/fragment_sign_up" />
     <fragment
         android:id="@+id/lostPasswordFragment"
         android:name="com.duckest.duckest.ui.resetpassword.ResetPasswordFragment"
-        android:label="LostPasswordFragment"
+        android:label="Восстановление"
         tools:layout="@layout/fragment_reset_password" />
     <activity
         tools:layout="@layout/activity_home"
         android:id="@+id/homeActivity"
         android:name="com.duckest.duckest.ui.home.HomeActivity"
         android:label="HomeActivity" />
+    <include app:graph="@navigation/navigation_home" />
 
 </navigation>

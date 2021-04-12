@@ -11,18 +11,21 @@
     <string name="sign_up_hint_save">Сохранить</string>
     <string name="sign_in_enter">Войти</string>
     <string name="sign_up_title">Регистрация</string>
-    <string name="sign_up_error_title_user_exist">Имя пользователя уже занято</string>
+    <string name="sign_up_error_title_user_exist">Для данной почты уже существует аккаунт</string>
     <string name="sign_up_error_title_password">Пароль должен содержать более 6 знаков</string>
     <string name="sign_up_error_title_something_went_wrong">Что-то пошло не так, попробуйте позже</string>
     <string name="sign_up_error_title_wrong_email">Введите правильную почту</string>
     <string name="sign_up_error_title_empty_password">Введите пароль</string>
     <string name="sign_up_error_title_empty_confitm_password">Введите пароль</string>
     <string name="sign_up_error_passwords_dont_match">Не совпадают пароли</string>
-    <string name="sign_up_error_title_empty_email">Введите e-mail</string>
+    <string name="sign_up_error_title_empty">Это поле обязательно для заполнения</string>
     <string name="feedback_company_email">duckest@gmail.com</string>
     <string name="feedback_error_title_no_mail_app">Нет почтового клиента</string>
     <string name="feed_test_title_javascript">JavaScript</string>
     <string name="feed_test_title_python">Python</string>
+    <string name="level_title_junior">Junior</string>
+    <string name="level_title_middle">Middle</string>
+    <string name="level_title_senior">Senior</string>
     <string name="test_preview_check_box_content_description">Чек бокс</string>
     <string name="test_preview_test_image_content_description">Изображение темы теста</string>
     <string name="menu_title_test">Тесты</string>
@@ -33,4 +36,6 @@
     <string name="header_content_description_app_icon">App icon</string>
     <string name="header_content_description_profile_icon">Profile icon</string>
     <string name="intro_title_app_name">DUCKEST</string>
+    <string name="sign_up_wrong_name">Это поле может содержать только буквы русского алфавита</string>
+    <string name="feedback_not_enough_symbols">Недостаточное количество символов</string>
 </resources>

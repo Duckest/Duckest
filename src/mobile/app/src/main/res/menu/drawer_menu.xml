@@ -2,13 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/testFragment"
+            android:id="@+id/feedFragment"
             android:icon="@drawable/ic_assignment"
             android:title="@string/menu_title_test" />
-        <item
-            android:id="@+id/progressFragment"
-            android:icon="@drawable/ic_calendar"
-            android:title="@string/menu_title_progress" />
         <item
             android:id="@+id/feedbackFragment"
             android:icon="@drawable/ic_send"
@@ -18,7 +14,8 @@
             android:icon="@drawable/ic_settings"
             android:title="@string/menu_title_settings" />
         <item
-            android:id="@+id/exitFragment"
+            android:id="@+id/navigation_main"
+            android:onClick="showLoginScreen"
             android:icon="@drawable/ic_logout"
             android:title="@string/menu_title_exit" />
     </group>
