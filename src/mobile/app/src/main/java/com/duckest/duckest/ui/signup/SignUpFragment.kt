@@ -125,7 +125,7 @@ class SignUpFragment : Fragment() {
                 isEmptyField(binding.passwordEdit, binding.password) or
                 isEmptyField(binding.confirmPasswordEdit, binding.confirmPassword) or
                 (isEmptyField(binding.emailEdit, binding.email) ||
-                        checkEmailPattern(binding.emailEdit, binding.email)) or
+                        Utils.checkEmailPattern(binding.emailEdit, binding.email)) or
                 (isEmptyField(binding.surnameEdit, binding.surname) ||
                         checkName(binding.surnameEdit, binding.surname)) or
                 checkName(binding.patronymicEdit, binding.patronymic) ||
@@ -134,20 +134,6 @@ class SignUpFragment : Fragment() {
                     binding.confirmPasswordEdit,
                     binding.confirmPassword
                 )
-
-
-
-
-    private fun checkEmailPattern(edit: TextInputEditText, layout: TextInputLayout): Boolean {
-        if (!Patterns.EMAIL_ADDRESS
-                .matcher(edit.text.toString().trim())
-                .matches()
-        ) {
-            setError(layout, getString(R.string.sign_up_error_title_wrong_email))
-            return true
-        }
-        return false
-    }
 
     private fun checkName(edit: TextInputEditText, layout: TextInputLayout): Boolean {
         //for testing able to use latin and cyrillic alphabet

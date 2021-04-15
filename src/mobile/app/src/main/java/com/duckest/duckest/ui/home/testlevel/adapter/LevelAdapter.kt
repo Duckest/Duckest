@@ -1,7 +1,6 @@
 package com.duckest.duckest.ui.home.testlevel.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -10,11 +9,19 @@ import com.duckest.duckest.databinding.ItemTestLevelBinding
 
 class LevelAdapter(
     private val items: List<LevelItem>,
+    private val listener: LevelItemListener
 ) :
     RecyclerView.Adapter<LevelAdapter.LevelHolder>() {
+    interface LevelItemListener {
+        fun onClickedTest(levelId: Int)
+    }
+
     inner class LevelHolder(val binding: ItemTestLevelBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: LevelItem) {
+            binding.root.setOnClickListener {
+                listener.onClickedTest( item.title)
+            }
             binding.levelTitle.setText(item.title)
             binding.photo.setImageResource(item.icon)
             if (item.done) {
@@ -28,6 +35,7 @@ class LevelAdapter(
             }
         }
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LevelHolder {
         return LevelHolder(
             ItemTestLevelBinding.inflate(
@@ -37,9 +45,11 @@ class LevelAdapter(
             )
         )
     }
+
     override fun onBindViewHolder(holder: LevelHolder, position: Int) {
         holder.bind(items[position])
     }
+
     override fun getItemCount(): Int {
         return items.size
     }

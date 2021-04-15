@@ -32,5 +32,63 @@
         <action
             android:id="@+id/action_levelFragment_to_feedFragment"
             app:destination="@id/feedFragment" />
+        <action
+            android:id="@+id/action_levelFragment_to_testIntro"
+            app:destination="@id/testIntro" />
+    </fragment>
+    <fragment
+        android:id="@+id/testIntro"
+        android:name="com.duckest.duckest.ui.home.test.TestIntro"
+        tools:layout="@layout/fragment_intro_test"
+        android:label="TestIntro" >
+        <argument
+            android:name="imageId"
+            app:argType="integer" />
+        <argument
+            android:name="testId"
+            app:argType="integer" />
+        <argument
+            android:name="levelId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_testIntro_to_testFragment"
+            app:destination="@id/testFragment" />
+        <action
+            android:id="@+id/action_testIntro_to_levelFragment"
+            app:destination="@id/levelFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/testFailFragment"
+        tools:layout="@layout/fragment_test_fail"
+        android:name="com.duckest.duckest.ui.home.test.TestFailFragment"
+        android:label="TestFailFragment" >
+        <action
+            android:id="@+id/action_testFailFragment_to_testIntro"
+            app:destination="@id/testIntro"
+            app:popUpTo="@id/testIntro"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/testPassedFragment"
+        tools:layout="@layout/fragment_test_passed"
+        android:name="com.duckest.duckest.ui.home.test.TestPassedFragment"
+        android:label="TestPassedFragment" >
+        <action
+            android:id="@+id/action_testPassedFragment_to_testIntro"
+            app:destination="@id/testIntro"
+            app:popUpTo="@id/testIntro"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/testFragment"
+        tools:layout="@layout/fragment_test"
+        android:name="com.duckest.duckest.ui.home.test.TestFragment"
+        android:label="TestFragment" >
+        <action
+            android:id="@+id/action_testFragment_to_testPassedFragment"
+            app:destination="@id/testPassedFragment" />
+        <action
+            android:id="@+id/action_testFragment_to_testFailFragment"
+            app:destination="@id/testFailFragment" />
     </fragment>
 </navigation>

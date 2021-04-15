@@ -11,7 +11,7 @@ import com.duckest.duckest.databinding.FragmentLevelBinding
 import com.duckest.duckest.ui.UiUtils
 import com.duckest.duckest.ui.home.testlevel.adapter.LevelAdapter
 
-class LevelFragment : Fragment() {
+class LevelFragment : Fragment(), LevelAdapter.LevelItemListener {
     lateinit var binding: FragmentLevelBinding
     lateinit var args: LevelFragmentArgs
     private val levels = UiUtils.getLevels()
@@ -40,7 +40,8 @@ class LevelFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setTitle(args.testId)
         binding.photo.setImageResource(args.imageId)
         val adapter = LevelAdapter(
-            levels
+            levels,
+            this
         )
         binding.items.adapter = adapter
     }
@@ -48,5 +49,15 @@ class LevelFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.drawer_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onClickedTest(levelId: Int) {
+        findNavController().navigate(
+            LevelFragmentDirections.actionLevelFragmentToTestIntro(
+                args.imageId,
+                args.testId,
+                levelId
+            )
+        )
     }
 }

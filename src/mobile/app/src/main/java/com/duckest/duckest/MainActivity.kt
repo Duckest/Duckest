@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container)
         val navController = navHostFragment!!.findNavController()
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.loginFragment))
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.loginFragment, R.id.checkEmailFragment))
         setSupportActionBar(binding.mainToolbar)
         Utils.context = this
         binding.mainToolbar.setupWithNavController(navController, appBarConfiguration)

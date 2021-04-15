@@ -34,7 +34,7 @@ class SignUpViewModel @Inject constructor(
             it.user!!.sendEmailVerification().addOnSuccessListener {
                 _response.value = NetworkResult.Success("Подтвердите аккаунт на почте")
             }.addOnFailureListener {
-                _response.value = NetworkResult.Error("Невозможно отправить подтверждение")
+                _response.value = NetworkResult.Error(data = "Невозможно отправить подтверждение", message = null, typeError = null)
             }
         }.addOnFailureListener { e ->
             when (e) {

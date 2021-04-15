@@ -2,6 +2,7 @@ package com.duckest.duckest
 
 import android.app.Activity
 import android.content.Context
+import android.util.Patterns
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.getSystemService
 import androidx.core.widget.addTextChangedListener
@@ -24,6 +25,17 @@ object Utils {
             context?.let {
                 setError(layout, context!!.getString(R.string.sign_up_error_title_empty))
             }
+            return true
+        }
+        return false
+    }
+
+    fun checkEmailPattern(edit: TextInputEditText, layout: TextInputLayout): Boolean {
+        if (!Patterns.EMAIL_ADDRESS
+                .matcher(edit.text.toString().trim())
+                .matches()
+        ) {
+            setError(layout, context!!.getString(R.string.sign_up_error_title_wrong_email))
             return true
         }
         return false
