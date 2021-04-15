@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.duckest.duckest.R
 import com.duckest.duckest.Utils
+import com.duckest.duckest.Utils.checkName
 import com.duckest.duckest.Utils.isEmptyField
 import com.duckest.duckest.Utils.setError
 import com.duckest.duckest.Utils.setTextChangeListener
@@ -135,17 +136,6 @@ class SignUpFragment : Fragment() {
                     binding.confirmPassword
                 )
 
-    private fun checkName(edit: TextInputEditText, layout: TextInputLayout): Boolean {
-        //for testing able to use latin and cyrillic alphabet
-        val regex = "^[a-zA-ZА-Яа-я]*\$".toRegex()
-        // val regex  = "^[А-Яа-я]*\$".toRegex()
-        val name = edit.text.toString().trim()
-        if (!regex.matches(name)) {
-            setError(layout, getString(R.string.sign_up_wrong_name))
-            return true
-        }
-        return false
-    }
 
     private fun arePasswordsSame(
         pass: TextInputEditText,

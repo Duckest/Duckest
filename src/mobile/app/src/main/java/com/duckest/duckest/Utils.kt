@@ -49,6 +49,19 @@ object Utils {
         }
     }
 
+
+    fun checkName(edit: TextInputEditText, layout: TextInputLayout): Boolean {
+        //for testing able to use latin and cyrillic alphabet
+        val regex = "^[a-zA-ZА-Яа-я]*\$".toRegex()
+        // val regex  = "^[А-Яа-я]*\$".toRegex()
+        val name = edit.text.toString().trim()
+        if (!regex.matches(name)) {
+            setError(layout,  context!!.getString(R.string.sign_up_wrong_name))
+            return true
+        }
+        return false
+    }
+
     fun hideKeyboard(activity: Activity) {
         // Check if no view has focus:
         val view = activity.currentFocus

@@ -91,4 +91,9 @@
             android:id="@+id/action_testFragment_to_testFailFragment"
             app:destination="@id/testFailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.duckest.duckest.ui.home.settings.SettingsFragment"
+        tools:layout="@layout/fragment_settings"
+        android:label="Настройки" />
 </navigation>

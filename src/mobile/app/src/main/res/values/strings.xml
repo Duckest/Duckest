@@ -57,4 +57,8 @@
     <string name="test_passed_title">Тест сдан</string>
     <string name="test_passed_congratulation">Поздравляем!</string>
     <string name="cd_certificate">certificate</string>
+    <string name="settings_change_profile">Редактирование профиля</string>
+    <string name="settings_descriptions">Ваше официальное имя используемой в сертификатах</string>
+    <string name="settings_change_password">Изменение пароля</string>
+    <string name="settings_new_password">Новый пароль</string>
 </resources>
