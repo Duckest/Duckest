@@ -12,6 +12,6 @@ class HomeViewModel @Inject constructor(
     private val repository: DataStoreRepository
 ) : ViewModel() {
     fun clear() = viewModelScope.launch {
-        repository.deleteUserId()
+        repository.deleteUserEmail()
     }
 }

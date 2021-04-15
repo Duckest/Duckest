@@ -9,28 +9,28 @@ import javax.inject.Inject
 class DataStoreRepository @Inject constructor(
     private val prefs: SharedPreferences
 ) {
-    private var userId: String? = null
+    private var userEmail: String? = null
     fun getUserId(): String? {
-        if (userId != null) return userId
+        if (userEmail != null) return userEmail
         if (prefs.contains(PREF_KEY_ID)) {
-            userId = prefs.getString(PREF_KEY_ID, null) ?: ""
+            userEmail = prefs.getString(PREF_KEY_ID, null) ?: ""
         }
-        return userId
+        return userEmail
     }
 
-    fun saveUserId(id: String) {
+    fun saveUserEmail(id: String) {
         prefs.edit {
             putString(PREF_KEY_ID, id)
         }
     }
 
-    fun deleteUserId() {
+    fun deleteUserEmail() {
         prefs.edit {
             if (prefs.contains(PREF_KEY_ID)) {
                 remove(PREF_KEY_ID)
             }
         }
-        userId = null
+        userEmail = null
     }
 
     companion object {

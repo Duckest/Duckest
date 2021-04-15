@@ -37,7 +37,7 @@ class SignInViewModel @Inject constructor(
                     // TODO: 04.04.2021  
                 }
                 user.isEmailVerified -> {
-                    repository.saveUserId(user.uid)
+                    repository.saveUserEmail(email)
                     response.value = NetworkResult.Success(Status.VERIFIED)
                 }
                 else -> {
