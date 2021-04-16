@@ -10,7 +10,7 @@ class DataStoreRepository @Inject constructor(
     private val prefs: SharedPreferences
 ) {
     private var userEmail: String? = null
-    fun getUserId(): String? {
+    fun getUserEmail(): String? {
         if (userEmail != null) return userEmail
         if (prefs.contains(PREF_KEY_ID)) {
             userEmail = prefs.getString(PREF_KEY_ID, null) ?: ""

@@ -61,4 +61,7 @@
     <string name="settings_descriptions">Ваше официальное имя используемой в сертификатах</string>
     <string name="settings_change_password">Изменение пароля</string>
     <string name="settings_new_password">Новый пароль</string>
+    <string name="settings_hint_old_password">Текущий пароль</string>
+    <string name="settings_wrong_password">Вы ввели неверный пароль</string>
+    <string name="settings_data_saved">Данные сохранены</string>
 </resources>

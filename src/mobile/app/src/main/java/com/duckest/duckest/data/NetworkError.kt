@@ -8,6 +8,6 @@ sealed class NetworkResult<T>(
     val data: T? = null
 ) {
     class Success<T>(data: T) : NetworkResult<T>(data = data)
-    class Error<T>(message: String?, typeError: ErrorResult?, data: T?) : NetworkResult<T>(message, typeError, data)
+    class Error<T>(message: String? = null, typeError: ErrorResult? = null, data: T? = null) : NetworkResult<T>(message, typeError, data)
     class Loading<T> : NetworkResult<T>()
 }
