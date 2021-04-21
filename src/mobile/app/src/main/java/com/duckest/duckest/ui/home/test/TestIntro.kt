@@ -24,7 +24,6 @@ class TestIntro : Fragment() {
         args = TestIntroArgs.fromBundle(requireArguments())
         (activity as AppCompatActivity).supportActionBar?.title = getString(args.testId)
         binding = FragmentIntroTestBinding.inflate(inflater, container, false)
-        //     args = LevelFragmentArgs.fromBundle(requireArguments())
 
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
@@ -43,6 +42,4 @@ class TestIntro : Fragment() {
         binding.photo.setImageResource(args.imageId)
         binding.levelTitle.text = getString(args.levelId, R.string.intro_test_title)
     }
-
-
 }
