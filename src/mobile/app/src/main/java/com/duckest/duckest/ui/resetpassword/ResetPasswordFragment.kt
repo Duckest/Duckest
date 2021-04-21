@@ -39,9 +39,10 @@ class ResetPasswordFragment : Fragment() {
         }
         binding.resetPassword.setOnClickListener {
            Utils.hideKeyboard(requireContext(), binding.emailEdit)
-            if (Utils.isEmptyField(binding.emailEdit, binding.email) || Utils.checkEmailPattern(
+            if (Utils.isEmptyField(binding.emailEdit, binding.email, requireContext()) || Utils.checkEmailPattern(
                     binding.emailEdit,
-                    binding.email
+                    binding.email,
+                    requireContext()
                 )
             ) {
                 return@setOnClickListener

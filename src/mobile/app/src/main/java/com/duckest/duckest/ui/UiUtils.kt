@@ -6,14 +6,14 @@ import com.duckest.duckest.ui.home.testlevel.adapter.LevelItem
 
 object UiUtils {
     fun getTests() = listOf(
-        TestItem(R.string.feed_test_title_javascript, R.drawable.img_javascript, done = false),
-        TestItem(R.string.feed_test_title_python, R.drawable.img_python, done = false),
-        TestItem(R.string.feed_test_title_python, R.drawable.img_python, done = true)
+        TestItem(R.string.feed_test_title_javascript, R.mipmap.img_javascript, done = false),
+        TestItem(R.string.feed_test_title_python, R.mipmap.img_python, done = false),
+        TestItem(R.string.feed_test_title_python, R.mipmap.img_python, done = true)
     )
 
     fun getLevels() = listOf(
-        LevelItem(R.string.level_title_junior, R.drawable.img_first, done = false),
-        LevelItem(R.string.level_title_middle, R.drawable.img_second, done = false),
-        LevelItem(R.string.level_title_senior, R.drawable.img_third, done = true)
+        LevelItem(R.string.level_title_junior, R.mipmap.img_first, done = false),
+        LevelItem(R.string.level_title_middle, R.mipmap.img_second, done = false),
+        LevelItem(R.string.level_title_senior, R.mipmap.img_third, done = true)
     )
 }

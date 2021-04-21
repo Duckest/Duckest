@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment!!.findNavController()
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.loginFragment))
         setSupportActionBar(binding.mainToolbar)
-        Utils.context = this
         binding.mainToolbar.setupWithNavController(navController, appBarConfiguration)
     }
 

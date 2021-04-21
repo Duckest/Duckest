@@ -15,7 +15,7 @@
         android:contentDescription="@string/header_content_description_app_icon"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:src="@drawable/ic_duck"
+        android:src="@mipmap/ic_duck"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,7 +37,6 @@
         android:layout_gravity="center"
         android:layout_marginStart="20dp"
         android:textColor="@color/white"
-        android:textFontWeight="600"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/email"
         app:layout_constraintStart_toEndOf="@+id/person"

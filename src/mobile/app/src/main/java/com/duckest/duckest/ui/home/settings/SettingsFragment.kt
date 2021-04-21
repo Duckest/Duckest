@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.duckest.duckest.R
@@ -49,11 +48,14 @@ class SettingsFragment : Fragment() {
             if (checkFieldsPasswords()) {
                 return@setOnClickListener
             }
-            vm.changePassword(binding.oldPasswordEdit.text.toString(), binding.passwordEdit.text.toString())
+            vm.changePassword(
+                binding.oldPasswordEdit.text.toString(),
+                binding.passwordEdit.text.toString()
+            )
         }
 
         vm.response.observe(viewLifecycleOwner) {
-            when(it) {
+            when (it) {
                 is NetworkResult.Loading -> binding.progressBar.visibility = View.VISIBLE
                 is NetworkResult.Success -> {
                     binding.progressBar.visibility = View.GONE
@@ -65,16 +67,16 @@ class SettingsFragment : Fragment() {
                 }
                 is NetworkResult.Error -> {
                     binding.progressBar.visibility = View.GONE
-                    when(it.typeError) {
+                    when (it.typeError) {
                         Error.WEAK_PASSWORD -> Utils.setError(
                             binding.password,
                             getString(R.string.sign_up_error_title_password)
                         )
-                        Error.WRONG_PASSWORD ->   Utils.setError(
+                        Error.WRONG_PASSWORD -> Utils.setError(
                             binding.oldPassword,
                             getString(R.string.settings_wrong_password)
                         )
-                        else -> Log.v("SettingsError", it.message?:"")
+                        else -> Log.v("SettingsError", it.message ?: "")
                     }
                 }
             }
@@ -82,9 +84,17 @@ class SettingsFragment : Fragment() {
     }
 
     private fun checkFieldsPasswords(): Boolean =
-        Utils.isEmptyField(binding.passwordEdit, binding.password) or
-                Utils.isEmptyField(binding.confirmPasswordEdit, binding.confirmPassword) or
-                Utils.isEmptyField(binding.oldPasswordEdit, binding.oldPassword) or
+        Utils.isEmptyField(binding.passwordEdit, binding.password, requireContext()) or
+                Utils.isEmptyField(
+                    binding.confirmPasswordEdit,
+                    binding.confirmPassword,
+                    requireContext()
+                ) or
+                Utils.isEmptyField(
+                    binding.oldPasswordEdit,
+                    binding.oldPassword,
+                    requireContext()
+                ) or
                 !arePasswordsSame(
                     binding.passwordEdit,
                     binding.confirmPasswordEdit,
@@ -106,12 +116,12 @@ class SettingsFragment : Fragment() {
     }
 
     private fun checkFields(): Boolean =
-        (Utils.isEmptyField(binding.nameEdit, binding.name) ||
-                checkName(binding.nameEdit, binding.name)) or
-                (Utils.isEmptyField(binding.surnameEdit, binding.surname) ||
-                        checkName(binding.surnameEdit, binding.surname)) or
-                (Utils.isEmptyField(binding.patronymicEdit, binding.patronymic) ||
-                        checkName(binding.patronymicEdit, binding.patronymic))
+        (Utils.isEmptyField(binding.nameEdit, binding.name, requireContext()) ||
+                checkName(binding.nameEdit, binding.name, requireContext())) or
+                (Utils.isEmptyField(binding.surnameEdit, binding.surname, requireContext()) ||
+                        checkName(binding.surnameEdit, binding.surname, requireContext())) or
+                (Utils.isEmptyField(binding.patronymicEdit, binding.patronymic, requireContext()) ||
+                        checkName(binding.patronymicEdit, binding.patronymic, requireContext()))
 
 
 }

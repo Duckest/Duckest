@@ -10,13 +10,10 @@
     <string name="sign_up_hint_confirm_password">Подтвердите пароль</string>
     <string name="sign_up_hint_save">Сохранить</string>
     <string name="sign_in_enter">Войти</string>
-    <string name="sign_up_title">Регистрация</string>
     <string name="sign_up_error_title_user_exist">Для данной почты уже существует аккаунт</string>
     <string name="sign_up_error_title_password">Пароль должен содержать более 6 знаков</string>
     <string name="sign_up_error_title_something_went_wrong">Что-то пошло не так, попробуйте позже</string>
     <string name="sign_up_error_title_wrong_email">Введите правильную почту</string>
-    <string name="sign_up_error_title_empty_password">Введите пароль</string>
-    <string name="sign_up_error_title_empty_confirm_password">Введите пароль</string>
     <string name="sign_up_error_passwords_dont_match">Не совпадают пароли</string>
     <string name="sign_up_error_title_empty">Это поле обязательно для заполнения</string>
     <string name="feedback_company_email">duckestcompany@gmail.com</string>
@@ -29,7 +26,6 @@
     <string name="test_preview_check_box_content_description">Чек бокс</string>
     <string name="test_preview_test_image_content_description">Изображение темы теста</string>
     <string name="menu_title_test">Тесты</string>
-    <string name="menu_title_progress">Прогресс</string>
     <string name="menu_title_feedback">Обратная связь</string>
     <string name="menu_title_settings">Настройки</string>
     <string name="menu_title_exit">Выход</string>
@@ -66,4 +62,8 @@
     <string name="settings_data_saved">Данные сохранены</string>
     <string name="intro_test_title">%1$s</string>
     <string name="menu_add_test">add test</string>
+    <string name="feedback_topic_hint">Тема обращения</string>
+    <string name="feedback_message_hint">Сообщение</string>
+    <string name="feedback_send_button">отправить</string>
+    <string name="level_title">Выберите уровень сложности:</string>
 </resources>

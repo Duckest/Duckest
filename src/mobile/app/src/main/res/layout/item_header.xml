@@ -36,7 +36,7 @@
             android:layout_weight="1"
             android:contentDescription="@string/header_content_description_app_icon"
             android:elevation="12dp"
-            android:src="@drawable/ic_duck"
+            android:src="@mipmap/ic_duck"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

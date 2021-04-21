@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:paddingHorizontal="15dp"
-            android:text="Выберите уровень сложности:"
+            android:text="@string/level_title"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/photo" />

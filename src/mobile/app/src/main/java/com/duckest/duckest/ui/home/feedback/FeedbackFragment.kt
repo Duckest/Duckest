@@ -32,8 +32,8 @@ class FeedbackFragment : Fragment() {
         setTextChangeListener(binding.feedbackEdit, binding.feedback)
 
         binding.sendFeedback.setOnClickListener {
-            if (isEmptyField(binding.topicEdit, binding.topic) or
-                (isEmptyField(binding.feedbackEdit, binding.feedback) ||
+            if (isEmptyField(binding.topicEdit, binding.topic, requireContext()) or
+                (isEmptyField(binding.feedbackEdit, binding.feedback, requireContext()) ||
                 checkSizeFeedback())
             ) {
                 return@setOnClickListener

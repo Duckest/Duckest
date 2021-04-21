@@ -14,7 +14,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.duckest.duckest.MainActivity
 import com.duckest.duckest.R
-import com.duckest.duckest.Utils
 import com.duckest.duckest.databinding.ActivityHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,7 +26,6 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Utils.context = this
         val binding =
             DataBindingUtil.setContentView<ActivityHomeBinding>(this, R.layout.activity_home)
         val toolbar = binding.navigationDrawer.toolbar
@@ -38,7 +36,7 @@ class HomeActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         //лочим свайп менюшки в не стартовом фрагменте
-        navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
+        navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, _: Bundle? ->
             if (nd.id == nc.graph.startDestination || nd.id == R.id.levelFragment) {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             } else {
@@ -47,7 +45,10 @@ class HomeActivity : AppCompatActivity() {
         }
         binding.navView.setupWithNavController(navController)
         appBarConfiguration =
-            AppBarConfiguration(setOf(R.id.feedFragment, R.id.levelFragment, R.id.testIntro), drawerLayout)
+            AppBarConfiguration(
+                setOf(R.id.feedFragment, R.id.levelFragment, R.id.testIntro),
+                drawerLayout
+            )
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
@@ -57,9 +58,11 @@ class HomeActivity : AppCompatActivity() {
                 || super.onOptionsItemSelected(item)
 
     fun showLoginScreen(item: MenuItem) {
-        vm.clear()
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
+        if (item.itemId == R.id.navigation_main) {
+            vm.clear()
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

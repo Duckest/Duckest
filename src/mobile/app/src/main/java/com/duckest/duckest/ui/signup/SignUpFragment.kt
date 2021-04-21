@@ -121,15 +121,15 @@ class SignUpFragment : Fragment() {
 
 
     private fun checkFields(): Boolean =
-        (isEmptyField(binding.nameEdit, binding.name) ||
-                checkName(binding.nameEdit, binding.name)) or
-                isEmptyField(binding.passwordEdit, binding.password) or
-                isEmptyField(binding.confirmPasswordEdit, binding.confirmPassword) or
-                (isEmptyField(binding.emailEdit, binding.email) ||
-                        Utils.checkEmailPattern(binding.emailEdit, binding.email)) or
-                (isEmptyField(binding.surnameEdit, binding.surname) ||
-                        checkName(binding.surnameEdit, binding.surname)) or
-                checkName(binding.patronymicEdit, binding.patronymic) ||
+        (isEmptyField(binding.nameEdit, binding.name, requireContext()) ||
+                checkName(binding.nameEdit, binding.name, requireContext())) or
+                isEmptyField(binding.passwordEdit, binding.password, requireContext()) or
+                isEmptyField(binding.confirmPasswordEdit, binding.confirmPassword, requireContext()) or
+                (isEmptyField(binding.emailEdit, binding.email, requireContext()) ||
+                        Utils.checkEmailPattern(binding.emailEdit, binding.email, requireContext())) or
+                (isEmptyField(binding.surnameEdit, binding.surname, requireContext()) ||
+                        checkName(binding.surnameEdit, binding.surname, requireContext())) or
+                checkName(binding.patronymicEdit, binding.patronymic, requireContext()) ||
                 !arePasswordsSame(
                     binding.passwordEdit,
                     binding.confirmPasswordEdit,
