@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
@@ -37,6 +38,7 @@ class ResetPasswordFragment : Fragment() {
             findNavController().navigate(ResetPasswordFragmentDirections.actionLostPasswordFragmentToLoginFragment())
         }
         binding.resetPassword.setOnClickListener {
+           Utils.hideKeyboard(requireContext(), binding.emailEdit)
             if (Utils.isEmptyField(binding.emailEdit, binding.email) || Utils.checkEmailPattern(
                     binding.emailEdit,
                     binding.email
@@ -50,6 +52,11 @@ class ResetPasswordFragment : Fragment() {
         binding.rememberPassword.setOnClickListener {
             findNavController().popBackStack()
         }
+
+        binding.checkEmail.tryAnotherEmailLabel.setOnClickListener {
+            binding.checkEmailLayout.visibility = View.GONE
+            binding.resetPasswordLayout.visibility = View.VISIBLE
+        }
         binding.emailEdit.addTextChangedListener {
             if (!it.isNullOrEmpty()) {
                 binding.email.isErrorEnabled = false
@@ -59,7 +66,8 @@ class ResetPasswordFragment : Fragment() {
             when (it) {
                 is NetworkResult.Success -> {
                     binding.progressBar.visibility = View.GONE
-                    findNavController().navigate(ResetPasswordFragmentDirections.actionLostPasswordFragmentToCheckEmailFragment())
+                    binding.checkEmailLayout.visibility = View.VISIBLE
+                    binding.resetPasswordLayout.visibility = View.GONE
                 }
                 is NetworkResult.Error -> {
                     binding.progressBar.visibility = View.GONE

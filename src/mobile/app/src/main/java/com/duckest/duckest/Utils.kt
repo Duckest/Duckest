@@ -3,7 +3,9 @@ package com.duckest.duckest
 import android.app.Activity
 import android.content.Context
 import android.util.Patterns
+import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.getSystemService
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.textfield.TextInputEditText
@@ -62,13 +64,8 @@ object Utils {
         return false
     }
 
-    fun hideKeyboard(activity: Activity) {
-        // Check if no view has focus:
-        val view = activity.currentFocus
-        view?.let { v ->
-            val imm: InputMethodManager? = activity.getSystemService()
-            imm?.hideSoftInputFromWindow(v.windowToken, 0)
-            v.clearFocus()
-        }
-    }
+    fun hideKeyboard(context: Context, view: View) =
+        (context.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as? InputMethodManager)!!
+            .hideSoftInputFromWindow(view.windowToken, 0)
+
 }

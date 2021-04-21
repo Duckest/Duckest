@@ -52,7 +52,7 @@ class SignUpFragment : Fragment() {
         setTextChangeListener(binding.patronymicEdit, binding.patronymic)
 
         binding.signUp.setOnClickListener {
-            Utils.hideKeyboard(requireActivity())
+            Utils.hideKeyboard(requireContext(), binding.emailEdit)
             if (checkFields()) {
                 return@setOnClickListener
             }

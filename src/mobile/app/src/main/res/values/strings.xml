@@ -64,4 +64,6 @@
     <string name="settings_hint_old_password">Текущий пароль</string>
     <string name="settings_wrong_password">Вы ввели неверный пароль</string>
     <string name="settings_data_saved">Данные сохранены</string>
+    <string name="intro_test_title">%1$s</string>
+    <string name="menu_add_test">add test</string>
 </resources>

@@ -38,7 +38,9 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/lostPasswordFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginFragment_to_homeActivity"
             app:destination="@id/homeActivity"
@@ -57,16 +59,13 @@
         android:label="Восстановление пароля"
         tools:layout="@layout/fragment_reset_password" >
         <action
-            android:id="@+id/action_lostPasswordFragment_to_checkEmailFragment"
-            app:destination="@id/checkEmailFragment"
-            app:popUpTo="@id/lostPasswordFragment" />
-        <action
             android:id="@+id/action_lostPasswordFragment_to_loginFragment"
             app:destination="@id/loginFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpToInclusive="true" />
     </fragment>
     <activity
         tools:layout="@layout/activity_home"
@@ -74,21 +73,5 @@
         android:name="com.duckest.duckest.ui.home.HomeActivity"
         android:label="HomeActivity" />
     <include app:graph="@navigation/navigation_home" />
-    <fragment
-        android:id="@+id/checkEmailFragment"
-        android:name="com.duckest.duckest.ui.resetpassword.CheckEmailFragment"
-        tools:layout="@layout/fragment_check_email"
-        android:label="Восстановление пароля" >
-        <action
-            android:id="@+id/action_checkEmailFragment_to_lostPasswordFragment"
-            app:destination="@id/lostPasswordFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_checkEmailFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left" />
-    </fragment>
 
 </navigation>

@@ -8,6 +8,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.duckest.duckest.R
 import com.duckest.duckest.databinding.FragmentIntroTestBinding
 import com.duckest.duckest.ui.UiUtils
 
@@ -21,8 +22,7 @@ class TestIntro : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         args = TestIntroArgs.fromBundle(requireArguments())
-        val header = "${getString(args.testId)}  ${getString(args.levelId)}"
-        (activity as AppCompatActivity).supportActionBar?.title = header
+        (activity as AppCompatActivity).supportActionBar?.title = getString(args.testId)
         binding = FragmentIntroTestBinding.inflate(inflater, container, false)
         //     args = LevelFragmentArgs.fromBundle(requireArguments())
 
@@ -41,6 +41,7 @@ class TestIntro : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.photo.setImageResource(args.imageId)
+        binding.levelTitle.text = getString(args.levelId, R.string.intro_test_title)
     }
 
 
