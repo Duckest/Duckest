@@ -23,7 +23,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.32999998" />
+            app:layout_constraintVertical_bias="0.19" />
 
         <TextView
             android:id="@+id/textView4"
@@ -39,41 +39,51 @@
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/certificate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:contentDescription="@string/cd_certificate"
-            android:src="@mipmap/img_first"
+            android:src="@mipmap/ic_certificate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView6"
+            app:layout_constraintStart_toEndOf="@+id/result"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/test_passed_title_certificate"
+            app:layout_constraintEnd_toEndOf="@+id/certificate"
+            app:layout_constraintStart_toStartOf="@+id/certificate"
+            app:layout_constraintTop_toBottomOf="@+id/certificate" />
+
+        <TextView
+            android:id="@+id/result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/test_result_right_answers"
             android:textColor="@color/typo"
             android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintBottom_toBottomOf="@+id/certificate"
+            app:layout_constraintEnd_toStartOf="@+id/certificate"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+            app:layout_constraintTop_toTopOf="@+id/certificate" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/wrong_answers"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
             android:text="@string/test_result_wrong_answers"
             android:textSize="26sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+            app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

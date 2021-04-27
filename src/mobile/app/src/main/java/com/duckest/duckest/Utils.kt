@@ -1,13 +1,16 @@
 package com.duckest.duckest
 
 import android.content.Context
+import android.graphics.*
 import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import kotlin.math.roundToInt
 
 object Utils {
 
@@ -24,7 +27,11 @@ object Utils {
         return false
     }
 
-    fun checkEmailPattern(edit: TextInputEditText, layout: TextInputLayout, context: Context): Boolean {
+    fun checkEmailPattern(
+        edit: TextInputEditText,
+        layout: TextInputLayout,
+        context: Context
+    ): Boolean {
         if (!Patterns.EMAIL_ADDRESS
                 .matcher(edit.text.toString().trim())
                 .matches()
@@ -59,4 +66,40 @@ object Utils {
     fun hideKeyboard(context: Context, view: View) =
         (context.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as? InputMethodManager)!!
             .hideSoftInputFromWindow(view.windowToken, 0)
+
+    private fun getTextSize(text1: String, text2: String) =
+        if (text1.length >= 21 || text2.length >= 20) 90 else 125
+
+
+    fun drawTextToBitmap(
+        context: Context,
+        gResId: Int,
+        textSize: Int = 30,
+        text1: String,
+        text2: String
+    ): Bitmap {
+        val resources = context.resources
+        val scale = resources.displayMetrics.density
+        var bitmap = BitmapFactory.decodeResource(resources, gResId)
+        var bitmapConfig = bitmap.config
+        if (bitmapConfig == null) {
+            bitmapConfig = Bitmap.Config.ARGB_8888
+        }
+        bitmap = bitmap.copy(bitmapConfig, true)
+        val canvas = Canvas(bitmap)
+        val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+        paint.color = Color.BLACK
+        paint.textSize = (textSize * scale).roundToInt().toFloat()
+        paint.setShadowLayer(1f, 0f, 1f, Color.WHITE)
+        val bounds = Rect()
+        paint.getTextBounds(text1, 0, text1.length, bounds)
+        var x = (bitmap.width - bounds.width()) / 2f - 900
+        var y = (bitmap.height + bounds.height()) / 2f - 200
+        canvas.drawText(text1, x, y, paint)
+        paint.getTextBounds(text2, 0, text2.length, bounds)
+        x = (bitmap.width - bounds.width()) / 2f - 800
+        y = (bitmap.height + bounds.height()) / 2f + 60
+        canvas.drawText(text2, x, y, paint)
+        return bitmap
+    }
 }

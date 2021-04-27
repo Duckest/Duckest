@@ -3,6 +3,7 @@ package com.duckest.duckest.ui.home
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -50,6 +51,10 @@ class HomeActivity : AppCompatActivity() {
                 drawerLayout
             )
         setupActionBarWithNavController(navController, appBarConfiguration)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_SECURE,
+            WindowManager.LayoutParams.FLAG_SECURE
+        )
     }
 
 

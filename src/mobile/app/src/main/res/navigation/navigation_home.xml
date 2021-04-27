@@ -61,22 +61,31 @@
         android:id="@+id/testFailFragment"
         tools:layout="@layout/fragment_test_fail"
         android:name="com.duckest.duckest.ui.home.test.TestFailFragment"
-        android:label="TestFailFragment" >
-        <action
-            android:id="@+id/action_testFailFragment_to_testIntro"
-            app:destination="@id/testIntro"
-            app:popUpTo="@id/testIntro"
-            app:popUpToInclusive="true" />
-    </fragment>
+        android:label="TestFailFragment" />
     <fragment
         android:id="@+id/testPassedFragment"
         tools:layout="@layout/fragment_test_passed"
         android:name="com.duckest.duckest.ui.home.test.TestPassedFragment"
         android:label="TestPassedFragment" >
+        <argument
+            android:name="total"
+            app:argType="integer" />
+        <argument
+            android:name="correct"
+            app:argType="integer" />
+        <argument
+            android:name="test"
+            app:argType="string" />
+        <argument
+            android:name="testId"
+            app:argType="integer" />
+        <argument
+            android:name="levelId"
+            app:argType="integer" />
         <action
-            android:id="@+id/action_testPassedFragment_to_testIntro"
-            app:destination="@id/testIntro"
-            app:popUpTo="@id/testIntro"
+            android:id="@+id/action_testPassedFragment_to_testFragment"
+            app:destination="@id/testFragment"
+            app:popUpTo="@id/testPassedFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -84,6 +93,12 @@
         tools:layout="@layout/fragment_test"
         android:name="com.duckest.duckest.ui.home.test.TestFragment"
         android:label="TestFragment" >
+        <argument
+            android:name="testId"
+            app:argType="integer" />
+        <argument
+            android:name="levelId"
+            app:argType="integer" />
         <action
             android:id="@+id/action_testFragment_to_testPassedFragment"
             app:destination="@id/testPassedFragment" />
