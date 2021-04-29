@@ -96,7 +96,7 @@ class TestPassedFragment : Fragment() {
     }
 
     private fun saveMediaToStorage() {
-        val filename = "${getString(args.testId)} ${getString(args.testId)}"
+        val filename = "${getString(args.testId)}_${getString(args.testId)}.jpg"
         var fos: OutputStream? = null
         val resolver = requireContext().contentResolver
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
