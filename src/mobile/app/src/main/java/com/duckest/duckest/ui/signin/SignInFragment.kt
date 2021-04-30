@@ -11,7 +11,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.duckest.duckest.Utils.setError
+import com.duckest.duckest.util.Utils.setError
 import com.duckest.duckest.data.Error
 import com.duckest.duckest.data.NetworkResult
 import com.duckest.duckest.databinding.FragmentSignInBinding

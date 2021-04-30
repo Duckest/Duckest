@@ -1,4 +1,4 @@
-package com.duckest.duckest
+package com.duckest.duckest.util
 
 import android.content.Context
 import android.graphics.*
@@ -6,8 +6,8 @@ import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.addTextChangedListener
+import com.duckest.duckest.R
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlin.math.roundToInt

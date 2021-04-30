@@ -10,9 +10,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.duckest.duckest.R
-import com.duckest.duckest.Utils.isEmptyField
-import com.duckest.duckest.Utils.setError
-import com.duckest.duckest.Utils.setTextChangeListener
+import com.duckest.duckest.util.Utils.isEmptyField
+import com.duckest.duckest.util.Utils.setError
+import com.duckest.duckest.util.Utils.setTextChangeListener
 import com.duckest.duckest.databinding.FragmentFeedbackBinding
 
 class FeedbackFragment : Fragment() {

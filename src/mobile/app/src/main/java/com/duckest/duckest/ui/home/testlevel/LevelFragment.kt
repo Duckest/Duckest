@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.duckest.duckest.R
 import com.duckest.duckest.databinding.FragmentLevelBinding
-import com.duckest.duckest.ui.UiUtils
+import com.duckest.duckest.util.UiUtils
 import com.duckest.duckest.ui.home.testlevel.adapter.LevelAdapter
 
 class LevelFragment : Fragment(), LevelAdapter.LevelItemListener {

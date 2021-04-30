@@ -1,35 +1,16 @@
 package com.duckest.duckest.ui.home.test
 
-import android.content.ContentValues
-import android.content.Context
-import android.content.Intent
-import android.graphics.Bitmap
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.duckest.duckest.R
-import com.duckest.duckest.Utils
 import com.duckest.duckest.databinding.FragmentIntroTestBinding
-import com.duckest.duckest.ui.UiUtils
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.OutputStream
+import com.duckest.duckest.util.UiUtils
 
 class TestIntro : Fragment() {
     lateinit var binding: FragmentIntroTestBinding

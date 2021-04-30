@@ -1,22 +1,20 @@
 package com.duckest.duckest.ui.signup
 
 import android.os.Bundle
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.duckest.duckest.R
-import com.duckest.duckest.Utils
-import com.duckest.duckest.Utils.checkName
-import com.duckest.duckest.Utils.isEmptyField
-import com.duckest.duckest.Utils.setError
-import com.duckest.duckest.Utils.setTextChangeListener
+import com.duckest.duckest.util.Utils
+import com.duckest.duckest.util.Utils.checkName
+import com.duckest.duckest.util.Utils.isEmptyField
+import com.duckest.duckest.util.Utils.setError
+import com.duckest.duckest.util.Utils.setTextChangeListener
 import com.duckest.duckest.data.Error
 import com.duckest.duckest.data.NetworkResult
 import com.duckest.duckest.databinding.FragmentSignUpBinding

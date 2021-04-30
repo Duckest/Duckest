@@ -18,7 +18,7 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.duckest.duckest.BuildConfig.APPLICATION_ID
 import com.duckest.duckest.R
-import com.duckest.duckest.Utils
+import com.duckest.duckest.util.Utils
 import com.duckest.duckest.databinding.FragmentTestPassedBinding
 import java.io.File
 import java.io.FileOutputStream
@@ -52,7 +52,7 @@ class TestPassedFragment : Fragment() {
             requireContext(),
             R.mipmap.img_certificate,
             text1 = "Имя Фамилия",
-            text2 = "${getString(args.testId)} ${getString(args.testId)}"
+            text2 = "${getString(args.testId)} ${getString(args.levelId)}"
         )
         binding.certificate.setOnClickListener {
             saveMediaToStorage()
@@ -96,7 +96,7 @@ class TestPassedFragment : Fragment() {
     }
 
     private fun saveMediaToStorage() {
-        val filename = "${getString(args.testId)}_${getString(args.testId)}.jpg"
+        val filename = "${getString(args.testId)}_${getString(args.levelId)}.jpg"
         var fos: OutputStream? = null
         val resolver = requireContext().contentResolver
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {

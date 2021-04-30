@@ -1,4 +1,4 @@
-package com.duckest.duckest.ui
+package com.duckest.duckest.util
 
 import com.duckest.duckest.R
 import com.duckest.duckest.ui.home.feed.adapter.TestItem

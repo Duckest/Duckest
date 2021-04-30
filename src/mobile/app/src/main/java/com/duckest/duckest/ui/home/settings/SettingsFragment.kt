@@ -9,9 +9,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.duckest.duckest.R
-import com.duckest.duckest.Utils
-import com.duckest.duckest.Utils.checkName
-import com.duckest.duckest.Utils.setTextChangeListener
+import com.duckest.duckest.util.Utils
+import com.duckest.duckest.util.Utils.checkName
+import com.duckest.duckest.util.Utils.setTextChangeListener
 import com.duckest.duckest.data.Error
 import com.duckest.duckest.data.NetworkResult
 import com.duckest.duckest.databinding.FragmentSettingsBinding
