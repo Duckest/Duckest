@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ru.duckest.duckest.dto.UserDto;
 import ru.duckest.duckest.service.UserService;
+import ru.duckest.duckest.utils.user.UserDtoTestFactory;
 
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
@@ -26,19 +27,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ru.duckest.duckest.utils.user.Constants.VALID_EMAIL;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest
 class UserControllerTest {
 
     private static MockMvc controller;
-    private final String validEmail = "dummyEmail@gmail.com";
-    private final UserDto validUser = UserDto.builder()
-            .login(validEmail)
-            .firstName("dummyFirstName")
-            .lastName("dummyLastName")
-            .middleName("dummyMiddleName")
-            .build();
+    private final UserDto validUser = UserDtoTestFactory.getValidUser();
     @Autowired
     private ObjectMapper mapper;
     @MockBean
@@ -97,9 +93,10 @@ class UserControllerTest {
     @Test
     @DisplayName("Получение пользователя по невалидному email бросает исключение")
     void userCanBeObtainedByEmail() throws Exception {
-        when(userService.getUserBy(validEmail)).thenThrow(IllegalArgumentException.class);
+        when(userService.getUserBy(VALID_EMAIL)).thenThrow(IllegalArgumentException.class);
 
-        controller.perform(get("/user").param("email", validEmail)).andExpect(status().isNotFound());
+        controller.perform(get("/user").param("email", VALID_EMAIL)).andExpect(status().isNotFound());
+        verify(userService).getUserBy(VALID_EMAIL);
     }
 
     @Test
@@ -107,8 +104,9 @@ class UserControllerTest {
     void userCanBeObtainedByValidEmail() throws Exception {
         String expected = mapper.writeValueAsString(validUser);
 
-        when(userService.getUserBy(validEmail)).thenReturn(validUser);
+        when(userService.getUserBy(VALID_EMAIL)).thenReturn(validUser);
 
-        controller.perform(get("/user").param("email", validEmail)).andExpect(status().isOk()).andExpect(content().string(expected));
+        controller.perform(get("/user").param("email", VALID_EMAIL)).andExpect(status().isOk()).andExpect(content().string(expected));
+        verify(userService).getUserBy(VALID_EMAIL);
     }
 }
