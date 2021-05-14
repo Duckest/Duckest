@@ -3,30 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background"
-        android:padding="10dp">
+        android:layout_height="match_parent">
 
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:elevation="0dp"
-            android:orientation="vertical"
-            app:cardCornerRadius="7dp"
-            app:cardElevation="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <ScrollView
+            android:id="@+id/settings_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/settings_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/bg_card_white"
                 android:padding="10dp">
 
                 <TextView
@@ -64,6 +57,7 @@
                         android:paddingStart="0dp"
                         android:paddingEnd="0dp"
                         android:singleLine="true" />
+
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -87,6 +81,7 @@
                         android:paddingStart="0dp"
                         android:paddingEnd="0dp"
                         android:singleLine="true" />
+
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -104,8 +99,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/sign_up_hint_patronymic"
-                        android:paddingStart="0dp"
                         android:inputType="textCapWords"
+                        android:paddingStart="0dp"
                         android:paddingEnd="0dp"
                         android:singleLine="true" />
 
@@ -144,10 +139,10 @@
                     android:textColor="@color/typo_light"
                     android:textSize="27sp"
                     android:textStyle="bold"
-
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/save_profile_settings" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/old_password"
                     android:layout_width="0dp"
@@ -169,7 +164,9 @@
                         android:inputType="textPassword"
                         android:paddingStart="0dp"
                         android:paddingEnd="0dp" />
+
                 </com.google.android.material.textfield.TextInputLayout>
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/password"
                     android:layout_width="0dp"
@@ -217,6 +214,7 @@
                         android:paddingEnd="0dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/save_password"
                     android:layout_width="0dp"
@@ -227,22 +225,18 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/confirm_password" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        </androidx.cardview.widget.CardView>
-
+        </ScrollView>
 
         <ProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:elevation="3dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_centerInParent="true"
+            android:elevation="1dp"
             tools:visibility="visible" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </RelativeLayout>
 </layout>

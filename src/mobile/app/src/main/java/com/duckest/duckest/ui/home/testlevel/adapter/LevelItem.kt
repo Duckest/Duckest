@@ -4,9 +4,9 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 
 data class LevelItem(
-    @StringRes
-    val title: Int,
+    val title: String?,
     @DrawableRes
     val icon: Int,
-    var done: Boolean = false
+    var done: Boolean? = false,
+    val progress: Double?
 )

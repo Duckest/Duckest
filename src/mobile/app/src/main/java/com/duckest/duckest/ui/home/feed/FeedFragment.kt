@@ -3,16 +3,22 @@ package com.duckest.duckest.ui.home.feed
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.duckest.duckest.R
+import com.duckest.duckest.data.NetworkResult
+import com.duckest.duckest.data.domain.TestLevelProgress
+import com.duckest.duckest.data.domain.TestLevelProgresses
 import com.duckest.duckest.databinding.FragmentFeedBinding
-import com.duckest.duckest.util.UiUtils
 import com.duckest.duckest.ui.home.feed.adapter.TestAdapter
+import com.duckest.duckest.util.UiUtils
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FeedFragment : Fragment(), TestAdapter.TestItemListener {
 
     lateinit var binding: FragmentFeedBinding
-    private val test = UiUtils.getTests()
+    val vm: FeedViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -25,15 +31,29 @@ class FeedFragment : Fragment(), TestAdapter.TestItemListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        vm.getProgress()
         val adapter = TestAdapter(
-            test,
+            listOf(),
             this
         )
         binding.items.adapter = adapter
-    }
-
-    override fun onClickedTest(imageId: Int, testId: Int) {
-        findNavController().navigate(FeedFragmentDirections.actionFeedFragmentToLevelFragment(imageId, testId))
+        vm.response.observe(viewLifecycleOwner) { res ->
+            when (res) {
+                is NetworkResult.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                }
+                is NetworkResult.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is NetworkResult.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    res.data?.let {
+                        adapter.items = it
+                        adapter.notifyDataSetChanged()
+                    }
+                }
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -42,9 +62,30 @@ class FeedFragment : Fragment(), TestAdapter.TestItemListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.add_test -> findNavController().navigate(FeedFragmentDirections.actionFeedFragmentToLevelFragment(0, 0))
-        }
+//        when (item.itemId) {
+//            R.id.add_test -> findNavController().navigate(
+//                FeedFragmentDirections.actionFeedFragmentToLevelFragment(
+//                    0,
+//                    0
+//                )
+//            )
+//        }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onClickedTest(
+        testLevels: List<TestLevelProgress>?,
+        testType: String?,
+        imgUrl: String?
+    ) {
+        val testLevelsProgresses = TestLevelProgresses()
+        testLevelsProgresses.addAll(testLevels!!.toTypedArray())
+        findNavController().navigate(
+            FeedFragmentDirections.actionFeedFragmentToLevelFragment(
+                imgUrl,
+                testType,
+                testLevelsProgresses
+            )
+        )
     }
 }

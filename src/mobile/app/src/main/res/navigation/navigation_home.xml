@@ -24,91 +24,119 @@
         android:label="LevelFragment"
         tools:layout="@layout/fragment_level">
         <argument
-            android:name="imageId"
-            app:argType="integer" />
+            android:name="imgUrl"
+            app:argType="string"
+            app:nullable="true" />
         <argument
-            android:name="testId"
-            app:argType="integer" />
+            android:name="testType"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="testLevels"
+            app:argType="com.duckest.duckest.data.domain.TestLevelProgresses" />
         <action
             android:id="@+id/action_levelFragment_to_feedFragment"
             app:destination="@id/feedFragment" />
         <action
             android:id="@+id/action_levelFragment_to_testIntro"
-            app:destination="@id/testIntro" />
+            app:destination="@id/testIntro"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_levelFragment_to_testPassedFragment"
+            app:destination="@id/testPassedFragment" />
     </fragment>
     <fragment
         android:id="@+id/testIntro"
         android:name="com.duckest.duckest.ui.home.test.TestIntro"
-        tools:layout="@layout/fragment_intro_test"
-        android:label="TestIntro" >
+        android:label="TestIntro"
+        tools:layout="@layout/fragment_intro_test">
         <argument
-            android:name="imageId"
-            app:argType="integer" />
+            android:name="imageUrl"
+            app:argType="string"
+            app:nullable="true" />
         <argument
-            android:name="testId"
-            app:argType="integer" />
+            android:name="testType"
+            app:argType="string" />
         <argument
-            android:name="levelId"
-            app:argType="integer" />
+            android:name="testLevel"
+            app:argType="string" />
         <action
             android:id="@+id/action_testIntro_to_testFragment"
-            app:destination="@id/testFragment" />
+            app:destination="@id/testFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_testIntro_to_levelFragment"
             app:destination="@id/levelFragment" />
     </fragment>
     <fragment
         android:id="@+id/testFailFragment"
-        tools:layout="@layout/fragment_test_fail"
         android:name="com.duckest.duckest.ui.home.test.TestFailFragment"
-        android:label="TestFailFragment" />
-    <fragment
-        android:id="@+id/testPassedFragment"
-        tools:layout="@layout/fragment_test_passed"
-        android:name="com.duckest.duckest.ui.home.test.TestPassedFragment"
-        android:label="TestPassedFragment" >
+        android:label="TestFailFragment"
+        tools:layout="@layout/fragment_test_fail">
         <argument
-            android:name="total"
+            android:name="result"
             app:argType="integer" />
         <argument
-            android:name="correct"
-            app:argType="integer" />
-        <argument
-            android:name="test"
+            android:name="testType"
             app:argType="string" />
         <argument
-            android:name="testId"
-            app:argType="integer" />
+            android:name="testLevel"
+            app:argType="string" />
         <argument
-            android:name="levelId"
-            app:argType="integer" />
+            android:name="imageUrl"
+            app:argType="string"
+            app:nullable="true" />
         <action
-            android:id="@+id/action_testPassedFragment_to_testFragment"
-            app:destination="@id/testFragment"
-            app:popUpTo="@id/testPassedFragment"
+            android:id="@+id/action_testFailFragment_to_testIntro"
+            app:destination="@id/testIntro"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
+        android:id="@+id/testPassedFragment"
+        android:name="com.duckest.duckest.ui.home.test.TestPassedFragment"
+        android:label="TestPassedFragment"
+        tools:layout="@layout/fragment_test_passed">
+        <argument
+            android:name="result"
+            app:argType="integer" />
+        <argument
+            android:name="testType"
+            app:argType="string" />
+        <argument
+            android:name="testLevel"
+            app:argType="string" />
+    </fragment>
+    <fragment
         android:id="@+id/testFragment"
-        tools:layout="@layout/fragment_test"
         android:name="com.duckest.duckest.ui.home.test.TestFragment"
-        android:label="TestFragment" >
+        tools:layout="@layout/fragment_test">
         <argument
-            android:name="testId"
-            app:argType="integer" />
+            android:name="testType"
+            app:argType="string" />
         <argument
-            android:name="levelId"
-            app:argType="integer" />
+            android:name="testLevel"
+            app:argType="string" />
+        <argument
+            android:name="imageUrl"
+            app:argType="string"
+            app:nullable="true" />
         <action
             android:id="@+id/action_testFragment_to_testPassedFragment"
-            app:destination="@id/testPassedFragment" />
+            app:destination="@id/testPassedFragment"
+            app:popUpTo="@id/feedFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_testFragment_to_testFailFragment"
-            app:destination="@id/testFailFragment" />
+            app:destination="@id/testFailFragment"
+            app:popUpTo="@id/levelFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.duckest.duckest.ui.home.settings.SettingsFragment"
-        tools:layout="@layout/fragment_settings"
-        android:label="Настройки" />
+        android:label="Настройки"
+        tools:layout="@layout/fragment_settings" />
+    <action
+        android:id="@+id/action_global_feedFragment"
+        app:destination="@id/feedFragment" />
 </navigation>

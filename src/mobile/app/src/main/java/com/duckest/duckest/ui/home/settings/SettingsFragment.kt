@@ -1,28 +1,31 @@
 package com.duckest.duckest.ui.home.settings
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.duckest.duckest.R
-import com.duckest.duckest.util.Utils
-import com.duckest.duckest.util.Utils.checkName
-import com.duckest.duckest.util.Utils.setTextChangeListener
 import com.duckest.duckest.data.Error
 import com.duckest.duckest.data.NetworkResult
 import com.duckest.duckest.databinding.FragmentSettingsBinding
+import com.duckest.duckest.ui.home.HomeViewModel
+import com.duckest.duckest.util.Utils
+import com.duckest.duckest.util.Utils.checkName
+import com.duckest.duckest.util.Utils.setTextChangeListener
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
     private val vm: SettingsViewModel by viewModels()
+    private val vmActivity: HomeViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,14 +38,58 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.progressBar.visibility = View.VISIBLE
+        binding.settingsScroll.visibility = View.GONE
+        vm.getUserProfile()
+        vm.user.observe(viewLifecycleOwner) {
+            it?.let {
+                binding.nameEdit.setText(it.name)
+                binding.surnameEdit.setText(it.surname)
+                binding.patronymicEdit.setText(it.patronymic)
+            }
+            binding.settingsScroll.visibility = View.VISIBLE
+            binding.progressBar.visibility = View.GONE
+        }
+
+        vm.userResponse.observe(viewLifecycleOwner) {
+            it?.let {
+                when (it) {
+                    is NetworkResult.Loading -> { //binding.progressBar.visibility = View.VISIBLE
+                    }
+                    is NetworkResult.Success -> {
+                        //  binding.progressBar.visibility = View.GONE
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.settings_data_saved),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    is NetworkResult.Error -> {
+                        //binding.progressBar.visibility = View.GONE
+                        Toast.makeText(
+                            requireContext(),
+                            it.message,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
+
         setTextChangeListener(binding.nameEdit, binding.name)
         setTextChangeListener(binding.surnameEdit, binding.surname)
         setTextChangeListener(binding.patronymicEdit, binding.patronymic)
         binding.saveProfileSettings.setOnClickListener {
+            Utils.hideKeyboard(requireContext(), it)
             if (checkFields()) {
                 return@setOnClickListener
             }
-            // TODO: 15.04.2021 когда Глеб напишет бэк можно и дописать
+            vm.updateUserProfile(
+                binding.nameEdit.text.toString().trim(),
+                binding.surnameEdit.text.toString().trim(),
+                binding.patronymicEdit.text.toString().trim()
+            )
+            vmActivity.getUser()
         }
         binding.savePassword.setOnClickListener {
             if (checkFieldsPasswords()) {
@@ -56,7 +103,9 @@ class SettingsFragment : Fragment() {
 
         vm.response.observe(viewLifecycleOwner) {
             when (it) {
-                is NetworkResult.Loading -> binding.progressBar.visibility = View.VISIBLE
+                is NetworkResult.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
                 is NetworkResult.Success -> {
                     binding.progressBar.visibility = View.GONE
                     Toast.makeText(
@@ -76,7 +125,7 @@ class SettingsFragment : Fragment() {
                             binding.oldPassword,
                             getString(R.string.settings_wrong_password)
                         )
-                        else -> Log.v("SettingsError", it.message ?: "")
+                        else -> Timber.v(it.message)
                     }
                 }
             }
@@ -122,6 +171,5 @@ class SettingsFragment : Fragment() {
                         checkName(binding.surnameEdit, binding.surname, requireContext())) or
                 (Utils.isEmptyField(binding.patronymicEdit, binding.patronymic, requireContext()) ||
                         checkName(binding.patronymicEdit, binding.patronymic, requireContext()))
-
 
 }

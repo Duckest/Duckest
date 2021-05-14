@@ -22,5 +22,4 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.mainToolbar)
         binding.mainToolbar.setupWithNavController(navController, appBarConfiguration)
     }
-
 }

@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="testViewModel"
+            type="com.duckest.duckest.ui.home.test.TestViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,26 +16,52 @@
         android:layout_height="match_parent"
         android:background="@color/background">
 
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:textColor="@color/typo"
+            android:text="@{@string/test_title(testViewModel.currentQuestionNum, testViewModel.response.data.totalQuestions)}"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="50dp"
-            android:layout_marginTop="70dp"
-            app:cardBackgroundColor="@color/typo"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/result">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:paddingHorizontal="30dp"
-                android:paddingVertical="40dp"
-                android:textColor="@color/white"
-                tools:text="Тут какой-то очень важный вопрос на который надо ответить" />
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardViewChild"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="20dp"
+                app:cardBackgroundColor="@color/typo"
+                app:cardCornerRadius="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:paddingHorizontal="30dp"
+                    android:paddingVertical="40dp"
+                    android:text="@{testViewModel.question.question}"
+                    android:textColor="@color/white"
+                    tools:text="Тут какой-то очень важный вопрос на который надо ответить" />
+
+            </com.google.android.material.card.MaterialCardView>
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -44,8 +74,8 @@
             android:animateLayoutChanges="true"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/materialCardView"
+            app:layout_constraintStart_toStartOf="@+id/materialCardView"
             app:layout_constraintTop_toBottomOf="@+id/materialCardView"
             app:layout_constraintVertical_bias="0.110000014">
 
@@ -53,30 +83,30 @@
                 android:id="@+id/firstAnswerRadioButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checked="true"
+                android:buttonTint="@color/typo"
+                android:text="@{testViewModel.question.answers[0]}"
                 tools:text="Blue" />
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/secondAnswerRadioButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/typo"
+                android:text="@{testViewModel.question.answers[1]}"
                 tools:text="Green" />
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/thirdAnswerRadioButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/typo"
+                android:text="@{testViewModel.question.answers[2]}"
                 tools:text="Yellow" />
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
-                android:id="@+id/fourthAnswerRadioButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="Red" />
         </RadioGroup>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/start_test"
+            android:id="@+id/next_question"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginHorizontal="30dp"
@@ -87,5 +117,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/questionRadioGroup" />
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:elevation="3dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

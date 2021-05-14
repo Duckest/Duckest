@@ -16,16 +16,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.duckest.duckest.BuildConfig.APPLICATION_ID
 import com.duckest.duckest.R
-import com.duckest.duckest.util.Utils
 import com.duckest.duckest.databinding.FragmentTestPassedBinding
+import com.duckest.duckest.util.Utils
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
 
-
+@AndroidEntryPoint
 class TestPassedFragment : Fragment() {
     private lateinit var binding: FragmentTestPassedBinding
     private lateinit var args: TestPassedFragmentArgs
@@ -37,22 +39,20 @@ class TestPassedFragment : Fragment() {
     ): View {
         setHasOptionsMenu(true)
         args = TestPassedFragmentArgs.fromBundle(requireArguments())
-        (activity as AppCompatActivity).supportActionBar?.title = getString(args.testId)
+        (activity as AppCompatActivity).supportActionBar?.title = args.testType
         binding = FragmentTestPassedBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.wrongAnswers.text =
-            getString(R.string.test_result_wrong_answers, args.total - args.correct)
         binding.result.text =
-            getString(R.string.test_result_right_answers, args.correct, args.total)
+            getString(R.string.test_result, args.result)
         bitmapCertificate = Utils.drawTextToBitmap(
             requireContext(),
             R.mipmap.img_certificate,
             text1 = "Имя Фамилия",
-            text2 = "${getString(args.testId)} ${getString(args.levelId)}"
+            text2 = "${args.testType} ${args.testLevel}"
         )
         binding.certificate.setOnClickListener {
             saveMediaToStorage()
@@ -89,14 +89,21 @@ class TestPassedFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.share -> share()
+        return when (item.itemId) {
+            R.id.share -> {
+                share()
+                true
+            }
+            android.R.id.home -> {
+                findNavController().navigate(TestPassedFragmentDirections.actionGlobalFeedFragment())
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun saveMediaToStorage() {
-        val filename = "${getString(args.testId)}_${getString(args.levelId)}.jpg"
+        val filename = "${args.testType}_${args.testLevel}.jpg"
         var fos: OutputStream? = null
         val resolver = requireContext().contentResolver
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {

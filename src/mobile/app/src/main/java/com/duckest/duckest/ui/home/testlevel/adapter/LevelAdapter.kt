@@ -13,18 +13,20 @@ class LevelAdapter(
 ) :
     RecyclerView.Adapter<LevelAdapter.LevelHolder>() {
     interface LevelItemListener {
-        fun onClickedTest(levelId: Int)
+        fun onClickedTest(testLevel: String, testPassed: Boolean, progress: Double)
     }
 
     inner class LevelHolder(val binding: ItemTestLevelBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: LevelItem) {
             binding.root.setOnClickListener {
-                listener.onClickedTest( item.title)
+                item.title?.let {
+                    listener.onClickedTest(item.title, item.done!!, item.progress!!)
+                }
             }
-            binding.levelTitle.setText(item.title)
+            binding.levelTitle.text = item.title
             binding.photo.setImageResource(item.icon)
-            if (item.done) {
+            if (item.done!!) {
                 binding.testCheck.setColorFilter(
                     ResourcesCompat.getColor(
                         binding.root.resources,
