@@ -13,8 +13,8 @@ public class UserSelector {
 
     private final Users users;
 
-    public User getUserByLogin(String login) {
-        Optional<User> user = users.findUsersByLogin(login);
+    public User getUserBy(String email) {
+        Optional<User> user = users.findUsersByEmail(email);
         return user.orElseThrow();
     }
 }

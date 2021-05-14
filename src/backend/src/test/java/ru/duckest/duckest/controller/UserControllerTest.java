@@ -27,10 +27,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ru.duckest.duckest.utils.user.Constants.INVALID_EMAIL;
 import static ru.duckest.duckest.utils.user.Constants.VALID_EMAIL;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest
+@WebMvcTest(controllers = UserController.class)
 class UserControllerTest {
 
     private static MockMvc controller;
@@ -47,18 +48,18 @@ class UserControllerTest {
 
     @ParameterizedTest(name = "{index} Email не должен быть {0} при регистрации")
     @NullAndEmptySource
-    @ValueSource(strings = {" ", "wrong email format"})
+    @ValueSource(strings = {" ", INVALID_EMAIL})
     void emailMustNotBeNullAndBlankWhenRegister(String email) throws Exception {
-        UserDto userWithBadEmail = UserDto.builder().login(email).build();
-        String json = mapper.writeValueAsString(userWithBadEmail);
+        var userWithBadEmail = UserDto.builder().email(email).build();
+        var json = mapper.writeValueAsString(userWithBadEmail);
         controller.perform(post("/user").content(json).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
     }
 
     @Test
     @DisplayName("Валидный пользователь может зарегистрироваться")
     void validUserCanBeRegister() throws Exception {
-        String json = mapper.writeValueAsString(validUser);
-        controller.perform(post("/user").content(json).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+        var json = mapper.writeValueAsString(validUser);
+        controller.perform(post("/user").content(json).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
         verify(userService).save(validUser);
     }
 
@@ -66,16 +67,16 @@ class UserControllerTest {
     @NullAndEmptySource
     @ValueSource(strings = {" ", "wrong email format"})
     void emailMustNotBeNullAndBlankWhenUpdating(String email) throws Exception {
-        UserDto userWithBadEmail = UserDto.builder().login(email).build();
-        String json = mapper.writeValueAsString(userWithBadEmail);
+        var userWithBadEmail = UserDto.builder().email(email).build();
+        var json = mapper.writeValueAsString(userWithBadEmail);
         controller.perform(put("/user").content(json).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
     }
 
     @Test
     @DisplayName("Несуществующий пользователь не может быть обновлён")
     void validUserCantBeUpdated() throws Exception {
-        UserDto nonExistentUser = UserDto.builder().login("validNonExistentEmail@gmail.com").build();
-        String json = mapper.writeValueAsString(nonExistentUser);
+        var nonExistentUser = UserDto.builder().email("validNonExistentEmail@gmail.com").build();
+        var json = mapper.writeValueAsString(nonExistentUser);
 
         doThrow(IllegalArgumentException.class).when(userService).update(nonExistentUser);
 
@@ -85,7 +86,7 @@ class UserControllerTest {
     @Test
     @DisplayName("Существующий пользователь может быть обновлён")
     void validUserCanBeUpdated() throws Exception {
-        String json = mapper.writeValueAsString(validUser);
+        var json = mapper.writeValueAsString(validUser);
         controller.perform(put("/user").content(json).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
         verify(userService).update(validUser);
     }
@@ -102,7 +103,7 @@ class UserControllerTest {
     @Test
     @DisplayName("По валидному email можно получить пользователя")
     void userCanBeObtainedByValidEmail() throws Exception {
-        String expected = mapper.writeValueAsString(validUser);
+        var expected = mapper.writeValueAsString(validUser);
 
         when(userService.getUserBy(VALID_EMAIL)).thenReturn(validUser);
 

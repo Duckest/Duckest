@@ -18,7 +18,7 @@ public class UserDto {
     @Email(message = "email не соответствует стандартному формату")
     @NotBlank(message = "email не должен быть пуст")
     @JsonProperty("email")
-    private String login;
+    private String email;
 
     @JsonProperty("name")
     private String firstName;

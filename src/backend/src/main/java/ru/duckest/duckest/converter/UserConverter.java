@@ -9,7 +9,7 @@ public class UserConverter {
 
     public User convert(UserDto user) {
         return User.builder()
-                .login(user.getLogin())
+                .email(user.getEmail())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .middleName(user.getMiddleName())
@@ -18,7 +18,7 @@ public class UserConverter {
 
     public UserDto convert(User user) {
         return UserDto.builder()
-                .login(user.getLogin())
+                .email(user.getEmail())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .middleName(user.getMiddleName())

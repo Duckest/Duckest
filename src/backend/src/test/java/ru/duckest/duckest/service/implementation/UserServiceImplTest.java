@@ -57,8 +57,8 @@ class UserServiceImplTest {
 
     @Test
     @DisplayName("Если пользователя с таким email не существует, то бросается исключение")
-    void loginForNonExistentUserCauseExceptionWhenGettingByLogin() {
-        when(userSelector.getUserByLogin(EMAIL_FOR_NON_EXISTENT_USER)).thenThrow(IllegalArgumentException.class);
+    void emailForNonExistentUserCauseExceptionWhenGettingByEmail() {
+        when(userSelector.getUserBy(EMAIL_FOR_NON_EXISTENT_USER)).thenThrow(IllegalArgumentException.class);
 
         Throwable throwable = catchThrowable(() -> service.getUserBy(EMAIL_FOR_NON_EXISTENT_USER));
         assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
@@ -66,15 +66,15 @@ class UserServiceImplTest {
 
     @Test
     @DisplayName("Если email невалиден, то бросается исключение")
-    void invalidLoginCauseExceptionWhenGettingByLogin() {
+    void invalidEmailCauseExceptionWhenGettingByEmail() {
         Throwable throwable = catchThrowable(() -> service.getUserBy(INVALID_EMAIL));
         assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("Пользователь находится по валидному email")
-    void userCanBeFoundByLogin() {
-        when(userSelector.getUserByLogin(VALID_EMAIL)).thenReturn(validUserEntity);
+    void userCanBeFoundByEmail() {
+        when(userSelector.getUserBy(VALID_EMAIL)).thenReturn(validUserEntity);
         when(converter.convert(validUserEntity)).thenReturn(validUser);
 
         UserDto actual = service.getUserBy(VALID_EMAIL);
@@ -85,7 +85,7 @@ class UserServiceImplTest {
     @DisplayName("Для несуществующего пользователя бросается исключение")
     void nonExistentUserCauseException() {
         UserDto invalidUser = getInvalidUser();
-        when(userSelector.getUserByLogin(invalidUser.getLogin())).thenThrow(IllegalArgumentException.class);
+        when(userSelector.getUserBy(invalidUser.getEmail())).thenThrow(IllegalArgumentException.class);
 
         Throwable throwable = catchThrowable(() -> service.update(invalidUser));
         assertThat(throwable).isInstanceOf(IllegalArgumentException.class);
@@ -95,7 +95,7 @@ class UserServiceImplTest {
     @DisplayName("Dto конвертируется и обновляется исправно")
     void dtoConvertingAndUpdating() {
         UserDto userForUpdate = getUserForUpdate();
-        when(userSelector.getUserByLogin(validUser.getLogin())).thenReturn(validUserEntity);
+        when(userSelector.getUserBy(validUser.getEmail())).thenReturn(validUserEntity);
 
         service.update(userForUpdate);
         verify(userUpdater).update(validUserEntity);

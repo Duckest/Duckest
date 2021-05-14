@@ -6,7 +6,7 @@ public interface UserService {
 
     void save(UserDto user);
 
-    UserDto getUserBy(String login);
+    UserDto getUserBy(String email);
 
     void update(UserDto user);
 }

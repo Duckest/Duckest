@@ -27,18 +27,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserBy(String login) {
-        if (!emailValidator.isValid(login)) {
-            throw new IllegalArgumentException("Invalid login when getting user");
+    public UserDto getUserBy(String email) {
+        if (!emailValidator.isValid(email)) {
+            throw new IllegalArgumentException("Invalid email when getting user");
         }
-        var user = userSelector.getUserByLogin(login);
+        var user = userSelector.getUserBy(email);
         return converter.convert(user);
     }
 
     @Override
     public void update(UserDto user) {
-        var userEntity = userSelector.getUserByLogin(user.getLogin());
-        userEntity.setLogin(user.getLogin());
+        var userEntity = userSelector.getUserBy(user.getEmail());
+        userEntity.setEmail(user.getEmail());
         userEntity.setFirstName(user.getFirstName());
         userEntity.setLastName(user.getLastName());
         userEntity.setMiddleName(user.getMiddleName());

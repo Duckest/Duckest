@@ -11,10 +11,12 @@ import static ru.duckest.duckest.utils.user.Constants.VALID_EMAIL;
 
 public class UserEntityTestFactory {
 
+    private static final UUID USER_ID = UUID.fromString("3d50f1dd-be9b-40e9-8b88-ab2b2377e6bd");
+
     public static User getValidUser() {
         return User.builder()
-                .id(UUID.randomUUID())
-                .login(VALID_EMAIL)
+                .id(USER_ID)
+                .email(VALID_EMAIL)
                 .firstName(DUMMY_FIRST_NAME)
                 .lastName(DUMMY_LAST_NAME)
                 .middleName(DUMMY_MIDDLE_NAME)

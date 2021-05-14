@@ -26,7 +26,7 @@ public class UserController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<HttpStatus> registerUser(@Valid @RequestBody UserDto user) {
         userService.save(user);
-        return ResponseEntity.ok(null);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

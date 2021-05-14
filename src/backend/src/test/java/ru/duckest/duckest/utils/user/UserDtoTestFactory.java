@@ -12,7 +12,7 @@ public class UserDtoTestFactory {
 
     public static UserDto getValidUser() {
         return UserDto.builder()
-                .login(VALID_EMAIL)
+                .email(VALID_EMAIL)
                 .firstName(DUMMY_FIRST_NAME)
                 .lastName(DUMMY_LAST_NAME)
                 .middleName(DUMMY_MIDDLE_NAME)
@@ -21,7 +21,7 @@ public class UserDtoTestFactory {
 
     public static UserDto getInvalidUser() {
         return UserDto.builder()
-                .login(EMAIL_FOR_NON_EXISTENT_USER)
+                .email(EMAIL_FOR_NON_EXISTENT_USER)
                 .firstName(DUMMY_FIRST_NAME)
                 .lastName(DUMMY_LAST_NAME)
                 .middleName(DUMMY_MIDDLE_NAME)
@@ -30,7 +30,7 @@ public class UserDtoTestFactory {
 
     public static UserDto getUserForUpdate() {
         return UserDto.builder()
-                .login(VALID_EMAIL)
+                .email(VALID_EMAIL)
                 .firstName("DUMMY_UPDATE_NAME")
                 .lastName("DUMMY_UPDATE_LAST_NAME")
                 .middleName("DUMMY_UPDATE_MIDDLE_NAME")

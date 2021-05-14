@@ -28,10 +28,10 @@ class UserSelectorTest {
 
     @Test
     @DisplayName("Если пользователя с таким email не существует, то бросается исключение")
-    void loginForNonExistentUserCauseException() {
-        when(users.findUsersByLogin(EMAIL_FOR_NON_EXISTENT_USER)).thenReturn(Optional.empty());
+    void emailForNonExistentUserCauseException() {
+        when(users.findUsersByEmail(EMAIL_FOR_NON_EXISTENT_USER)).thenReturn(Optional.empty());
 
-        Throwable throwable = catchThrowable(() -> userSelector.getUserByLogin(EMAIL_FOR_NON_EXISTENT_USER));
+        Throwable throwable = catchThrowable(() -> userSelector.getUserBy(EMAIL_FOR_NON_EXISTENT_USER));
         assertThat(throwable).isInstanceOf(NoSuchElementException.class);
     }
 
@@ -40,9 +40,9 @@ class UserSelectorTest {
     void userCanBeObtainedByValidEmail() {
         User validUser = UserEntityTestFactory.getValidUser();
 
-        when(users.findUsersByLogin(VALID_EMAIL)).thenReturn(Optional.of(validUser));
+        when(users.findUsersByEmail(VALID_EMAIL)).thenReturn(Optional.of(validUser));
 
-        User actual = userSelector.getUserByLogin(VALID_EMAIL);
+        User actual = userSelector.getUserBy(VALID_EMAIL);
         assertThat(actual).isEqualTo(validUser);
     }
 
