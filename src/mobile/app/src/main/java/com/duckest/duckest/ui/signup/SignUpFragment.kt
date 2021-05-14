@@ -1,5 +1,6 @@
 package com.duckest.duckest.ui.signup
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -10,14 +11,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.duckest.duckest.R
+import com.duckest.duckest.data.Error
+import com.duckest.duckest.data.NetworkResult
+import com.duckest.duckest.data.domain.UserProfile
+import com.duckest.duckest.databinding.FragmentSignUpBinding
 import com.duckest.duckest.util.Utils
 import com.duckest.duckest.util.Utils.checkName
 import com.duckest.duckest.util.Utils.isEmptyField
 import com.duckest.duckest.util.Utils.setError
 import com.duckest.duckest.util.Utils.setTextChangeListener
-import com.duckest.duckest.data.Error
-import com.duckest.duckest.data.NetworkResult
-import com.duckest.duckest.databinding.FragmentSignUpBinding
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,13 +56,18 @@ class SignUpFragment : Fragment() {
             if (checkFields()) {
                 return@setOnClickListener
             }
-            vm.registerUser(
+            val user = UserProfile(
                 binding.emailEdit.text.toString().trim(),
+                binding.nameEdit.text.toString().trim(),
+                binding.surnameEdit.text.toString().trim(),
+                binding.patronymicEdit.text.toString().trim(),
+            )
+            vm.registerUser(
+                user,
                 binding.passwordEdit.text.toString().trim()
             )
 
         }
-
 
         vm.error.observe(viewLifecycleOwner, {
             binding.progressBar.visibility = View.GONE
@@ -82,8 +89,24 @@ class SignUpFragment : Fragment() {
 
         })
 
+        vm.response.observe(viewLifecycleOwner) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    showDialog()
+                }
+                else -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(
+                        requireContext(),
+                        it.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
 
-        vm.response.observe(viewLifecycleOwner, {
+        vm.responseFirebase.observe(viewLifecycleOwner, {
             when (it) {
                 is NetworkResult.Error -> {
                     binding.progressBar.visibility = View.GONE
@@ -94,8 +117,7 @@ class SignUpFragment : Fragment() {
                     ).show()
                 }
                 is NetworkResult.Success -> {
-                    binding.progressBar.visibility = View.GONE
-                    findNavController().popBackStack()
+                    vm.registerUser(it.data)
                 }
 
                 is NetworkResult.Loading -> {
@@ -117,14 +139,21 @@ class SignUpFragment : Fragment() {
         }
     }
 
-
     private fun checkFields(): Boolean =
         (isEmptyField(binding.nameEdit, binding.name, requireContext()) ||
                 checkName(binding.nameEdit, binding.name, requireContext())) or
                 isEmptyField(binding.passwordEdit, binding.password, requireContext()) or
-                isEmptyField(binding.confirmPasswordEdit, binding.confirmPassword, requireContext()) or
+                isEmptyField(
+                    binding.confirmPasswordEdit,
+                    binding.confirmPassword,
+                    requireContext()
+                ) or
                 (isEmptyField(binding.emailEdit, binding.email, requireContext()) ||
-                        Utils.checkEmailPattern(binding.emailEdit, binding.email, requireContext())) or
+                        Utils.checkEmailPattern(
+                            binding.emailEdit,
+                            binding.email,
+                            requireContext()
+                        )) or
                 (isEmptyField(binding.surnameEdit, binding.surname, requireContext()) ||
                         checkName(binding.surnameEdit, binding.surname, requireContext())) or
                 checkName(binding.patronymicEdit, binding.patronymic, requireContext()) ||
@@ -133,7 +162,6 @@ class SignUpFragment : Fragment() {
                     binding.confirmPasswordEdit,
                     binding.confirmPassword
                 )
-
 
     private fun arePasswordsSame(
         pass: TextInputEditText,
@@ -149,4 +177,15 @@ class SignUpFragment : Fragment() {
         return true
     }
 
+    private fun showDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.apply {
+            setTitle(getString(R.string.dialog_title_confirm_email))
+            setMessage(getString(R.string.dialog_description_confirm_email))
+            setPositiveButton(getString(R.string.dialog_ok)) { _, _ ->
+                findNavController().popBackStack()
+            }
+            show()
+        }
+    }
 }

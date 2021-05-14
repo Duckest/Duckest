@@ -3,12 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
-
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragment_container"
@@ -33,13 +31,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/blue"
-                app:titleTextColor="@color/white"
-                app:title="Авторизация"
                 android:minHeight="?attr/actionBarSize"
-                android:theme="@android:style/ThemeOverlay.Material.Dark.ActionBar" >
+                android:theme="@android:style/ThemeOverlay.Material.Dark.ActionBar"
+                app:title="Авторизация"
+                app:titleTextColor="@color/white" />
 
-            </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
-
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background">
+        android:background="@color/background"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView5"
@@ -18,12 +15,7 @@
             android:text="@string/test_passed_title"
             android:textColor="@color/green"
             android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.19" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textView4"
@@ -32,11 +24,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/test_passed_congratulation"
             android:textColor="@color/typo"
-            android:textSize="17sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            android:textSize="17sp" />
 
         <ImageView
             android:id="@+id/certificate"
@@ -44,46 +32,25 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:contentDescription="@string/cd_certificate"
-            android:src="@mipmap/ic_certificate"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/result"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
+            android:src="@mipmap/ic_certificate" />
 
         <TextView
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@string/test_passed_title_certificate"
-            app:layout_constraintEnd_toEndOf="@+id/certificate"
-            app:layout_constraintStart_toStartOf="@+id/certificate"
-            app:layout_constraintTop_toBottomOf="@+id/certificate" />
+            android:text="@string/test_passed_title_certificate" />
 
         <TextView
             android:id="@+id/result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="@string/test_result_right_answers"
+            android:text="@string/test_result"
             android:textColor="@color/typo"
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="@+id/certificate"
-            app:layout_constraintEnd_toStartOf="@+id/certificate"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/certificate" />
+            android:textSize="25sp" />
 
-        <TextView
-            android:id="@+id/wrong_answers"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:gravity="center"
-            android:text="@string/test_result_wrong_answers"
-            android:textSize="26sp"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+    </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

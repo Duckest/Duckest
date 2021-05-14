@@ -46,6 +46,7 @@
     <string name="start_test_btn">Начать тестирование</string>
     <string name="test_result_wrong_answers">Неправильные ответы: %1$d</string>
     <string name="test_result_right_answers">%1$d из %2$d \n результат</string>
+    <string name="test_result">Тест пройден на %1$d%%</string>
     <string name="test_result_btn_try_again">Попробовать еще раз</string>
     <string name="test_result_dont_upset">Не расстраивайтесь!</string>
     <string name="result_test_fail_label">Тест не сдан</string>
@@ -70,4 +71,12 @@
     <string name="share">Share</string>
     <string name="certificate_passed_name">certificate.jpg</string>
     <string name="certificate_saved_information">Сертификат сохранен в галерее</string>
+    <string name="back">back</string>
+    <string name="exit">Выход</string>
+    <string name="exit_message">Вы хотите прервать прохождение теста? Данные не будут сохранены</string>
+    <string name="test_title">Вопрос: %1$s / %2$s</string>
+    <string name="head_name_title">%1$s  %2$s</string>
+    <string name="dialog_title_confirm_email">Подтверждение почты</string>
+    <string name="dialog_description_confirm_email">На ваш адрес отправлено письмо с уникальной ссылкой для подтверждения почты</string>
+    <string name="dialog_ok">ОК</string>
 </resources>

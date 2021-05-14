@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.WindowManager
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -44,6 +45,12 @@ class HomeActivity : AppCompatActivity() {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             }
         }
+        vm.getUser()
+        vm.user.observe(this) {
+            binding.navView.getHeaderView(0).findViewById<TextView>(R.id.email).text = it.email
+                    binding.navView.getHeaderView(0).findViewById<TextView>(R.id.name).text = getString( R.string.head_name_title, "${it.surname}","${it.name}")
+        }
+
         binding.navView.setupWithNavController(navController)
         appBarConfiguration =
             AppBarConfiguration(
@@ -56,7 +63,6 @@ class HomeActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_SECURE
         )
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
         item.onNavDestinationSelected(findNavController(R.id.home_host_fragment))
