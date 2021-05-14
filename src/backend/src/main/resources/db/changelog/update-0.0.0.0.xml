@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="gv_kirsanov_1" author="${author}" runOnChange="true">
+        <createTable tableName="person">
+            <column name="id" type="${datatype_uuid}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="login" type="${datatype_text}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="${datatype_text}"/>
+            <column name="middle_name" type="${datatype_text}"/>
+            <column name="last_name" type="${datatype_text}"/>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="person"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="gv_kirsanov_2" author="${author}" runOnChange="true">
+        <createTable tableName="role">
+            <column name="role_name" type="${datatype_text}">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="role"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="gv_kirsanov_3" author="${author}" runOnChange="true">
+        <createTable tableName="person_role">
+            <column name="person_id" type="${datatype_uuid}">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="role_name" type="${datatype_text}">
+                <constraints primaryKey="true"
+                             foreignKeyName="role_name_fk"
+                             references="role(role_name)"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="person_role"
+                                 baseColumnNames="person_id"
+                                 constraintName="role_person_id_fk"
+                                 referencedTableName="person"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+
+        <rollback>
+            <dropTable tableName="person_role"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="gv_kirsanov_4" author="${author}" runOnChange="true">
+        <createTable tableName="quiz_type">
+            <column name="type" type="${datatype_text}">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="quiz_type"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="gv_kirsanov_5" author="${author}" runOnChange="true">
+        <createTable tableName="quiz_level">
+            <column name="level" type="${datatype_text}">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="quiz_level"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="gv_kirsanov_6" author="${author}" runOnChange="true">
+        <createTable tableName="quiz_level_type_pair">
+            <column name="id" type="${datatype_uuid}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="quiz_level" type="${datatype_text}">
+                <constraints foreignKeyName="question_quiz_level_fk"
+                             references="quiz_level(level)"/>
+            </column>
+            <column name="quiz_type" type="${datatype_text}">
+                <constraints foreignKeyName="question_quiz_type_fk"
+                             references="quiz_type(type)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="gv_kirsanov_7" author="${author}" runOnChange="true">
+        <createTable tableName="quiz_question">
+            <column name="id" type="${datatype_uuid}">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="question" type="${datatype_text}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quiz_level_type_id" type="${datatype_uuid}">
+                <constraints foreignKeyName="question_quiz_level_type_fk"
+                             references="quiz_level_type_pair(id)"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="quiz_question"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="gv_kirsanov_8" author="${author}" runOnChange="true">
+        <createTable tableName="answer">
+            <column name="id" type="${datatype_uuid}">
+                <constraints primaryKey="true" unique="true"/>
+            </column>
+            <column name="question_id" type="${datatype_uuid}">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="answer" type="${datatype_text}">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="answer"
+                                 baseColumnNames="question_id"
+                                 constraintName="answer_question_id_fk"
+                                 referencedTableName="quiz_question"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="CASCADE"/>
+
+        <rollback>
+            <dropTable tableName="answer"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="gv_kirsanov_9" author="${author}" runOnChange="true">
+        <createTable tableName="right_answer">
+            <column name="id" type="${datatype_uuid}">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="question_id" type="${datatype_uuid}">
+                <constraints nullable="false"
+                             references="quiz_question(id)"
+                             foreignKeyName="right_answer_question_fk"/>
+            </column>
+            <column name="right_answer_index" type="${datatype_integer}"/>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="right_answer"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="gv_kirsanov_10" author="${author}" runOnChange="true">
+        <createTable tableName="quiz_description">
+            <column name="quiz_level_type_id" type="${datatype_uuid}">
+                <constraints primaryKey="true"
+                             foreignKeyName="pass_threshold_level_type_fk"
+                             references="quiz_level_type_pair(id)"/>
+            </column>
+            <column name="description" type="${datatype_text}">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="quiz_description"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="gv_kirsanov_11" author="${author}" runOnChange="true">
+        <createTable tableName="progress">
+            <column name="person_id" type="${datatype_uuid}">
+                <constraints primaryKey="true"
+                             foreignKeyName="progress_person_id_fk"
+                             references="person(id)"/>
+            </column>
+            <column name="quiz_level_type_id" type="${datatype_uuid}">
+                <constraints primaryKey="true"
+                             foreignKeyName="progress_level_type_fk"
+                             references="quiz_level_type_pair(id)"/>
+            </column>
+            <column name="progress" type="real">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="progress"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="gv_kirsanov_12" author="${author}" runOnChange="true">
+        <createTable tableName="pass_threshold">
+            <column name="quiz_level_type_id" type="${datatype_uuid}">
+                <constraints primaryKey="true"
+                             foreignKeyName="pass_threshold_level_type_fk"
+                             references="quiz_level_type_pair(id)"/>
+            </column>
+            <column name="threshold" type="${datatype_integer}">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="pass_threshold"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="gv_kirsanov_13" author="${author}" runOnChange="true">
+        <createTable tableName="quiz_pass_date">
+            <column name="person_id" type="${datatype_uuid}">
+                <constraints primaryKey="true"
+                             foreignKeyName="pass_date_person_id_fk"
+                             references="person(id)"/>
+            </column>
+            <column name="quiz_level_type_id" type="${datatype_uuid}">
+                <constraints primaryKey="true"
+                             foreignKeyName="pass_date_level_type_fk"
+                             references="quiz_level_type_pair(id)"/>
+            </column>
+            <column name="finish_date" type="${datatype_date}">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="quiz_pass_date"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="gv_kirsanov_14" author="${author}" runOnChange="true">
+        <insert tableName="role">
+            <column name="role_name" value="user"/>
+        </insert>
+        <insert tableName="role">
+            <column name="role_name" value="admin"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="role"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="gv_kirsanov_15" author="${author}" runOnChange="true">
+        <insert tableName="quiz_level">
+            <column name="level" value="junior"/>
+        </insert>
+        <insert tableName="quiz_level">
+            <column name="level" value="middle"/>
+        </insert>
+        <insert tableName="quiz_level">
+            <column name="level" value="senior"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="quiz_level"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="gv_kirsanov_16" author="${author}" runOnChange="true">
+        <renameColumn tableName="person" oldColumnName="login" newColumnName="email"/>
+
+        <rollback>
+            <renameColumn tableName="person" oldColumnName="email" newColumnName="login"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="gv_kirsanov_17" author="${author}" runOnChange="true">
+        <createTable tableName="level_type_image_url">
+            <column name="quiz_level_type_id" type="${datatype_uuid}">
+                <constraints primaryKey="true"
+                             foreignKeyName="pass_threshold_level_type_fk"
+                             references="quiz_level_type_pair(id)"/>
+            </column>
+            <column name="image_url" type="${datatype_text}"/>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="level_type_image_url"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
