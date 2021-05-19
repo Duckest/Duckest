@@ -1,0 +1,36 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <property name="author" value="duckest"/>
+    <property name="datatype_timestamp" value="timestamp(6) with time zone"/>
+    <property name="datatype_timestamp_default" value="clock_timestamp()"/>
+    <property name="datatype_timestamp_current" value="current_timestamp"/>
+    <property name="datatype_timestamp_infinity" value="timestamp 'infinity'"/>
+    <property name="datatype_id" value="integer"/>
+    <property name="datatype_integer" value="integer"/>
+    <property name="datatype_bigint" value="bigint"/>
+    <property name="datatype_name" value="varchar(255)"/>
+    <property name="datatype_text" value="text"/>
+    <property name="datatype_flag" value="integer"/>
+    <property name="datatype_boolean" value="boolean"/>
+    <property name="datatype_number" value="numeric"/>
+    <property name="datatype_uuid" value="uuid"/>
+    <property name="datatype_jsonb" value="jsonb"/>
+    <property name="datatype_date" value="date"/>
+    <property name="datatype_time" value="time"/>
+    <property name="version" value="0.0.1.0" global="false"/>
+    <property name="runAlways" value="true" context="update-test"/>
+    <property name="runAlways" value="false" context="!update-test"/>
+
+
+    <changeSet id="begin" author="${author}" runOnChange="true" runAlways="true" logicalFilePath="master.xml"
+               runInTransaction="false">
+        <output target="INFO">Начало выполнения liquibase сценариев</output>
+        <sql>set application_name to 'duckest-liquibase'</sql>
+    </changeSet>
+
+    <include file="update.xml" relativeToChangelogFile="true"/>
+</databaseChangeLog>
