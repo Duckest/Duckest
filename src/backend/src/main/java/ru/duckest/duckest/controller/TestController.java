@@ -28,9 +28,8 @@ public class TestController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TestDto> getTestBy(@RequestParam("test_type") String testType,
-                                             @RequestParam("test_level") String testLevel) {
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TestDto> getTestBy(@RequestParam("test_type") String testType, @RequestParam("test_level") String testLevel) {
         var typeLevelPair = TypeLevelPairDto.builder().testLevel(testLevel).testType(testType).build();
         TestDto test = testService.getTestBy(typeLevelPair);
         return ResponseEntity.ok(test);

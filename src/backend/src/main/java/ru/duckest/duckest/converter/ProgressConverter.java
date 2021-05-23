@@ -3,7 +3,6 @@ package ru.duckest.duckest.converter;
 import org.springframework.stereotype.Component;
 import ru.duckest.duckest.dto.TestLevelProgressDto;
 import ru.duckest.duckest.dto.TestTypeProgressDto;
-import ru.duckest.duckest.entity.LevelTypeImageUrl;
 import ru.duckest.duckest.entity.Progress;
 import ru.duckest.duckest.entity.QuizLevelTypePair;
 
@@ -18,9 +17,7 @@ public class ProgressConverter {
 
     public TestLevelProgressDto convert(Progress progress) {
         QuizLevelTypePair levelTypePair = progress.getLevelTypePair();
-        LevelTypeImageUrl imageUrl = levelTypePair.getImageUrl();
         return TestLevelProgressDto.builder()
-                .imageUrl(imageUrl == null ? null : imageUrl.getImageUrl())
                 .testLevel(levelTypePair.getQuizLevel().getLevel())
                 .testCompleted(progress.getProgressValue() >= levelTypePair.getPassThreshold().getThreshold())
                 .build();
@@ -32,6 +29,7 @@ public class ProgressConverter {
         for (Progress progress : progressesWithOneType) {
             var testLevelProgressDto = convert(progress);
             testTypeProgressDto.getTestLevelProgressDtos().add(testLevelProgressDto);
+            testTypeProgressDto.setImageUrl(progress.getLevelTypePair().getQuizType().getImageUrl().getImageUrl());
             isAllLevelsCompleted &= testLevelProgressDto.isTestCompleted();
         }
         testTypeProgressDto.setLevelCompleted(isAllLevelsCompleted);

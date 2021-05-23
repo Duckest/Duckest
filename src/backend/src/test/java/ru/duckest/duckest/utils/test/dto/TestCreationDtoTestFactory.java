@@ -2,6 +2,7 @@ package ru.duckest.duckest.utils.test.dto;
 
 import ru.duckest.duckest.dto.TestCreationDto;
 
+import static ru.duckest.duckest.utils.test.Constants.DUMMY_IMAGE_URL;
 import static ru.duckest.duckest.utils.test.Constants.DUMMY_TEST_DESCRIPTION;
 import static ru.duckest.duckest.utils.test.Constants.DUMMY_TEST_LEVEL;
 import static ru.duckest.duckest.utils.test.Constants.DUMMY_TEST_TYPE;
@@ -17,6 +18,7 @@ public class TestCreationDtoTestFactory {
                 .testLevel(DUMMY_TEST_LEVEL)
                 .testType(DUMMY_TEST_TYPE)
                 .description(DUMMY_TEST_DESCRIPTION)
+                .imageUrl(DUMMY_IMAGE_URL)
                 .questions(getTwentyDummyQuestions())
                 .build();
     }

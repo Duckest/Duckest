@@ -43,7 +43,7 @@ class TestSaverTest {
     void quizLevelCanBeObtainedFromDatabase() {
         TestCreationDto dummyTestCreationDto = TestCreationDtoTestFactory.getDummyTestCreationDto();
 
-        testSaver.save(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType());
+        testSaver.save(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType(), dummyTestCreationDto.getImageUrl());
         verify(quizLevelSelector).findBy(dummyTestCreationDto.getTestLevel());
     }
 
@@ -54,7 +54,7 @@ class TestSaverTest {
 
         when(quizLevelSelector.findBy(dummyTestCreationDto.getTestLevel())).thenReturn(Optional.empty());
 
-        testSaver.save(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType());
+        testSaver.save(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType(), dummyTestCreationDto.getImageUrl());
         verify(quizLevelSaver).save(dummyTestCreationDto.getTestLevel());
     }
 
@@ -63,7 +63,7 @@ class TestSaverTest {
     void quizTypeCanBeObtainedFromDatabase() {
         TestCreationDto dummyTestCreationDto = TestCreationDtoTestFactory.getDummyTestCreationDto();
 
-        testSaver.save(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType());
+        testSaver.save(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType(), dummyTestCreationDto.getImageUrl());
         verify(quizTypeSelector).findBy(dummyTestCreationDto.getTestType());
     }
 
@@ -74,8 +74,8 @@ class TestSaverTest {
 
         when(quizTypeSelector.findBy(dummyTestCreationDto.getTestType())).thenReturn(Optional.empty());
 
-        testSaver.save(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType());
-        verify(quizTypeSaver).save(dummyTestCreationDto.getTestType());
+        testSaver.save(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType(), dummyTestCreationDto.getImageUrl());
+        verify(quizTypeSaver).save(dummyTestCreationDto.getTestType(), dummyTestCreationDto.getImageUrl());
     }
 
 
@@ -84,13 +84,12 @@ class TestSaverTest {
     void levelTypePairCanBeSaved() {
         TestCreationDto dummyTestCreationDto = getDummyTestCreationDto();
         QuizLevelTypePair dummyTestEntity = getDummyTestEntity();
-        dummyTestEntity.setImageUrl(null);
         dummyTestEntity.setPassThreshold(null);
 
         when(quizLevelSelector.findBy(dummyTestCreationDto.getTestLevel())).thenReturn(Optional.of(dummyTestEntity.getQuizLevel()));
         when(quizTypeSelector.findBy(dummyTestCreationDto.getTestType())).thenReturn(Optional.of(dummyTestEntity.getQuizType()));
 
-        testSaver.save(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType());
+        testSaver.save(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType(), dummyTestCreationDto.getImageUrl());
         verify(quizLevelTypePairs).save(dummyTestEntity);
     }
 

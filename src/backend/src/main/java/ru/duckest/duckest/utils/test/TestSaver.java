@@ -25,9 +25,9 @@ public class TestSaver {
         return quizLevelTypePairs.save(QuizLevelTypePair.builder().quizLevel(level).quizType(type).build());
     }
 
-    public QuizLevelTypePair save(String level, String type) {
+    public QuizLevelTypePair save(String level, String type, String imageUrl) {
         var quizLevel = quizLevelSelector.findBy(level).orElse(quizLevelSaver.save(level));
-        var quizType = quizTypeSelector.findBy(type).orElse(quizTypeSaver.save(type));
+        var quizType = quizTypeSelector.findBy(type).orElse(quizTypeSaver.save(type, imageUrl));
         return save(quizLevel, quizType);
     }
 

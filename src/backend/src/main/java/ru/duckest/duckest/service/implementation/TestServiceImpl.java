@@ -41,7 +41,7 @@ public class TestServiceImpl implements TestService {
     @Override
     public void save(TestCreationDto test) {
         var levelTypePair = testSelector.findByLevelAndType(test.getTestLevel(), test.getTestType())
-                .orElseGet(() -> testSaver.save(test.getTestLevel(), test.getTestType()));
+                .orElseGet(() -> testSaver.save(test.getTestLevel(), test.getTestType(), test.getImageUrl()));
         descriptionSaver.save(test.getDescription(), levelTypePair);
         passThresholdSaver.save(test.getThreshold(), levelTypePair);
         List<QuizQuestion> questions = test.getQuestions().stream().map(question -> {

@@ -32,7 +32,7 @@ class QuizTypeSaverTest {
     @DisplayName("Язык программирования можно сохранять, передав строку")
     void levelStringCanBeSaved() {
         QuizType dummyQuizType = QuizTypeTestFactory.getDummyQuizType();
-        quizTypeSaver.save(dummyQuizType.getType());
+        quizTypeSaver.save(dummyQuizType.getType(), dummyQuizType.getImageUrl().getImageUrl());
         verify(quizTypes).save(dummyQuizType);
     }
 

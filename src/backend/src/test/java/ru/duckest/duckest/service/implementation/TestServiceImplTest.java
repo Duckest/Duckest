@@ -69,12 +69,13 @@ class TestServiceImplTest {
     @DisplayName("Пара языка программирования и уровня сохраняются в бд, если отсутствуют")
     void levelTypePairCanBeSaved() {
         TestCreationDto dummyTestCreationDto = getDummyTestCreationDto();
+        dummyTestCreationDto.setImageUrl(null);
 
         when(testSelector.findByLevelAndType(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType())).thenReturn(
                 Optional.empty());
 
         testService.save(dummyTestCreationDto);
-        verify(testSaver).save(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType());
+        verify(testSaver).save(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType(), dummyTestCreationDto.getImageUrl());
     }
 
     @Test

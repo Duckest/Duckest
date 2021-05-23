@@ -55,16 +55,14 @@ class TestControllerTest {
             when(testService.getTestBy(TYPE_LEVEL_PAIR_DTO)).thenThrow(IllegalArgumentException.class);
 
             controller.perform(get("/test").param("test_type", TYPE_LEVEL_PAIR_DTO.getTestType())
-                                       .param("test_level", TYPE_LEVEL_PAIR_DTO.getTestLevel())
-                                       .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNotFound());
+                                       .param("test_level", TYPE_LEVEL_PAIR_DTO.getTestLevel())).andExpect(status().isNotFound());
         }
 
         @Test
         @DisplayName("Получение теста по языку программирования и уровню c сервисного слоя проходит успешно")
         void gettingTestByTypeAndLevelFromServiceLayer() throws Exception {
             controller.perform(get("/test").param("test_type", TYPE_LEVEL_PAIR_DTO.getTestType())
-                                       .param("test_level", TYPE_LEVEL_PAIR_DTO.getTestLevel())
-                                       .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+                                       .param("test_level", TYPE_LEVEL_PAIR_DTO.getTestLevel())).andExpect(status().isOk());
             verify(testService).getTestBy(TYPE_LEVEL_PAIR_DTO);
         }
 
@@ -76,8 +74,7 @@ class TestControllerTest {
             when(testService.getTestBy(TYPE_LEVEL_PAIR_DTO)).thenReturn(expected);
 
             MvcResult mvcResult = controller.perform(get("/test").param("test_type", TYPE_LEVEL_PAIR_DTO.getTestType())
-                                                             .param("test_level", TYPE_LEVEL_PAIR_DTO.getTestLevel())
-                                                             .contentType(MediaType.APPLICATION_JSON))
+                                                             .param("test_level", TYPE_LEVEL_PAIR_DTO.getTestLevel()))
                     .andExpect(status().isOk())
                     .andReturn();
             var actual = mapper.readValue(mvcResult.getResponse().getContentAsString(), TestDto.class);
