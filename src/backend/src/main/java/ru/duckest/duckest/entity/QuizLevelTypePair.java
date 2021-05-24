@@ -50,4 +50,10 @@ public class QuizLevelTypePair implements Serializable {
 
     @OneToOne(mappedBy = "levelTypePair", targetEntity = PassThreshold.class, cascade = CascadeType.ALL)
     private PassThreshold passThreshold;
+
+    @OneToMany(mappedBy = "levelTypePair", targetEntity = Progress.class, cascade = CascadeType.ALL)
+    private List<Progress> progresses;
+
+    @OneToMany(mappedBy = "levelTypePair", targetEntity = QuizPassDate.class, cascade = CascadeType.ALL)
+    private List<QuizPassDate> passDates;
 }
