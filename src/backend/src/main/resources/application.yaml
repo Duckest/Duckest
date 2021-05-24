@@ -5,7 +5,7 @@ spring:
   application:
     name: duckest
   datasource:
-    url: jdbc:postgresql://localhost:11111/duckest
+    url: {DATABASE_URL:jdbc:postgresql://localhost:11111/duckest}
     username: default
     password: default
   jpa:
