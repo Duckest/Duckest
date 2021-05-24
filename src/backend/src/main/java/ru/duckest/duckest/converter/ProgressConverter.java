@@ -20,6 +20,7 @@ public class ProgressConverter {
         return TestLevelProgressDto.builder()
                 .testLevel(levelTypePair.getQuizLevel().getLevel())
                 .testCompleted(progress.getProgressValue() >= levelTypePair.getPassThreshold().getThreshold())
+                .progress(progress.getProgressValue())
                 .build();
     }
 

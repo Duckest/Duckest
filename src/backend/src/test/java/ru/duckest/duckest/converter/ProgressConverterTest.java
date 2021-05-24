@@ -38,6 +38,7 @@ class ProgressConverterTest {
                                                              .imageUrl(DUMMY_IMAGE_URL)
                                                              .testLevelProgressDtos(List.of(TestLevelProgressDto.builder()
                                                                                                     .testLevel(DUMMY_TEST_LEVEL)
+                                                                                                    .progress(80.)
                                                                                                     .testCompleted(true)
                                                                                                     .build()))
                                                              .build());
