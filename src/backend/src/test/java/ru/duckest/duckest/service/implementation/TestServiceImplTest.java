@@ -1,6 +1,7 @@
 package ru.duckest.duckest.service.implementation;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +14,7 @@ import ru.duckest.duckest.dto.TypeLevelPairDto;
 import ru.duckest.duckest.entity.QuizLevelTypePair;
 import ru.duckest.duckest.entity.QuizQuestion;
 import ru.duckest.duckest.service.TestService;
+import ru.duckest.duckest.utils.test.TestDeleter;
 import ru.duckest.duckest.utils.test.TestSaver;
 import ru.duckest.duckest.utils.test.TestSelector;
 import ru.duckest.duckest.utils.test.description.DescriptionSaver;
@@ -47,6 +49,8 @@ class TestServiceImplTest {
     @MockBean
     private TestSaver testSaver;
     @MockBean
+    private TestDeleter testDeleter;
+    @MockBean
     private DescriptionSaver descriptionSaver;
     @MockBean
     private PassThresholdSaver passThresholdSaver;
@@ -55,110 +59,150 @@ class TestServiceImplTest {
     @MockBean
     private TestConverter testConverter;
 
+    @Nested
+    @DisplayName("Сохранение теста")
+    class SaveTest {
 
-    @Test
-    @DisplayName("Пара языка программирования и уровня находятся в бд при сохранении теста")
-    void levelTypePairCanBeFoundInDatabase() {
-        TestCreationDto dummyTestCreationDto = getDummyTestCreationDto();
+        @Test
+        @DisplayName("Пара языка программирования и уровня находятся в бд при сохранении теста")
+        void levelTypePairCanBeFoundInDatabase() {
+            TestCreationDto dummyTestCreationDto = getDummyTestCreationDto();
 
-        testService.save(dummyTestCreationDto);
-        verify(testSelector).findByLevelAndType(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType());
+            testService.save(dummyTestCreationDto);
+            verify(testSelector).findByLevelAndType(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType());
+        }
+
+        @Test
+        @DisplayName("Пара языка программирования и уровня сохраняются в бд, если отсутствуют")
+        void levelTypePairCanBeSaved() {
+            TestCreationDto dummyTestCreationDto = getDummyTestCreationDto();
+            dummyTestCreationDto.setImageUrl(null);
+
+            when(testSelector.findByLevelAndType(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType())).thenReturn(
+                    Optional.empty());
+
+            testService.save(dummyTestCreationDto);
+            verify(testSaver).save(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType(),
+                                   dummyTestCreationDto.getImageUrl());
+        }
+
+        @Test
+        @DisplayName("Описание теста сохраняется в бд")
+        void descriptionCanBeSaved() {
+            TestCreationDto dummyTestCreationDto = getDummyTestCreationDto();
+            QuizLevelTypePair dummyTestEntity = getDummyTestEntity();
+
+            when(testSelector.findByLevelAndType(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType())).thenReturn(
+                    Optional.of(dummyTestEntity));
+
+            testService.save(dummyTestCreationDto);
+            verify(descriptionSaver).save(dummyTestCreationDto.getDescription(), dummyTestEntity);
+        }
+
+        @Test
+        @DisplayName("Проходной порог для теста сохраняется")
+        void passThresholdCanBeSaved() {
+            TestCreationDto dummyTestCreationDto = getDummyTestCreationDto();
+            QuizLevelTypePair dummyTestEntity = getDummyTestEntity();
+
+            when(testSelector.findByLevelAndType(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType())).thenReturn(
+                    Optional.of(dummyTestEntity));
+
+            testService.save(dummyTestCreationDto);
+            verify(passThresholdSaver).save(dummyTestCreationDto.getThreshold(), dummyTestEntity);
+        }
+
+        @Test
+        @DisplayName("Вопросы и ответы для теста сохраняются")
+        void questionsAndAnswersCanBeSaved() {
+            TestCreationDto dummyTestCreationDto = getDummyTestCreationDto();
+            QuizLevelTypePair dummyTestEntity = getDummyTestEntity();
+            List<QuizQuestion> questions = dummyTestCreationDto.getQuestions().stream().map(question -> {
+                var converted = questionConverter.convert(question);
+                converted.setQuizLevelTypePair(dummyTestEntity);
+                return converted;
+            }).collect(Collectors.toList());
+
+            when(testSelector.findByLevelAndType(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType())).thenReturn(
+                    Optional.of(dummyTestEntity));
+
+            testService.save(dummyTestCreationDto);
+            verify(questionSaver).save(questions);
+        }
     }
 
-    @Test
-    @DisplayName("Пара языка программирования и уровня сохраняются в бд, если отсутствуют")
-    void levelTypePairCanBeSaved() {
-        TestCreationDto dummyTestCreationDto = getDummyTestCreationDto();
-        dummyTestCreationDto.setImageUrl(null);
+    @Nested
+    @DisplayName("Получение теста")
+    class GetTest {
 
-        when(testSelector.findByLevelAndType(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType())).thenReturn(
-                Optional.empty());
+        @Test
+        @DisplayName("Если какого-то уровня или языка программирования нет, то бросается исключение")
+        void absenceOfLevelOrTypeCauseException() {
+            TypeLevelPairDto dummyTypeLevelPairDto = getDummyTypeLevelPairDto();
 
-        testService.save(dummyTestCreationDto);
-        verify(testSaver).save(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType(), dummyTestCreationDto.getImageUrl());
+            when(testSelector.findByLevelAndTypeOrThrow(dummyTypeLevelPairDto.getTestLevel(),
+                                                        dummyTypeLevelPairDto.getTestType())).thenThrow(NoSuchElementException.class);
+
+            var throwable = catchThrowable(() -> testService.getTestBy(dummyTypeLevelPairDto));
+            assertThat(throwable).isInstanceOf(NoSuchElementException.class);
+        }
+
+        @Test
+        @DisplayName("Тест исправно получен с data layer и передан в конвертацию")
+        void testSuccessfullyObtainedFromDataLayer() {
+            TypeLevelPairDto dummyTypeLevelPairDto = getDummyTypeLevelPairDto();
+            QuizLevelTypePair foundToConvert = getDummyTestEntity();
+
+            when(testSelector.findByLevelAndTypeOrThrow(dummyTypeLevelPairDto.getTestLevel(),
+                                                        dummyTypeLevelPairDto.getTestType())).thenReturn(foundToConvert);
+
+            testService.getTestBy(dummyTypeLevelPairDto);
+            verify(testConverter).convert(foundToConvert);
+        }
+
+        @Test
+        @DisplayName("Тест исправно получен с сервисного слоя")
+        void testSuccessfullyObtainedFromServiceLayer() {
+            TypeLevelPairDto dummyTypeLevelPairDto = getDummyTypeLevelPairDto();
+            QuizLevelTypePair foundToConvert = getDummyTestEntity();
+            TestDto expected = getDummyTestDto();
+
+            when(testSelector.findByLevelAndTypeOrThrow(dummyTypeLevelPairDto.getTestLevel(),
+                                                        dummyTypeLevelPairDto.getTestType())).thenReturn(foundToConvert);
+            when(testConverter.convert(foundToConvert)).thenReturn(getDummyTestDto());
+
+            TestDto actual = testService.getTestBy(dummyTypeLevelPairDto);
+            assertThat(actual).isEqualTo(expected);
+        }
     }
 
-    @Test
-    @DisplayName("Описание теста сохраняется в бд")
-    void descriptionCanBeSaved() {
-        TestCreationDto dummyTestCreationDto = getDummyTestCreationDto();
-        QuizLevelTypePair dummyTestEntity = getDummyTestEntity();
+    @Nested
+    @DisplayName("Удаление теста")
+    class DeleteTest {
 
-        when(testSelector.findByLevelAndType(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType())).thenReturn(
-                Optional.of(dummyTestEntity));
+        @Test
+        @DisplayName("Если какого-то уровня или языка программирования нет, то бросается исключение")
+        void absenceOfLevelOrTypeCauseException() {
+            TypeLevelPairDto dummyTypeLevelPairDto = getDummyTypeLevelPairDto();
 
-        testService.save(dummyTestCreationDto);
-        verify(descriptionSaver).save(dummyTestCreationDto.getDescription(), dummyTestEntity);
-    }
+            when(testSelector.findByLevelAndTypeOrThrow(dummyTypeLevelPairDto.getTestLevel(),
+                                                        dummyTypeLevelPairDto.getTestType())).thenThrow(NoSuchElementException.class);
 
-    @Test
-    @DisplayName("Проходной порог для теста сохраняется")
-    void passThresholdCanBeSaved() {
-        TestCreationDto dummyTestCreationDto = getDummyTestCreationDto();
-        QuizLevelTypePair dummyTestEntity = getDummyTestEntity();
+            var throwable = catchThrowable(() -> testService.delete(dummyTypeLevelPairDto));
+            assertThat(throwable).isInstanceOf(NoSuchElementException.class);
+        }
 
-        when(testSelector.findByLevelAndType(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType())).thenReturn(
-                Optional.of(dummyTestEntity));
+        @Test
+        @DisplayName("Тест исправно получен с data layer и передан на удаление")
+        void testSuccessfullyObtainedFromDataLayer() {
+            TypeLevelPairDto dummyTypeLevelPairDto = getDummyTypeLevelPairDto();
+            QuizLevelTypePair testToDelete = getDummyTestEntity();
 
-        testService.save(dummyTestCreationDto);
-        verify(passThresholdSaver).save(dummyTestCreationDto.getThreshold(), dummyTestEntity);
-    }
+            when(testSelector.findByLevelAndTypeOrThrow(dummyTypeLevelPairDto.getTestLevel(),
+                                                        dummyTypeLevelPairDto.getTestType())).thenReturn(testToDelete);
 
-    @Test
-    @DisplayName("Вопросы и ответы для теста сохраняются")
-    void questionsAndAnswersCanBeSaved() {
-        TestCreationDto dummyTestCreationDto = getDummyTestCreationDto();
-        QuizLevelTypePair dummyTestEntity = getDummyTestEntity();
-        List<QuizQuestion> questions = dummyTestCreationDto.getQuestions().stream().map(question -> {
-            var converted = questionConverter.convert(question);
-            converted.setQuizLevelTypePair(dummyTestEntity);
-            return converted;
-        }).collect(Collectors.toList());
-
-        when(testSelector.findByLevelAndType(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType())).thenReturn(
-                Optional.of(dummyTestEntity));
-
-        testService.save(dummyTestCreationDto);
-        verify(questionSaver).save(questions);
-    }
-
-    @Test
-    @DisplayName("Если какого-то уровня или языка программирования нет, то бросается исключение")
-    void absenceOfLevelOrTypeCauseExceptionWhenGettingTest() {
-        TypeLevelPairDto dummyTypeLevelPairDto = getDummyTypeLevelPairDto();
-
-        when(testSelector.findByLevelAndTypeOrThrow(dummyTypeLevelPairDto.getTestLevel(), dummyTypeLevelPairDto.getTestType())).thenThrow(
-                NoSuchElementException.class);
-
-        var throwable = catchThrowable(() -> testService.getTestBy(dummyTypeLevelPairDto));
-        assertThat(throwable).isInstanceOf(NoSuchElementException.class);
-    }
-
-    @Test
-    @DisplayName("Тест исправно получен с data layer и передан в конвертацию")
-    void testSuccessfullyObtainedFromDataLayer() {
-        TypeLevelPairDto dummyTypeLevelPairDto = getDummyTypeLevelPairDto();
-        QuizLevelTypePair foundToConvert = getDummyTestEntity();
-
-        when(testSelector.findByLevelAndTypeOrThrow(dummyTypeLevelPairDto.getTestLevel(), dummyTypeLevelPairDto.getTestType())).thenReturn(
-                foundToConvert);
-
-        testService.getTestBy(dummyTypeLevelPairDto);
-        verify(testConverter).convert(foundToConvert);
-    }
-
-    @Test
-    @DisplayName("Тест исправно получен с сервисного слоя")
-    void testSuccessfullyObtainedFromServiceLayer() {
-        TypeLevelPairDto dummyTypeLevelPairDto = getDummyTypeLevelPairDto();
-        QuizLevelTypePair foundToConvert = getDummyTestEntity();
-        TestDto expected = getDummyTestDto();
-
-        when(testSelector.findByLevelAndTypeOrThrow(dummyTypeLevelPairDto.getTestLevel(), dummyTypeLevelPairDto.getTestType())).thenReturn(
-                foundToConvert);
-        when(testConverter.convert(foundToConvert)).thenReturn(getDummyTestDto());
-
-        TestDto actual = testService.getTestBy(dummyTypeLevelPairDto);
-        assertThat(actual).isEqualTo(expected);
+            testService.delete(dummyTypeLevelPairDto);
+            verify(testDeleter).delete(testToDelete);
+        }
     }
 }

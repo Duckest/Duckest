@@ -22,6 +22,7 @@ import ru.duckest.duckest.utils.test.dto.TestCreationDtoTestFactory;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -88,8 +89,8 @@ class TestControllerTest {
     class CreateTest {
 
         @Test
-        @DisplayName("Эндпоинт на создание теста вызывает сервисный слой")
-        void testCreationTriggersServiceLayer() throws Exception {
+        @DisplayName("Вызывает сервисный слой")
+        void triggersServiceLayer() throws Exception {
             var testCreationDto = TestCreationDtoTestFactory.getDummyTestCreationDto();
             var json = mapper.writeValueAsString(testCreationDto);
 
@@ -98,13 +99,32 @@ class TestControllerTest {
         }
 
         @Test
-        @DisplayName("Эндпоинт создания теста возвращает 201 код")
-        void testCreationReturns201HttpCode() throws Exception {
+        @DisplayName("Возвращает 201 код")
+        void returns201HttpCode() throws Exception {
             var testCreationDto = TestCreationDtoTestFactory.getDummyTestCreationDto();
             var json = mapper.writeValueAsString(testCreationDto);
 
             controller.perform(post("/test").content(json).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated());
         }
 
+    }
+
+    @Nested
+    @DisplayName("DELETE /test")
+    class DeleteTest {
+        @Test
+        @DisplayName("Возвращает 204 код ошибки")
+        void returns204HttpCode() throws Exception {
+            controller.perform(delete("/test").param("test_type", TYPE_LEVEL_PAIR_DTO.getTestType())
+                                       .param("test_level", TYPE_LEVEL_PAIR_DTO.getTestLevel())).andExpect(status().isNoContent());
+        }
+
+        @Test
+        @DisplayName("Вызывает сервисный слой")
+        void triggersServiceLayer() throws Exception {
+            controller.perform(delete("/test").param("test_type", TYPE_LEVEL_PAIR_DTO.getTestType())
+                                       .param("test_level", TYPE_LEVEL_PAIR_DTO.getTestLevel()));
+            verify(testService).delete(TYPE_LEVEL_PAIR_DTO);
+        }
     }
 }
