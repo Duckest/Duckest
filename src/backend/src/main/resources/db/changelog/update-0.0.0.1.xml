@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="gv_kirsanov_1" author="${author}" runOnChange="true">
+        <addUniqueConstraint tableName="person" columnNames="email"/>
+
+        <rollback>
+            <dropUniqueConstraint tableName="person" catalogName="email"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="gv_kirsanov_2" author="${author}" runOnChange="true">
+        <addUniqueConstraint tableName="type_image_url" columnNames="quiz_type"/>
+
+        <rollback>
+            <dropUniqueConstraint tableName="type_image_url" catalogName="quiz_type"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
