@@ -9,4 +9,6 @@ public interface TestService {
     TestDto getTestBy(TypeLevelPairDto typeLevelPairDto);
 
     void save(TestCreationDto test);
+
+    void delete(TypeLevelPairDto typeLevelPairDto);
 }

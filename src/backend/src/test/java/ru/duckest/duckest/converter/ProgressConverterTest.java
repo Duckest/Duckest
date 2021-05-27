@@ -35,10 +35,11 @@ class ProgressConverterTest {
         List<TestTypeProgressDto> expected = List.of(TestTypeProgressDto.builder()
                                                              .levelCompleted(true)
                                                              .testType(DUMMY_TEST_TYPE)
+                                                             .imageUrl(DUMMY_IMAGE_URL)
                                                              .testLevelProgressDtos(List.of(TestLevelProgressDto.builder()
                                                                                                     .testLevel(DUMMY_TEST_LEVEL)
+                                                                                                    .progress(80.)
                                                                                                     .testCompleted(true)
-                                                                                                    .imageUrl(DUMMY_IMAGE_URL)
                                                                                                     .build()))
                                                              .build());
 

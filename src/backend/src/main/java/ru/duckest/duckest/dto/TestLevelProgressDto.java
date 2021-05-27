@@ -18,6 +18,9 @@ public class TestLevelProgressDto {
     @JsonProperty("image_url")
     private String imageUrl;
 
+    @JsonProperty("progress")
+    private Double progress;
+
     @JsonProperty("is_test_completed")
     private boolean testCompleted;
 }

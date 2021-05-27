@@ -29,6 +29,9 @@ public class TestCreationDto {
     @JsonProperty("threshold")
     private Integer threshold = 80;
 
+    @JsonProperty("image_url")
+    private String imageUrl;
+
     @Default
     @JsonProperty("questions")
     private List<QuestionDto> questions = new ArrayList<>();

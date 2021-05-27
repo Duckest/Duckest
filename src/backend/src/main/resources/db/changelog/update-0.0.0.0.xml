@@ -291,4 +291,36 @@
         </rollback>
     </changeSet>
 
+    <changeSet id="gv_kirsanov_18" author="${author}" runOnChange="true">
+        <dropTable tableName="level_type_image_url"/>
+
+        <rollback>
+            <createTable tableName="level_type_image_url">
+                <column name="quiz_level_type_id" type="${datatype_uuid}">
+                    <constraints primaryKey="true"
+                                 foreignKeyName="pass_threshold_level_type_fk"
+                                 references="quiz_level_type_pair(id)"/>
+                </column>
+                <column name="image_url" type="${datatype_text}"/>
+            </createTable>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="gv_kirsanov_19" author="${author}" runOnChange="true">
+        <createTable tableName="type_image_url">
+            <column name="id" type="${datatype_uuid}">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="quiz_type" type="${datatype_text}">
+                <constraints foreignKeyName="image_type_fk"
+                             references="quiz_type(type)"/>
+            </column>
+            <column name="image_url" type="${datatype_text}"/>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="level_type_image_url"/>
+        </rollback>
+    </changeSet>
+
 </databaseChangeLog>

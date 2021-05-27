@@ -43,6 +43,28 @@ class TestSelectorTest {
     private QuizTypeSelector quizTypeSelector;
 
     @Test
+    @DisplayName("Язык программирования отсутствует в бд, возвращается Optional.empty()")
+    void levelCannotBeFoundInDatabase() {
+        TestCreationDto dummyTestCreationDto = getDummyTestCreationDto();
+
+        when(quizLevelSelector.findBy(dummyTestCreationDto.getTestLevel())).thenReturn(Optional.empty());
+
+        var actual = testSelector.findByLevelAndType(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType());
+        assertThat(actual).isEmpty();
+    }
+
+    @Test
+    @DisplayName("Язык программирования отсутствует в бд, возвращается Optional.empty()")
+    void typeCannotBeFoundInDatabase() {
+        TestCreationDto dummyTestCreationDto = getDummyTestCreationDto();
+
+        when(quizTypeSelector.findBy(dummyTestCreationDto.getTestType())).thenReturn(Optional.empty());
+
+        var actual = testSelector.findByLevelAndType(dummyTestCreationDto.getTestLevel(), dummyTestCreationDto.getTestType());
+        assertThat(actual).isEmpty();
+    }
+
+    @Test
     @DisplayName("Язык программирования и уровень ищутся в бд")
     void levelTypePairCanBeFoundInDatabase() {
         TestCreationDto dummyTestCreationDto = getDummyTestCreationDto();
