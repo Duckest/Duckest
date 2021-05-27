@@ -6,5 +6,6 @@
     <property name="filename" value="update.xml" global="false" />
 
     <include file="update-0.0.0.0.xml" relativeToChangelogFile="true" />
+    <include file="update-0.0.0.1.xml" relativeToChangelogFile="true" />
 
 </databaseChangeLog>
