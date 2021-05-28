@@ -54,10 +54,12 @@ class SettingsFragment : Fragment() {
         vm.userResponse.observe(viewLifecycleOwner) {
             it?.let {
                 when (it) {
-                    is NetworkResult.Loading -> { //binding.progressBar.visibility = View.VISIBLE
+                    is NetworkResult.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
                     }
                     is NetworkResult.Success -> {
-                        //  binding.progressBar.visibility = View.GONE
+                        vmActivity.getUser()
+                        binding.progressBar.visibility = View.GONE
                         Toast.makeText(
                             requireContext(),
                             getString(R.string.settings_data_saved),
@@ -65,7 +67,7 @@ class SettingsFragment : Fragment() {
                         ).show()
                     }
                     is NetworkResult.Error -> {
-                        //binding.progressBar.visibility = View.GONE
+                        binding.progressBar.visibility = View.GONE
                         Toast.makeText(
                             requireContext(),
                             it.message,
@@ -89,8 +91,8 @@ class SettingsFragment : Fragment() {
                 binding.surnameEdit.text.toString().trim(),
                 binding.patronymicEdit.text.toString().trim()
             )
-            vmActivity.getUser()
         }
+
         binding.savePassword.setOnClickListener {
             if (checkFieldsPasswords()) {
                 return@setOnClickListener

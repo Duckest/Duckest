@@ -48,7 +48,8 @@ class HomeActivity : AppCompatActivity() {
         vm.getUser()
         vm.user.observe(this) {
             binding.navView.getHeaderView(0).findViewById<TextView>(R.id.email).text = it.email
-                    binding.navView.getHeaderView(0).findViewById<TextView>(R.id.name).text = getString( R.string.head_name_title, "${it.surname}","${it.name}")
+            binding.navView.getHeaderView(0).findViewById<TextView>(R.id.name).text =
+                getString(R.string.head_name_title, "${it.surname}", "${it.name}")
         }
 
         binding.navView.setupWithNavController(navController)
