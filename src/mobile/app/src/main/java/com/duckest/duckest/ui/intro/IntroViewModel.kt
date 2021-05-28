@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.duckest.duckest.data.DataStoreRepository
+import com.duckest.duckest.data.network.RemoteDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,7 +19,8 @@ class IntroViewModel @Inject constructor(
         get() = _needToNavigate
     private val _needToNavigate = MutableLiveData<Endpoint?>()
     fun getUser() = viewModelScope.launch {
-        val user = dataStoreRepository.getUserEmail()
+        delay(1000)
+        val user = dataStoreRepository.getUser()
         if (user == null) {
             _needToNavigate.value = Endpoint.LOGIN
         } else {

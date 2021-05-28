@@ -1,5 +1,6 @@
 package com.duckest.duckest.data.network
 
+import com.duckest.duckest.data.NetworkResult
 import com.duckest.duckest.data.domain.*
 import retrofit2.Response
 import retrofit2.http.*
@@ -9,7 +10,7 @@ interface DuckestApi {
     suspend fun getUserBy(
         @Query("email")
         email: String
-    ): Response<UserProfile>
+    ): UserProfile?
 
     @PUT("/user")
     suspend fun updateUserData(

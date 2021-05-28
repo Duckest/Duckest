@@ -2,6 +2,7 @@ package com.duckest.duckest.ui.home.feed
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -11,7 +12,6 @@ import com.duckest.duckest.data.domain.TestLevelProgress
 import com.duckest.duckest.data.domain.TestLevelProgresses
 import com.duckest.duckest.databinding.FragmentFeedBinding
 import com.duckest.duckest.ui.home.feed.adapter.TestAdapter
-import com.duckest.duckest.util.UiUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -41,6 +41,11 @@ class FeedFragment : Fragment(), TestAdapter.TestItemListener {
             when (res) {
                 is NetworkResult.Error -> {
                     binding.progressBar.visibility = View.GONE
+                    Toast.makeText(
+                        requireContext(),
+                        res.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 is NetworkResult.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE

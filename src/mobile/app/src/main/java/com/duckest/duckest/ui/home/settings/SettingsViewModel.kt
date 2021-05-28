@@ -39,7 +39,7 @@ class SettingsViewModel @Inject constructor(
     fun getUserProfile() = viewModelScope.launch {
         try {
             email?.let {
-                val res = remoteRepository.getUser(it).body()
+                val res = repository.getUser()
                 _user.value = res
             }
         } catch (e: Exception) {
@@ -52,14 +52,16 @@ class SettingsViewModel @Inject constructor(
             _userResponse.value = NetworkResult.Loading()
             try {
                 email?.let {
-                   remoteRepository.updateUser(
-                        UserProfile(
-                            it,
-                            name,
-                            surname,
-                            patronymic
-                        )
+                    val user = UserProfile(
+                        it,
+                        name,
+                        surname,
+                        patronymic
                     )
+                    remoteRepository.updateUser(
+                       user
+                    )
+                    repository.saveUser(user)
                 }
                 _userResponse.value = NetworkResult.Success(Status.UPDATED)
             } catch (e: Exception) {

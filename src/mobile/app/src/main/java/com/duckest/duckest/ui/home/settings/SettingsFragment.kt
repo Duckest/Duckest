@@ -171,7 +171,6 @@ class SettingsFragment : Fragment() {
                 checkName(binding.nameEdit, binding.name, requireContext())) or
                 (Utils.isEmptyField(binding.surnameEdit, binding.surname, requireContext()) ||
                         checkName(binding.surnameEdit, binding.surname, requireContext())) or
-                (Utils.isEmptyField(binding.patronymicEdit, binding.patronymic, requireContext()) ||
-                        checkName(binding.patronymicEdit, binding.patronymic, requireContext()))
+                checkName(binding.patronymicEdit, binding.patronymic, requireContext())
 
 }

@@ -102,7 +102,7 @@ class TestFragment : Fragment() {
             } else {
                 Toast.makeText(
                     requireContext(),
-                    "Выберете вариант ответа",
+                    getString(R.string.test_message_no_answer),
                     Toast.LENGTH_LONG
                 ).show()
             }

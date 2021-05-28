@@ -50,7 +50,6 @@ object Utils {
         }
     }
 
-
     fun checkName(edit: TextInputEditText, layout: TextInputLayout, context: Context): Boolean {
         //for testing able to use latin and cyrillic alphabet
         val regex = "^[a-zA-ZА-Яа-я]*\$".toRegex()
@@ -69,7 +68,6 @@ object Utils {
 
     private fun getTextSize(text1: String, text2: String) =
         if (text1.length >= 21 || text2.length >= 20) 90 else 125
-
 
     fun drawTextToBitmap(
         context: Context,
@@ -93,12 +91,12 @@ object Utils {
         paint.setShadowLayer(1f, 0f, 1f, Color.WHITE)
         val bounds = Rect()
         paint.getTextBounds(text1, 0, text1.length, bounds)
-        var x = (bitmap.width - bounds.width()) / 2f - 900
-        var y = (bitmap.height + bounds.height()) / 2f - 200
+        var x = (bitmap.width - bounds.width() * scale) / 2f - 400
+        var y = (bitmap.height + bounds.height() * scale) / 2f - 200
         canvas.drawText(text1, x, y, paint)
         paint.getTextBounds(text2, 0, text2.length, bounds)
-        x = (bitmap.width - bounds.width()) / 2f - 800
-        y = (bitmap.height + bounds.height()) / 2f + 60
+        x = (bitmap.width - bounds.width() * scale) / 2f - 300
+        y = (bitmap.height + bounds.height() * scale) / 2f + 60
         canvas.drawText(text2, x, y, paint)
         return bitmap
     }

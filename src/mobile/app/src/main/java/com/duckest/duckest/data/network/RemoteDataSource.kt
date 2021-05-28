@@ -1,19 +1,19 @@
 package com.duckest.duckest.data.network
 
+import com.duckest.duckest.data.NetworkResult
 import com.duckest.duckest.data.domain.*
 import dagger.hilt.android.scopes.ActivityRetainedScoped
-import retrofit2.Response
 import javax.inject.Inject
 
 @ActivityRetainedScoped
 class RemoteDataSource @Inject constructor(
     private val duckestApi: DuckestApi
 ) {
-    suspend fun signUpUser(user: UserProfile?)  {
+    suspend fun signUpUser(user: UserProfile?) {
         duckestApi.signUpUser(user)
     }
 
-    suspend fun getUser(email: String): Response<UserProfile> {
+    suspend fun getUser(email: String): UserProfile? {
         return duckestApi.getUserBy(email)
     }
 

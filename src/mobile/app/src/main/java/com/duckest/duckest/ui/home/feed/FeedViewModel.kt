@@ -28,7 +28,7 @@ class FeedViewModel @Inject constructor(
                 val res = remoteRepository.getProgress(it)
                 _response.value = NetworkResult.Success(res)
             } catch (e: Exception) {
-
+                _response.value = NetworkResult.Error(message = e.message)
             }
         }
     }

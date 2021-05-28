@@ -22,15 +22,14 @@ class HomeViewModel @Inject constructor(
     fun getUser() = viewModelScope.launch {
         repository.getUserEmail()?.let {
             try {
-                val response = remoteRepository.getUser(it)
-                _user.value = response.body()
+                _user.value = repository.getUser()
             } catch (e: Exception) {
-                // TODO: 20.05.2021  
+                // TODO: 20.05.2021
             }
         }
     }
 
     fun clear() = viewModelScope.launch {
-        repository.deleteUserEmail()
+        repository.deleteAllData()
     }
 }

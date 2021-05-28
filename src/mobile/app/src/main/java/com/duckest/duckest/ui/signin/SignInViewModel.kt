@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.duckest.duckest.data.DataStoreRepository
 import com.duckest.duckest.data.Error
 import com.duckest.duckest.data.NetworkResult
+import com.duckest.duckest.data.network.RemoteDataSource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
@@ -16,11 +17,16 @@ import javax.inject.Inject
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val repository: DataStoreRepository,
+    private val remoteRepository: RemoteDataSource,
     private val firebaseAuth: FirebaseAuth
 ) : ViewModel() {
     val response: MutableLiveData<NetworkResult<Status>>
         get() = _response
     private val _response = MutableLiveData<NetworkResult<Status>>()
+
+    val responseUser: MutableLiveData<NetworkResult<UserStatus>>
+        get() = _responseUser
+    private val _responseUser = MutableLiveData<NetworkResult<UserStatus>>()
 
     val error: MutableLiveData<Error>
         get() = _error
@@ -56,7 +62,42 @@ class SignInViewModel @Inject constructor(
         }
     }
 
+    fun clearEmail() {
+        repository.deleteAllData()
+    }
+
+    fun getUserInfo() = viewModelScope.launch {
+        try {
+            val email = repository.getUserEmail()
+            if (!email.isNullOrEmpty()) {
+                val res = remoteRepository.getUser(email)
+                if (res != null) {
+                    repository.saveUser(res)
+                    _responseUser.value = NetworkResult.Success(UserStatus.SUCCESSFUL)
+                } else {
+                    _responseUser.value =
+                        NetworkResult.Error(
+                            message = "Данные о пользователя не найдены",
+                            data = UserStatus.NO_DATA
+                        )
+                }
+            } else {
+                _responseUser.value =
+                    NetworkResult.Error(
+                        message = "Что-то пошло не так, попробуйте войти позже",
+                        data = UserStatus.EMPTY_EMAIL
+                    )
+            }
+        } catch (e: Exception) {
+            _responseUser.value = NetworkResult.Error(message = e.message, data = UserStatus.ERROR)
+        }
+    }
+
     enum class Status {
         NOT_VERIFIED, VERIFIED
+    }
+
+    enum class UserStatus {
+        SUCCESSFUL, NO_DATA, EMPTY_EMAIL, ERROR
     }
 }
