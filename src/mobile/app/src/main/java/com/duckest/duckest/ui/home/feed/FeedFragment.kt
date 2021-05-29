@@ -61,22 +61,6 @@ class FeedFragment : Fragment(), TestAdapter.TestItemListener {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.admin_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            R.id.add_test -> findNavController().navigate(
-//                FeedFragmentDirections.actionFeedFragmentToLevelFragment(
-//                    0,
-//                    0
-//                )
-//            )
-//        }
-        return super.onOptionsItemSelected(item)
-    }
 
     override fun onClickedTest(
         testLevels: List<TestLevelProgress>?,

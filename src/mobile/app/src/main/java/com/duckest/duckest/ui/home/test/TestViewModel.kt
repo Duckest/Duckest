@@ -1,6 +1,5 @@
 package com.duckest.duckest.ui.home.test
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,6 +13,7 @@ import com.duckest.duckest.data.domain.TypeLevelPair
 import com.duckest.duckest.data.network.RemoteDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.net.UnknownHostException
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
@@ -56,8 +56,11 @@ class TestViewModel @Inject constructor(
             test = res
             typeLevel = typeLevelPair
             _response.value = NetworkResult.Success(res)
+        } catch (e: UnknownHostException) {
+            _response.value =
+                NetworkResult.Error(message = "Невозможно подключиться к сервису, проверьте свое подключение к интернету")
         } catch (e: Exception) {
-            _response.value = NetworkResult.Error(e.message)
+            _response.value = NetworkResult.Error(message = e.message)
         }
     }
 
@@ -88,8 +91,11 @@ class TestViewModel @Inject constructor(
                 )
             )
             _eventTestFinish.value = Pair(isPassed, res.roundToInt())
+        } catch (e: UnknownHostException) {
+            _response.value =
+                NetworkResult.Error(message = "Невозможно подключиться к сервису, проверьте свое подключение к интернету")
         } catch (e: Exception) {
-            // TODO: 23.05.2021
+            _response.value = NetworkResult.Error(message = e.message)
         }
     }
 }

@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.duckest.duckest.data.DataStoreRepository
-import com.duckest.duckest.data.network.RemoteDataSource
 import com.duckest.duckest.data.domain.UserProfile
+import com.duckest.duckest.data.network.RemoteDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,11 +21,7 @@ class HomeViewModel @Inject constructor(
     private val _user = MutableLiveData<UserProfile>()
     fun getUser() = viewModelScope.launch {
         repository.getUserEmail()?.let {
-            try {
-                _user.value = repository.getUser()
-            } catch (e: Exception) {
-                // TODO: 20.05.2021
-            }
+            _user.value = repository.getUser()
         }
     }
 

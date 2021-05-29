@@ -32,10 +32,12 @@ class TestIntro : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
+                    findNavController().popBackStack()
 //                    findNavController().navigate(
 //                        TestIntroDirections.actionTestIntroToLevelFragment(
-//                            args.imageId,
-//                            args.testId
+//                            args.imageUrl,
+//                            args.testType,
+//                            args.testLevel
 //                        )
 //                    )
                 }

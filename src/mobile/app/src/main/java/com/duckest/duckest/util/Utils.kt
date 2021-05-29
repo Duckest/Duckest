@@ -95,7 +95,7 @@ object Utils {
         var y = (bitmap.height + bounds.height() * scale) / 2f - 200
         canvas.drawText(text1, x, y, paint)
         paint.getTextBounds(text2, 0, text2.length, bounds)
-        x = (bitmap.width - bounds.width() * scale) / 2f - 300
+        x = (bitmap.width - bounds.width() * scale) / 2f - 450
         y = (bitmap.height + bounds.height() * scale) / 2f + 60
         canvas.drawText(text2, x, y, paint)
         return bitmap

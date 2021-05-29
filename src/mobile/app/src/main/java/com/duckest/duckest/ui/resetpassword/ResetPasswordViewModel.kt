@@ -24,7 +24,6 @@ class ResetPasswordViewModel @Inject constructor(
         }.addOnFailureListener {
             _response.value = NetworkResult.Error(it.message, Error.WRONG_EMAIL, Status.ERROR)
         }
-
     }
 
     enum class Status {

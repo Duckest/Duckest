@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -88,6 +89,9 @@ class SignInViewModel @Inject constructor(
                         data = UserStatus.EMPTY_EMAIL
                     )
             }
+        } catch (e: UnknownHostException) {
+            _response.value =
+                NetworkResult.Error(message = "Невозможно подключиться к сервису, проверьте свое подключение к интернету")
         } catch (e: Exception) {
             _responseUser.value = NetworkResult.Error(message = e.message, data = UserStatus.ERROR)
         }
