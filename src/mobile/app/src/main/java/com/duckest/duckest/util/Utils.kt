@@ -52,8 +52,8 @@ object Utils {
 
     fun checkName(edit: TextInputEditText, layout: TextInputLayout, context: Context): Boolean {
         //for testing able to use latin and cyrillic alphabet
-        val regex = "^[a-zA-ZА-Яа-я]*\$".toRegex()
-        // val regex  = "^[А-Яа-я]*\$".toRegex()
+        // val regex = "^[a-zA-ZА-Яа-я]*\$".toRegex()
+        val regex = "^[А-Яа-я]*\$".toRegex()
         val name = edit.text.toString().trim()
         if (!regex.matches(name)) {
             setError(layout, context.getString(R.string.sign_up_wrong_name))
@@ -91,13 +91,15 @@ object Utils {
         paint.setShadowLayer(1f, 0f, 1f, Color.WHITE)
         val bounds = Rect()
         paint.getTextBounds(text1, 0, text1.length, bounds)
-        var x = (bitmap.width - bounds.width() * scale) / 2f - 400
-        var y = (bitmap.height + bounds.height() * scale) / 2f - 200
-        canvas.drawText(text1, x, y, paint)
+        val xOffset = (13.33f * scale + 0.5f).toInt()
+        val yOffset = (14.67f * scale + 0.5f).toInt()
+        var x = (bitmap.width - bounds.width()) / 2f - 650
+        var y = (bitmap.height + bounds.height()) / 2f - 200
+        canvas.drawText(text1, x + xOffset, y + yOffset, paint)
         paint.getTextBounds(text2, 0, text2.length, bounds)
-        x = (bitmap.width - bounds.width() * scale) / 2f - 450
-        y = (bitmap.height + bounds.height() * scale) / 2f + 60
-        canvas.drawText(text2, x, y, paint)
+        x = (bitmap.width - bounds.width()) / 2f -700
+        y = (bitmap.height + bounds.height()) / 2f + 60
+        canvas.drawText(text2, x + xOffset, y + yOffset, paint)
         return bitmap
     }
 }

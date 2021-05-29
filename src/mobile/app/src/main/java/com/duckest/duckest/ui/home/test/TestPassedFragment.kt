@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.duckest.duckest.BuildConfig.APPLICATION_ID
 import com.duckest.duckest.R
@@ -32,6 +33,7 @@ class TestPassedFragment : Fragment() {
     private lateinit var binding: FragmentTestPassedBinding
     private lateinit var args: TestPassedFragmentArgs
     private lateinit var bitmapCertificate: Bitmap
+    private val vm: TestPassedViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,19 +50,22 @@ class TestPassedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.result.text =
             getString(R.string.test_result, args.result)
-        bitmapCertificate = Utils.drawTextToBitmap(
-            requireContext(),
-            R.mipmap.img_certificate,
-            text1 = "Имя Фамилия",
-            text2 = "${args.testType} ${args.testLevel}"
-        )
-        binding.certificate.setOnClickListener {
-            saveMediaToStorage()
-            Toast.makeText(
+        vm.getUser()
+        vm.user.observe(viewLifecycleOwner) {
+            bitmapCertificate = Utils.drawTextToBitmap(
                 requireContext(),
-                getString(R.string.certificate_saved_information),
-                Toast.LENGTH_SHORT
-            ).show()
+                R.mipmap.img_certificate,
+                text1 = "${it.surname} ${it.name} ${it.patronymic}",
+                text2 = "${args.testType} ${args.testLevel}"
+            )
+            binding.certificate.setOnClickListener {
+                saveMediaToStorage()
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.certificate_saved_information),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 

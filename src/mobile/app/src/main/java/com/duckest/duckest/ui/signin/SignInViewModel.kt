@@ -41,7 +41,7 @@ class SignInViewModel @Inject constructor(
             val user = it.user
             when {
                 user == null -> {
-                    // TODO: 04.04.2021  
+                    error.value = Error.OTHER
                 }
                 user.isEmailVerified -> {
                     repository.saveUserEmail(email)

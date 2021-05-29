@@ -41,8 +41,7 @@ class DataStoreRepository @Inject constructor(
         if (user != null) return user
         if (prefs.contains(PREF_KEY_ID) &&
             prefs.contains(PREF_KEY_NAME) &&
-            prefs.contains(PREF_KEY_SURNAME) &&
-            prefs.contains(PREF_KEY_PATRONYMIC)
+            prefs.contains(PREF_KEY_SURNAME)
         ) {
             user = UserProfile(
                 prefs.getString(PREF_KEY_ID, null) ?: "",

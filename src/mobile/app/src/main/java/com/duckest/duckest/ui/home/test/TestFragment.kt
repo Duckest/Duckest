@@ -113,7 +113,6 @@ class TestFragment : Fragment() {
         ) {
             showDialog()
         }
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -126,6 +125,11 @@ class TestFragment : Fragment() {
                 super.onOptionsItemSelected(item)
             }
         }
+    }
+
+    override fun onPause() {
+        findNavController().navigate(TestFragmentDirections.actionGlobalFeedFragment())
+        super.onPause()
     }
 
     private fun showDialog() {
