@@ -18,11 +18,6 @@
     <string name="sign_up_error_title_empty">Это поле обязательно для заполнения</string>
     <string name="feedback_company_email">duckestcompany@gmail.com</string>
     <string name="feedback_error_title_no_mail_app">Нет почтового клиента</string>
-    <string name="feed_test_title_javascript">JavaScript</string>
-    <string name="feed_test_title_python">Python</string>
-    <string name="level_title_junior">Junior</string>
-    <string name="level_title_middle">Middle</string>
-    <string name="level_title_senior">Senior</string>
     <string name="test_preview_check_box_content_description">Чек бокс</string>
     <string name="test_preview_test_image_content_description">Изображение темы теста</string>
     <string name="menu_title_test">Тесты</string>
@@ -44,8 +39,6 @@
     <string name="reset_password_btn_label">Восстановить пароль</string>
     <string name="start_test_description">Все вопросы имеют только один правильный ответ. По окончании тестирования Вам будет показан результат тестирования в процентах. При условии прохождения теста на 80% и более Вы можете получить сертификат, а также возможность увидеть ответы на вопросы, где была допущена ошибка. Выходить во время теста нельзя, иначе прохождение теста будет сброшено.</string>
     <string name="start_test_btn">Начать тестирование</string>
-    <string name="test_result_wrong_answers">Неправильные ответы: %1$d</string>
-    <string name="test_result_right_answers">%1$d из %2$d \n результат</string>
     <string name="test_result">Тест пройден на %1$d%%</string>
     <string name="test_result_btn_try_again">Попробовать еще раз</string>
     <string name="test_result_dont_upset">Не расстраивайтесь!</string>
@@ -62,7 +55,6 @@
     <string name="settings_wrong_password">Вы ввели неверный пароль</string>
     <string name="settings_data_saved">Данные сохранены</string>
     <string name="intro_test_title">%1$s</string>
-    <string name="menu_add_test">add test</string>
     <string name="feedback_topic_hint">Тема обращения</string>
     <string name="feedback_message_hint">Сообщение</string>
     <string name="feedback_send_button">отправить</string>
@@ -71,7 +63,6 @@
     <string name="share">Share</string>
     <string name="certificate_passed_name">certificate.jpg</string>
     <string name="certificate_saved_information">Сертификат сохранен в галерее</string>
-    <string name="back">back</string>
     <string name="exit">Выход</string>
     <string name="exit_message">Вы хотите прервать прохождение теста? Данные не будут сохранены</string>
     <string name="test_title">Вопрос: %1$s / %2$s</string>

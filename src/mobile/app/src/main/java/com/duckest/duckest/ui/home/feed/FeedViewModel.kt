@@ -10,7 +10,7 @@ import com.duckest.duckest.data.domain.TestProgress
 import com.duckest.duckest.data.network.RemoteDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.net.UnknownHostException
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,7 +28,7 @@ class FeedViewModel @Inject constructor(
             try {
                 val res = remoteRepository.getProgress(it)
                 _response.value = NetworkResult.Success(res)
-            } catch (e: UnknownHostException) {
+            } catch (e: IOException) {
                 _response.value =
                     NetworkResult.Error(message = "Невозможно подключиться к сервису, проверьте свое подключение к интернету")
             } catch (e: Exception) {

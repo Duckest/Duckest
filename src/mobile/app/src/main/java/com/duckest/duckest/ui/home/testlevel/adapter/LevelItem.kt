@@ -1,7 +1,6 @@
 package com.duckest.duckest.ui.home.testlevel.adapter
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 
 data class LevelItem(
     val title: String?,

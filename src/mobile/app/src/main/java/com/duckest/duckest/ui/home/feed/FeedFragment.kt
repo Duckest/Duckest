@@ -1,12 +1,13 @@
 package com.duckest.duckest.ui.home.feed
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.duckest.duckest.R
 import com.duckest.duckest.data.NetworkResult
 import com.duckest.duckest.data.domain.TestLevelProgress
 import com.duckest.duckest.data.domain.TestLevelProgresses
@@ -68,7 +69,9 @@ class FeedFragment : Fragment(), TestAdapter.TestItemListener {
         imgUrl: String?
     ) {
         val testLevelsProgresses = TestLevelProgresses()
-        testLevelsProgresses.addAll(testLevels!!.toTypedArray())
+        testLevelsProgresses.addAll(
+            testLevels!!.sortedBy { it.testLevel }.toTypedArray()
+        )
         findNavController().navigate(
             FeedFragmentDirections.actionFeedFragmentToLevelFragment(
                 imgUrl,

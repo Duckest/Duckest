@@ -1,8 +1,9 @@
 package com.duckest.duckest.data.network
 
-import com.duckest.duckest.data.NetworkResult
-import com.duckest.duckest.data.domain.*
-import retrofit2.Response
+import com.duckest.duckest.data.domain.Test
+import com.duckest.duckest.data.domain.TestProgress
+import com.duckest.duckest.data.domain.TestResult
+import com.duckest.duckest.data.domain.UserProfile
 import retrofit2.http.*
 
 interface DuckestApi {

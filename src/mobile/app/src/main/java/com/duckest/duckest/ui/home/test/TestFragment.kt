@@ -31,7 +31,7 @@ class TestFragment : Fragment() {
     ): View {
         args = TestFragmentArgs.fromBundle(requireArguments())
         binding = FragmentTestBinding.inflate(inflater, container, false)
-        (activity as AppCompatActivity).supportActionBar?.title = args.testLevel
+        (activity as AppCompatActivity).supportActionBar?.title = args.testType
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -40,6 +40,10 @@ class TestFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.testViewModel = vm
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.materialCardView.visibility = View.GONE
+        binding.questionRadioGroup.visibility = View.GONE
+        binding.nextQuestion.visibility = View.GONE
+        binding.testTitle.visibility = View.GONE
         vm.getTest(
             TypeLevelPair(
                 args.testType,
@@ -72,6 +76,10 @@ class TestFragment : Fragment() {
             when (it) {
                 is NetworkResult.Loading -> binding.progressBar.visibility = View.VISIBLE
                 is NetworkResult.Success -> {
+                    binding.materialCardView.visibility = View.VISIBLE
+                    binding.questionRadioGroup.visibility = View.VISIBLE
+                    binding.nextQuestion.visibility = View.VISIBLE
+                    binding.testTitle.visibility = View.VISIBLE
                     binding.progressBar.visibility = View.GONE
                     vm.nextQuestion()
                 }
@@ -103,7 +111,7 @@ class TestFragment : Fragment() {
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.test_message_no_answer),
-                    Toast.LENGTH_LONG
+                    Toast.LENGTH_SHORT
                 ).show()
             }
         }
@@ -125,11 +133,6 @@ class TestFragment : Fragment() {
                 super.onOptionsItemSelected(item)
             }
         }
-    }
-
-    override fun onPause() {
-        findNavController().navigate(TestFragmentDirections.actionGlobalFeedFragment())
-        super.onPause()
     }
 
     private fun showDialog() {

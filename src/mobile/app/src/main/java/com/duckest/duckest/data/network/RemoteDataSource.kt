@@ -1,6 +1,5 @@
 package com.duckest.duckest.data.network
 
-import com.duckest.duckest.data.NetworkResult
 import com.duckest.duckest.data.domain.*
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Inject

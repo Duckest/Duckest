@@ -10,9 +10,9 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.duckest.duckest.util.Utils
 import com.duckest.duckest.data.NetworkResult
 import com.duckest.duckest.databinding.FragmentResetPasswordBinding
+import com.duckest.duckest.util.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,8 +37,12 @@ class ResetPasswordFragment : Fragment() {
             findNavController().navigate(ResetPasswordFragmentDirections.actionLostPasswordFragmentToLoginFragment())
         }
         binding.resetPassword.setOnClickListener {
-           Utils.hideKeyboard(requireContext(), binding.emailEdit)
-            if (Utils.isEmptyField(binding.emailEdit, binding.email, requireContext()) || Utils.checkEmailPattern(
+            Utils.hideKeyboard(requireContext(), binding.emailEdit)
+            if (Utils.isEmptyField(
+                    binding.emailEdit,
+                    binding.email,
+                    requireContext()
+                ) || Utils.checkEmailPattern(
                     binding.emailEdit,
                     binding.email,
                     requireContext()
@@ -83,9 +87,4 @@ class ResetPasswordFragment : Fragment() {
             }
         })
     }
-
-    override fun onStop() {
-        super.onStop()
-    }
-
 }

@@ -17,7 +17,7 @@
         android:background="@color/background">
 
         <TextView
-            android:id="@+id/result"
+            android:id="@+id/test_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -39,7 +39,7 @@
             app:cardCornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/result">
+            app:layout_constraintTop_toBottomOf="@+id/test_title">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/materialCardViewChild"

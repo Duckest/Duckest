@@ -52,6 +52,7 @@ class LevelFragment : Fragment(), LevelAdapter.LevelItemListener {
             )
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(binding.photo)
+
         val levels = args.testLevels.mapIndexed { indx, item ->
             val imgRes = when (indx) {
                 0 -> R.mipmap.img_first
@@ -88,7 +89,11 @@ class LevelFragment : Fragment(), LevelAdapter.LevelItemListener {
         } else {
             if (testPassed) {
                 findNavController().navigate(
-                    LevelFragmentDirections.actionLevelFragmentToTestPassedFragment(progress.roundToInt(), testLevel, args.testType!!)
+                    LevelFragmentDirections.actionLevelFragmentToTestPassedFragment(
+                        progress.roundToInt(),
+                        args.testType!!,
+                        testLevel
+                    )
                 )
             } else {
                 findNavController().navigate(

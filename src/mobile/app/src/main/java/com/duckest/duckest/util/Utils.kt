@@ -66,8 +66,8 @@ object Utils {
         (context.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as? InputMethodManager)!!
             .hideSoftInputFromWindow(view.windowToken, 0)
 
-    private fun getTextSize(text1: String, text2: String) =
-        if (text1.length >= 21 || text2.length >= 20) 90 else 125
+//    private fun getTextSize(text1: String, text2: String) =
+//        if (text1.length >= 21 || text2.length >= 20) 90 else 125
 
     fun drawTextToBitmap(
         context: Context,

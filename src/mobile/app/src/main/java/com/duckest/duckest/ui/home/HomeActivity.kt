@@ -59,10 +59,10 @@ class HomeActivity : AppCompatActivity() {
                 drawerLayout
             )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_SECURE,
-            WindowManager.LayoutParams.FLAG_SECURE
-        )
+//        window.setFlags(
+//            WindowManager.LayoutParams.FLAG_SECURE,
+//            WindowManager.LayoutParams.FLAG_SECURE
+//        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
@@ -81,4 +81,5 @@ class HomeActivity : AppCompatActivity() {
         val navController = this.findNavController(R.id.home_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+    
 }

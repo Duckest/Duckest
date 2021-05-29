@@ -6,15 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.duckest.duckest.data.DataStoreRepository
 import com.duckest.duckest.data.domain.UserProfile
-import com.duckest.duckest.data.network.RemoteDataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: DataStoreRepository,
-    private val remoteRepository: RemoteDataSource
+    private val repository: DataStoreRepository
 ) : ViewModel() {
     val user: LiveData<UserProfile>
         get() = _user

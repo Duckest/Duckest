@@ -27,7 +27,7 @@ class TestAdapter(
                 listener.onClickedTest(item.testLevelProgress, item.testType, item.imageUrl)
             }
 
-            binding.title.setText(item.testType)
+            binding.title.text = item.testType
             Glide.with(binding.photo)
                 .load(item.imageUrl)
                 .placeholder(
