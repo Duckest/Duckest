@@ -6,6 +6,7 @@ import ru.duckest.dto.ResultDto;
 import ru.duckest.dto.TestTypeProgressDto;
 import ru.duckest.converter.ProgressConverter;
 import ru.duckest.entity.Progress;
+import ru.duckest.entity.QuizLevelTypePair;
 import ru.duckest.service.ProgressService;
 import ru.duckest.utils.passdate.QuizPassDateSaver;
 import ru.duckest.utils.test.TestSelector;
@@ -49,6 +50,13 @@ public class ProgressServiceImpl implements ProgressService {
     public List<TestTypeProgressDto> getTestsProgressBy(String email) {
         var user = userSelector.getUserBy(email);
         List<Progress> userProgress = progressSelector.getProgressBy(user.getId());
+        var allTests = testSelector.findAllTests();
+        for (Progress progress : userProgress) {
+            allTests.removeIf(test -> test.equals(progress.getLevelTypePair()));
+        }
+        for (QuizLevelTypePair test : allTests) {
+            userProgress.add(Progress.builder().levelTypePair(test).build());
+        }
         return progressConverter.convert(userProgress);
     }
 
