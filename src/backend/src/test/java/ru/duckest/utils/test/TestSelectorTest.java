@@ -2,6 +2,7 @@ package ru.duckest.utils.test;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +22,7 @@ import ru.duckest.utils.test.type.QuizTypeSelector;
 import ru.duckest.utils.test.dto.TestCreationDtoTestFactory;
 import ru.duckest.utils.test.jpa.QuizLevelTypePairTestFactory;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -136,5 +138,29 @@ class TestSelectorTest {
         QuizLevelTypePair test = testSelector.findByLevelAndTypeOrThrow(dummyTestCreationDto.getTestLevel(),
                                                                         dummyTestCreationDto.getTestType());
         assertThat(test).isEqualTo(expected);
+    }
+
+    @Nested
+    @DisplayName("Поиск всех тестов сразу")
+    class FindAllTests {
+
+        @Test
+        @DisplayName("Если в бд нет тестов, то возвращается пустой лист")
+        void emptyListReturnsIfNoTests() {
+            List<QuizLevelTypePair> test = testSelector.findAllTests();
+            assertThat(test).isEmpty();
+        }
+
+        @Test
+        @DisplayName("Если в бд есть тесты, то возвращается лист с тестами")
+        void filledListReturnsIfTestsAreInDatabase() {
+            var expectedToBeContained = QuizLevelTypePairTestFactory.getDummyTestEntity();
+
+            when(quizLevelTypePairs.findAll()).thenReturn(List.of(expectedToBeContained));
+
+            List<QuizLevelTypePair> test = testSelector.findAllTests();
+            assertThat(test).contains(expectedToBeContained);
+        }
+
     }
 }

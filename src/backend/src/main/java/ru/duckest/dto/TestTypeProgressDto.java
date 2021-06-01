@@ -23,8 +23,8 @@ public class TestTypeProgressDto {
     @JsonProperty("test_levels")
     private List<TestLevelProgressDto> testLevelProgressDtos = new ArrayList<>();
 
-    @JsonProperty("is_level_completed")
-    private boolean levelCompleted;
+    @JsonProperty("is_type_completed")
+    private boolean typeCompleted;
 
     @JsonProperty("image_url")
     private String imageUrl;

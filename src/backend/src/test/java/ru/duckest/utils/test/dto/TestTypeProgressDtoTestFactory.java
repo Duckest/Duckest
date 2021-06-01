@@ -10,7 +10,7 @@ public class TestTypeProgressDtoTestFactory {
         return TestTypeProgressDto.builder()
                 .testType(DUMMY_TEST_TYPE)
                 .testLevelProgressDtos(TestLevelProgressDtosTestFactory.getDummyTestLevelProgressDtos())
-                .levelCompleted(false)
+                .typeCompleted(false)
                 .build();
     }
 

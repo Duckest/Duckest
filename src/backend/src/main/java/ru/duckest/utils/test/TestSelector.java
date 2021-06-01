@@ -7,6 +7,7 @@ import ru.duckest.repository.QuizLevelTypePairs;
 import ru.duckest.utils.test.level.QuizLevelSelector;
 import ru.duckest.utils.test.type.QuizTypeSelector;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -31,6 +32,10 @@ public class TestSelector {
             return Optional.empty();
         }
         return quizLevelTypePairs.findByQuizLevelAndQuizType(quizLevel.get(), quizType.get());
+    }
+
+    public List<QuizLevelTypePair> findAllTests() {
+        return (List<QuizLevelTypePair>) quizLevelTypePairs.findAll();
     }
 
 }
