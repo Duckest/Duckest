@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,22 +27,22 @@ class SignUpViewModel @Inject constructor(
     val error: LiveData<Error>
         get() = _error
 
-    private val _responseFirebase = MutableLiveData<NetworkResult<UserProfile>>()
-    val responseFirebase: LiveData<NetworkResult<UserProfile>>
+    private val _responseFirebase = MutableLiveData<NetworkResult<String>>()
+    val responseFirebase: LiveData<NetworkResult<String>>
         get() = _responseFirebase
 
-    private val _response = MutableLiveData<NetworkResult<String>>()
-    val response: LiveData<NetworkResult<String>>
+    private val _response = MutableLiveData<NetworkResult<Pair<String, String>>>()
+    val response: LiveData<NetworkResult<Pair<String, String>>>
         get() = _response
 
-    fun registerUser(user: UserProfile, password: String) = viewModelScope.launch {
+    fun registerUser(email: String, password: String) = viewModelScope.launch {
         _responseFirebase.value = NetworkResult.Loading()
         firebaseAuth.createUserWithEmailAndPassword(
-            user.email,
+            email,
             password
         ).addOnSuccessListener {
             it.user!!.sendEmailVerification().addOnSuccessListener {
-                _responseFirebase.value = NetworkResult.Success(data = user)
+                _responseFirebase.value = NetworkResult.Success(data = "OK")
             }.addOnFailureListener {
                 _responseFirebase.value = NetworkResult.Error(
                     data = null,
@@ -59,10 +60,15 @@ class SignUpViewModel @Inject constructor(
         }
     }
 
-    fun registerUser(user: UserProfile?) = viewModelScope.launch {
+    fun registerUser(user: UserProfile?, pass: String) = viewModelScope.launch {
+        _response.value = NetworkResult.Loading()
         try {
+            if (pass.length < 6) throw Exception("Пароль должен содержать 6 и более знаков")
             remoteDataSource.signUpUser(user)
-            _response.value = NetworkResult.Success(data = "user saved")
+            _response.value = NetworkResult.Success(data = Pair(user!!.email, pass))
+        } catch (e: IOException) {
+            _response.value =
+                NetworkResult.Error(message = "Невозможно подключиться к сервису, проверьте свое подключение к интернету")
         } catch (e: Exception) {
             _response.value = NetworkResult.Error(message = e.message)
         }

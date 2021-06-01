@@ -11,6 +11,7 @@ import com.duckest.duckest.data.domain.Test
 import com.duckest.duckest.data.domain.TestResult
 import com.duckest.duckest.data.domain.TypeLevelPair
 import com.duckest.duckest.data.network.RemoteDataSource
+import com.duckest.duckest.util.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -38,8 +39,8 @@ class TestViewModel @Inject constructor(
     val currentQuestionNum: LiveData<Int>
         get() = _currentQuestionNum
 
-    private val _eventTestFinish = MutableLiveData<Pair<Boolean, Int>>()
-    val eventTestFinish: LiveData<Pair<Boolean, Int>>
+    private val _eventTestFinish = MutableLiveData<NetworkResult<Pair<Boolean, Int>>>()
+    val eventTestFinish: LiveData<NetworkResult<Pair<Boolean, Int>>>
         get() = _eventTestFinish
 
     init {
@@ -80,7 +81,8 @@ class TestViewModel @Inject constructor(
     }
 
     private fun onTestFinish() = viewModelScope.launch {
-        val res = (((score * 1.0) / test.totalQuestions!!) * 100)
+        _eventTestFinish.value = NetworkResult.Loading()
+        val res = Utils.result(score, test.totalQuestions!!)
         try {
             val isPassed = remoteRepository.sendProgress(
                 TestResult(
@@ -90,12 +92,12 @@ class TestViewModel @Inject constructor(
                     res
                 )
             )
-            _eventTestFinish.value = Pair(isPassed, res.roundToInt())
+            _eventTestFinish.value = NetworkResult.Success(Pair(isPassed, res.roundToInt()))
         } catch (e: IOException) {
-            _response.value =
+            _eventTestFinish.value =
                 NetworkResult.Error(message = "Невозможно подключиться к сервису, проверьте свое подключение к интернету")
         } catch (e: Exception) {
-            _response.value = NetworkResult.Error(message = e.message)
+            _eventTestFinish.value = NetworkResult.Error(message = e.message)
         }
     }
 }

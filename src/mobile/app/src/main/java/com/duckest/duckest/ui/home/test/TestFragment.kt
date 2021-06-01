@@ -40,10 +40,7 @@ class TestFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.testViewModel = vm
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.materialCardView.visibility = View.GONE
-        binding.questionRadioGroup.visibility = View.GONE
-        binding.nextQuestion.visibility = View.GONE
-        binding.testTitle.visibility = View.GONE
+        hideViews()
         vm.getTest(
             TypeLevelPair(
                 args.testType,
@@ -52,34 +49,51 @@ class TestFragment : Fragment() {
         )
 
         vm.eventTestFinish.observe(viewLifecycleOwner) {
-            if (it.first) {
-                findNavController().navigate(
-                    TestFragmentDirections.actionTestFragmentToTestPassedFragment(
-                        it.second,
-                        args.testType,
-                        args.testLevel
-                    )
-                )
-            } else {
-                findNavController().navigate(
-                    TestFragmentDirections.actionTestFragmentToTestFailFragment(
-                        it.second,
-                        args.testType,
-                        args.testLevel,
-                        args.imageUrl
-                    )
-                )
+            when(it) {
+                is NetworkResult.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    binding.nextQuestion.isEnabled = true
+                    Toast.makeText(
+                        requireContext(),
+                        it.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                is NetworkResult.Loading -> {
+                    disableViews()
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is NetworkResult.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    if (it.data!!.first) {
+                        findNavController().navigate(
+                            TestFragmentDirections.actionTestFragmentToTestPassedFragment(
+                                it.data.second,
+                                args.testType,
+                                args.testLevel
+                            )
+                        )
+                    } else {
+                        findNavController().navigate(
+                            TestFragmentDirections.actionTestFragmentToTestFailFragment(
+                                it.data.second,
+                                args.testType,
+                                args.testLevel,
+                                args.imageUrl
+                            )
+                        )
+                    }
+                }
             }
         }
 
         vm.response.observe(viewLifecycleOwner) {
             when (it) {
-                is NetworkResult.Loading -> binding.progressBar.visibility = View.VISIBLE
+                is NetworkResult.Loading ->  {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
                 is NetworkResult.Success -> {
-                    binding.materialCardView.visibility = View.VISIBLE
-                    binding.questionRadioGroup.visibility = View.VISIBLE
-                    binding.nextQuestion.visibility = View.VISIBLE
-                    binding.testTitle.visibility = View.VISIBLE
+                    showViews()
                     binding.progressBar.visibility = View.GONE
                     vm.nextQuestion()
                 }
@@ -121,6 +135,27 @@ class TestFragment : Fragment() {
         ) {
             showDialog()
         }
+    }
+
+    private fun hideViews() {
+        binding.materialCardView.visibility = View.GONE
+        binding.questionRadioGroup.visibility = View.GONE
+        binding.nextQuestion.visibility = View.GONE
+        binding.testTitle.visibility = View.GONE
+    }
+
+    private fun showViews() {
+        binding.materialCardView.visibility = View.VISIBLE
+        binding.questionRadioGroup.visibility = View.VISIBLE
+        binding.nextQuestion.visibility = View.VISIBLE
+        binding.testTitle.visibility = View.VISIBLE
+    }
+
+    private fun disableViews() {
+        binding.materialCardView.isEnabled = false
+        binding.questionRadioGroup.isEnabled = false
+        binding.nextQuestion.isEnabled = false
+        binding.testTitle.isEnabled = false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -4,9 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class TestResult(
     val email: String,
-    @SerializedName("test_type")
-    val testType: String?,
-    @SerializedName("test_level")
-    val testLevel: String?,
+    val test_type: String?,
+    val test_level: String?,
     val result: Double?
 )

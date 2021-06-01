@@ -62,6 +62,10 @@ object Utils {
         return false
     }
 
+    fun result(score: Int, total: Int) =
+        (((score * 1.0) / total) * 100)
+
+
     fun hideKeyboard(context: Context, view: View) =
         (context.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as? InputMethodManager)!!
             .hideSoftInputFromWindow(view.windowToken, 0)
@@ -97,7 +101,7 @@ object Utils {
         var y = (bitmap.height + bounds.height()) / 2f - 200
         canvas.drawText(text1, x + xOffset, y + yOffset, paint)
         paint.getTextBounds(text2, 0, text2.length, bounds)
-        x = (bitmap.width - bounds.width()) / 2f -700
+        x = (bitmap.width - bounds.width()) / 2f - 700
         y = (bitmap.height + bounds.height()) / 2f + 60
         canvas.drawText(text2, x + xOffset, y + yOffset, paint)
         return bitmap

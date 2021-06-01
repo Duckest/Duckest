@@ -92,10 +92,12 @@ class SignUpFragment : Fragment() {
         vm.response.observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkResult.Success -> {
-                    binding.progressBar.visibility = View.GONE
-                    showDialog()
+                    vm.registerUser(it.data!!.first, it.data.second)
                 }
-                else -> {
+                is NetworkResult.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is NetworkResult.Error -> {
                     binding.progressBar.visibility = View.GONE
                     Toast.makeText(
                         requireContext(),
@@ -117,16 +119,14 @@ class SignUpFragment : Fragment() {
                     ).show()
                 }
                 is NetworkResult.Success -> {
-                    vm.registerUser(it.data)
+                    binding.progressBar.visibility = View.GONE
+                    showDialog()
                 }
-
                 is NetworkResult.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
-
                 }
             }
         })
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
