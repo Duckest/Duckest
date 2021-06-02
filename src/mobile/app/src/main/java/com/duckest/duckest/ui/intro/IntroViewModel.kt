@@ -18,7 +18,8 @@ class IntroViewModel @Inject constructor(
         get() = _needToNavigate
     private val _needToNavigate = MutableLiveData<Endpoint?>()
     fun getUser() = viewModelScope.launch {
-        val user = dataStoreRepository.getUserId()
+        delay(1000)
+        val user = dataStoreRepository.getUser()
         if (user == null) {
             _needToNavigate.value = Endpoint.LOGIN
         } else {

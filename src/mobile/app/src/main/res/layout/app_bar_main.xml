@@ -3,8 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,16 +16,13 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                app:titleTextColor="@color/white"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
                 app:popupTheme="@style/Theme.Duckest.PopupOverlay"
-                />
+                app:titleTextColor="@color/white" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <!--    <include layout="@layout/content_main" />-->
-
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </layout>

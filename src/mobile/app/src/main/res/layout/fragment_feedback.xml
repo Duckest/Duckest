@@ -22,7 +22,7 @@
                 android:id="@+id/topic_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Тема обращения"
+                android:hint="@string/feedback_topic_hint"
                 android:paddingStart="0dp"
                 android:paddingEnd="0dp"
                 android:singleLine="true" />
@@ -44,7 +44,7 @@
                 android:id="@+id/feedback_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Сообщение"
+                android:hint="@string/feedback_message_hint"
                 android:paddingStart="0dp"
                 android:paddingEnd="0dp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -55,11 +55,11 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="70dp"
             android:layout_marginTop="40dp"
-            android:text="отправить"
+            android:text="@string/feedback_send_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/feedback" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
