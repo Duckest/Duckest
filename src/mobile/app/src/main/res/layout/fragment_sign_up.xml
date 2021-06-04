@@ -47,6 +47,7 @@
                         android:paddingStart="0dp"
                         android:paddingEnd="0dp"
                         android:singleLine="true" />
+
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -69,6 +70,7 @@
                         android:paddingStart="0dp"
                         android:paddingEnd="0dp"
                         android:singleLine="true" />
+
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -90,6 +92,7 @@
                         android:paddingStart="0dp"
                         android:paddingEnd="0dp"
                         android:singleLine="true" />
+
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -110,6 +113,7 @@
                         android:inputType="textEmailAddress"
                         android:paddingStart="0dp"
                         android:paddingEnd="0dp" />
+
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -170,7 +174,9 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/confirm_password" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.cardview.widget.CardView>
 
         <ProgressBar
@@ -184,5 +190,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

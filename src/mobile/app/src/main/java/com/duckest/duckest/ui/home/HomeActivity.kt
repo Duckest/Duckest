@@ -3,6 +3,8 @@ package com.duckest.duckest.ui.home
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.WindowManager
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -14,7 +16,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.duckest.duckest.MainActivity
 import com.duckest.duckest.R
-import com.duckest.duckest.Utils
 import com.duckest.duckest.databinding.ActivityHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,7 +28,6 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Utils.context = this
         val binding =
             DataBindingUtil.setContentView<ActivityHomeBinding>(this, R.layout.activity_home)
         val toolbar = binding.navigationDrawer.toolbar
@@ -38,32 +38,48 @@ class HomeActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         //лочим свайп менюшки в не стартовом фрагменте
-        navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, args: Bundle? ->
+        navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, _: Bundle? ->
             if (nd.id == nc.graph.startDestination || nd.id == R.id.levelFragment) {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             } else {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             }
         }
+        vm.getUser()
+        vm.user.observe(this) {
+            binding.navView.getHeaderView(0).findViewById<TextView>(R.id.email).text = it.email
+            binding.navView.getHeaderView(0).findViewById<TextView>(R.id.name).text =
+                getString(R.string.head_name_title, "${it.surname}", "${it.name}")
+        }
+
         binding.navView.setupWithNavController(navController)
         appBarConfiguration =
-            AppBarConfiguration(setOf(R.id.feedFragment, R.id.levelFragment), drawerLayout)
+            AppBarConfiguration(
+                setOf(R.id.feedFragment, R.id.levelFragment, R.id.testIntro),
+                drawerLayout
+            )
         setupActionBarWithNavController(navController, appBarConfiguration)
+//        window.setFlags(
+//            WindowManager.LayoutParams.FLAG_SECURE,
+//            WindowManager.LayoutParams.FLAG_SECURE
+//        )
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
         item.onNavDestinationSelected(findNavController(R.id.home_host_fragment))
                 || super.onOptionsItemSelected(item)
 
     fun showLoginScreen(item: MenuItem) {
-        vm.clear()
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
+        if (item.itemId == R.id.navigation_main) {
+            vm.clear()
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = this.findNavController(R.id.home_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+    
 }

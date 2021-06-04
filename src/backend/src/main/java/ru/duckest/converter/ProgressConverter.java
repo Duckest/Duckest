@@ -33,7 +33,7 @@ public class ProgressConverter {
             testTypeProgressDto.setImageUrl(progress.getLevelTypePair().getQuizType().getImageUrl().getImageUrl());
             isAllLevelsCompleted &= testLevelProgressDto.isTestCompleted();
         }
-        testTypeProgressDto.setLevelCompleted(isAllLevelsCompleted);
+        testTypeProgressDto.setTypeCompleted(isAllLevelsCompleted && !progressesWithOneType.isEmpty());
         return Optional.of(testTypeProgressDto);
     }
 

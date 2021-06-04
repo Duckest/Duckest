@@ -33,7 +33,7 @@ class ProgressConverterTest {
     @DisplayName("Непустой список конвертируется в dto")
     void progressListCanBeConvertedToProgressDto() {
         List<TestTypeProgressDto> expected = List.of(TestTypeProgressDto.builder()
-                                                             .levelCompleted(true)
+                                                             .typeCompleted(true)
                                                              .testType(DUMMY_TEST_TYPE)
                                                              .imageUrl(DUMMY_IMAGE_URL)
                                                              .testLevelProgressDtos(List.of(TestLevelProgressDto.builder()

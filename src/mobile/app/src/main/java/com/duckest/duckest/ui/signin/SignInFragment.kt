@@ -11,10 +11,10 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.duckest.duckest.Utils.setError
 import com.duckest.duckest.data.Error
 import com.duckest.duckest.data.NetworkResult
 import com.duckest.duckest.databinding.FragmentSignInBinding
+import com.duckest.duckest.util.Utils.setError
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,6 +28,7 @@ class SignInFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        (activity as AppCompatActivity).supportActionBar?.show()
         binding = FragmentSignInBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -37,13 +38,10 @@ class SignInFragment : Fragment() {
         vm.response.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-                    binding.progressBar.visibility = View.GONE
                     when (response.data) {
                         SignInViewModel.Status.VERIFIED -> {
-                            findNavController().navigate(SignInFragmentDirections.actionLoginFragmentToHomeActivity())
-                            requireActivity().finish()
+                            vm.getUserInfo()
                         }
-
                         SignInViewModel.Status.NOT_VERIFIED -> Toast.makeText(
                             requireContext(),
                             "Вы не подтвердили почту",
@@ -66,6 +64,28 @@ class SignInFragment : Fragment() {
                 }
             }
 
+        }
+
+        vm.responseUser.observe(viewLifecycleOwner) {
+            when (it) {
+                is NetworkResult.Error -> {
+                    vm.clearEmail()
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(
+                        requireContext(),
+                        it.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is NetworkResult.Loading -> {
+
+                }
+                is NetworkResult.Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    findNavController().navigate(SignInFragmentDirections.actionLoginFragmentToHomeActivity())
+                    requireActivity().finish()
+                }
+            }
         }
 
         vm.error.observe(viewLifecycleOwner) { e ->

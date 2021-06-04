@@ -16,9 +16,15 @@ import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import static javax.persistence.CascadeType.DETACH;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REFRESH;
 
 @Data
 @Entity
@@ -34,11 +40,11 @@ public class QuizLevelTypePair implements Serializable {
     @Column(name = "id")
     private UUID id;
 
-    @OneToOne(targetEntity = QuizLevel.class, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = QuizLevel.class, cascade = {PERSIST, MERGE, REFRESH, DETACH})
     @JoinColumn(name = "quiz_level", referencedColumnName = "level", foreignKey = @ForeignKey(name = "question_quiz_level_fk"))
     private QuizLevel quizLevel;
 
-    @OneToOne(targetEntity = QuizType.class, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = QuizType.class, cascade = {PERSIST, MERGE, REFRESH, DETACH})
     @JoinColumn(name = "quiz_type", referencedColumnName = "type", foreignKey = @ForeignKey(name = "question_quiz_type_fk"))
     private QuizType quizType;
 

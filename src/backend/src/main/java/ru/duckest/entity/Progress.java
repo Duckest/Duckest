@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -38,6 +39,7 @@ public class Progress implements Serializable {
     @JoinColumn(name = "person_id", referencedColumnName = "id", insertable = false, updatable = false)
     private User user;
 
+    @ToString.Exclude
     @ManyToOne(targetEntity = QuizLevelTypePair.class)
     @JoinColumn(name = "quiz_level_type_id", referencedColumnName = "id", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "description_quiz_level_fk"))
     private QuizLevelTypePair levelTypePair;

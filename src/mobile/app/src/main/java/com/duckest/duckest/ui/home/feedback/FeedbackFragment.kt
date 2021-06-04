@@ -9,14 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.duckest.duckest.R
-import com.duckest.duckest.Utils.isEmptyField
-import com.duckest.duckest.Utils.setError
-import com.duckest.duckest.Utils.setTextChangeListener
 import com.duckest.duckest.databinding.FragmentFeedbackBinding
+import com.duckest.duckest.util.Utils.isEmptyField
+import com.duckest.duckest.util.Utils.setError
+import com.duckest.duckest.util.Utils.setTextChangeListener
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FeedbackFragment : Fragment() {
     lateinit var binding: FragmentFeedbackBinding
+    val vm: FeedbackViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,16 +36,18 @@ class FeedbackFragment : Fragment() {
         setTextChangeListener(binding.feedbackEdit, binding.feedback)
 
         binding.sendFeedback.setOnClickListener {
-            if (isEmptyField(binding.topicEdit, binding.topic) or
-                (isEmptyField(binding.feedbackEdit, binding.feedback) ||
-                checkSizeFeedback())
+            if (isEmptyField(binding.topicEdit, binding.topic, requireContext()) or
+                (isEmptyField(binding.feedbackEdit, binding.feedback, requireContext()) ||
+                        checkSizeFeedback())
             ) {
                 return@setOnClickListener
             }
             composeEmail(
                 arrayOf(getString(R.string.feedback_company_email)),
                 binding.topicEdit.text.toString().trim(),
-                binding.feedbackEdit.text.toString().trim()
+                "${
+                    binding.feedbackEdit.text.toString().trim()
+                } \n\n--------\nАккаунт: ${vm.email}"
             )
         }
     }

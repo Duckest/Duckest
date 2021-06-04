@@ -15,9 +15,6 @@ public class TestLevelProgressDto {
     @JsonProperty("test_level")
     private String testLevel;
 
-    @JsonProperty("image_url")
-    private String imageUrl;
-
     @JsonProperty("progress")
     private Double progress;
 

@@ -1,24 +1,25 @@
 package com.duckest.duckest.ui.signup
 
+import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.duckest.duckest.R
-import com.duckest.duckest.Utils
-import com.duckest.duckest.Utils.isEmptyField
-import com.duckest.duckest.Utils.setError
-import com.duckest.duckest.Utils.setTextChangeListener
 import com.duckest.duckest.data.Error
 import com.duckest.duckest.data.NetworkResult
+import com.duckest.duckest.data.domain.UserProfile
 import com.duckest.duckest.databinding.FragmentSignUpBinding
+import com.duckest.duckest.util.Utils
+import com.duckest.duckest.util.Utils.checkName
+import com.duckest.duckest.util.Utils.isEmptyField
+import com.duckest.duckest.util.Utils.setError
+import com.duckest.duckest.util.Utils.setTextChangeListener
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,17 +52,22 @@ class SignUpFragment : Fragment() {
         setTextChangeListener(binding.patronymicEdit, binding.patronymic)
 
         binding.signUp.setOnClickListener {
-            Utils.hideKeyboard(requireActivity())
+            Utils.hideKeyboard(requireContext(), binding.emailEdit)
             if (checkFields()) {
                 return@setOnClickListener
             }
-            vm.registerUser(
+            val user = UserProfile(
                 binding.emailEdit.text.toString().trim(),
+                binding.nameEdit.text.toString().trim(),
+                binding.surnameEdit.text.toString().trim(),
+                binding.patronymicEdit.text.toString().trim(),
+            )
+            vm.registerUser(
+                user,
                 binding.passwordEdit.text.toString().trim()
             )
 
         }
-
 
         vm.error.observe(viewLifecycleOwner, {
             binding.progressBar.visibility = View.GONE
@@ -83,8 +89,26 @@ class SignUpFragment : Fragment() {
 
         })
 
+        vm.response.observe(viewLifecycleOwner) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    vm.registerUser(it.data!!.first, it.data.second)
+                }
+                is NetworkResult.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                is NetworkResult.Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(
+                        requireContext(),
+                        it.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
 
-        vm.response.observe(viewLifecycleOwner, {
+        vm.responseFirebase.observe(viewLifecycleOwner, {
             when (it) {
                 is NetworkResult.Error -> {
                     binding.progressBar.visibility = View.GONE
@@ -96,16 +120,13 @@ class SignUpFragment : Fragment() {
                 }
                 is NetworkResult.Success -> {
                     binding.progressBar.visibility = View.GONE
-                    findNavController().popBackStack()
+                    showDialog()
                 }
-
                 is NetworkResult.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
-
                 }
             }
         })
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -118,48 +139,29 @@ class SignUpFragment : Fragment() {
         }
     }
 
-
     private fun checkFields(): Boolean =
-        (isEmptyField(binding.nameEdit, binding.name) ||
-                checkName(binding.nameEdit, binding.name)) or
-                isEmptyField(binding.passwordEdit, binding.password) or
-                isEmptyField(binding.confirmPasswordEdit, binding.confirmPassword) or
-                (isEmptyField(binding.emailEdit, binding.email) ||
-                        checkEmailPattern(binding.emailEdit, binding.email)) or
-                (isEmptyField(binding.surnameEdit, binding.surname) ||
-                        checkName(binding.surnameEdit, binding.surname)) or
-                checkName(binding.patronymicEdit, binding.patronymic) ||
+        (isEmptyField(binding.nameEdit, binding.name, requireContext()) ||
+                checkName(binding.nameEdit, binding.name, requireContext())) or
+                isEmptyField(binding.passwordEdit, binding.password, requireContext()) or
+                isEmptyField(
+                    binding.confirmPasswordEdit,
+                    binding.confirmPassword,
+                    requireContext()
+                ) or
+                (isEmptyField(binding.emailEdit, binding.email, requireContext()) ||
+                        Utils.checkEmailPattern(
+                            binding.emailEdit,
+                            binding.email,
+                            requireContext()
+                        )) or
+                (isEmptyField(binding.surnameEdit, binding.surname, requireContext()) ||
+                        checkName(binding.surnameEdit, binding.surname, requireContext())) or
+                checkName(binding.patronymicEdit, binding.patronymic, requireContext()) ||
                 !arePasswordsSame(
                     binding.passwordEdit,
                     binding.confirmPasswordEdit,
                     binding.confirmPassword
                 )
-
-
-
-
-    private fun checkEmailPattern(edit: TextInputEditText, layout: TextInputLayout): Boolean {
-        if (!Patterns.EMAIL_ADDRESS
-                .matcher(edit.text.toString().trim())
-                .matches()
-        ) {
-            setError(layout, getString(R.string.sign_up_error_title_wrong_email))
-            return true
-        }
-        return false
-    }
-
-    private fun checkName(edit: TextInputEditText, layout: TextInputLayout): Boolean {
-        //for testing able to use latin and cyrillic alphabet
-        val regex = "^[a-zA-ZА-Яа-я]*\$".toRegex()
-        // val regex  = "^[А-Яа-я]*\$".toRegex()
-        val name = edit.text.toString().trim()
-        if (!regex.matches(name)) {
-            setError(layout, getString(R.string.sign_up_wrong_name))
-            return true
-        }
-        return false
-    }
 
     private fun arePasswordsSame(
         pass: TextInputEditText,
@@ -175,4 +177,15 @@ class SignUpFragment : Fragment() {
         return true
     }
 
+    private fun showDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.apply {
+            setTitle(getString(R.string.dialog_title_confirm_email))
+            setMessage(getString(R.string.dialog_description_confirm_email))
+            setPositiveButton(getString(R.string.dialog_ok)) { _, _ ->
+                findNavController().popBackStack()
+            }
+            show()
+        }
+    }
 }
